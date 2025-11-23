@@ -1,0 +1,15 @@
+targets:
+  $default:
+    sources:
+      include:
+        - lib/**
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true
+          field_rename: snake
+          include_if_null: false
+      retrofit_generator:
+        options:
+          nullable: true
+
