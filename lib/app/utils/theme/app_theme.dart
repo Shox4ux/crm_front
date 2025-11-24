@@ -8,7 +8,12 @@ abstract class AppTheme {
       bodyMedium: TextStyle(fontSize: 16),
       titleLarge: TextStyle(fontWeight: FontWeight.bold),
     ),
-    appBarTheme: const AppBarTheme(elevation: 2, centerTitle: true),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.black87,
+      foregroundColor: Colors.white, // sets title & icons to white
+      elevation: 0,
+      centerTitle: true,
+    ),
     inputDecorationTheme: const InputDecorationTheme(
       border: OutlineInputBorder(),
     ),

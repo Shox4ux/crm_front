@@ -65,6 +65,7 @@ showAddWProductDialog(
                 onPressed: () {
                   context.read<WarehouseCubit>().addWareProd(
                     WarehouseProductWrite(
+                      warehouseId: context.read<WarehouseCubit>().getWID(),
                       productId: slktdP!.id,
                       status: slktdStatus?.index ?? 0,
                       quantity: int.tryParse(quantityCtrl.text) ?? 0,

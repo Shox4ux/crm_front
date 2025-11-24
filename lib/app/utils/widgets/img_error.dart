@@ -9,7 +9,7 @@ class OnImgError extends StatelessWidget {
     return Image.asset(
       AppAssets.defaultImg,
       width: size ?? double.maxFinite,
-      height: size ?? 210,
+      height: size ?? 190,
       fit: BoxFit.cover,
     );
   }

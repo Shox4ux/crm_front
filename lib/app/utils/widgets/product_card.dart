@@ -3,6 +3,7 @@ import 'package:crm_app/app/src/data/remote/models/response/product/product_read
 import 'package:crm_app/app/src/data/remote/models/response/user/user_read.dart';
 import 'package:crm_app/app/src/logic/logic.dart';
 import 'package:crm_app/app/utils/extensions/full_url.dart';
+import 'package:crm_app/app/utils/funcs/profit_percent.dart';
 import 'package:crm_app/app/utils/widgets/custom_double_text.dart';
 import 'package:crm_app/app/utils/widgets/custom_ibtn.dart';
 import 'package:crm_app/app/utils/widgets/custom_field.dart';
@@ -38,18 +39,20 @@ class _ProductCardState extends State<ProductCard> {
 
   @override
   Widget build(BuildContext context) {
+    var prod = widget.product;
     return Stack(
       children: [
         InkWell(
           onTap: () {
             print("object");
-            context.push('/product_add_edit', extra: widget.product);
+            context.push('/product_add_edit', extra: prod);
           },
           child: Card(
             margin: EdgeInsets.only(right: 23, bottom: 20),
             clipBehavior: Clip.hardEdge,
             color: Colors.white,
             elevation: 8,
+
             child: Column(
               spacing: 10,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,37 +67,48 @@ class _ProductCardState extends State<ProductCard> {
                     clipBehavior: Clip.hardEdge,
                     child: Image.network(
                       errorBuilder: (_, e, s) => OnImgError(),
-                      widget.product.imgUrl.fullUrl(),
+                      prod.imgUrl.fullUrl(),
                       width: double.maxFinite,
-                      height: 190,
+                      height: 200,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    spacing: 4,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomDoubleText(ttl: "Name: ", b: widget.product.name),
-                      CustomDoubleText(
-                        isNum: true,
-                        ttl: "Buy Price: ",
-                        b: widget.product.basePrice.toString(),
-                      ),
-                      widget.cp != null
-                          ? CustomDoubleText(
-                              isNum: true,
-                              ttl: "Custom Price: ",
-                              b: widget.cp?.customPrice.toString() ?? "",
-                            )
-                          : CustomDoubleText(
-                              isNum: true,
-                              ttl: "Sell Price: ",
-                              b: widget.product.sellPrice.toString(),
-                            ),
-                    ],
+                  child: Flexible(
+                    child: Column(
+                      spacing: 4,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomDoubleText(ttl: "Name: ", b: prod.name),
+                        CustomDoubleText(
+                          isNum: true,
+                          ttl: "Buy Price: ",
+                          b: prod.basePrice.toString(),
+                        ),
+                        widget.cp != null
+                            ? CustomDoubleText(
+                                isNum: true,
+                                ttl: "Custom Price: ",
+                                b: widget.cp?.customPrice.toString() ?? "",
+                              )
+                            : CustomDoubleText(
+                                isNum: true,
+                                ttl: "Sell Price: ",
+                                b: prod.sellPrice.toString(),
+                              ),
+                        CustomDoubleText(
+                          ttl: "Quantity: ",
+                          b: prod.total_quantity.toString(),
+                        ),
+                        CustomDoubleText(
+                          isPrc: true,
+                          ttl: "Profit: ",
+                          b: profitPrc(prod.basePrice, prod.sellPrice),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

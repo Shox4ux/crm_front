@@ -18,7 +18,7 @@ import '../../src/data/remote/repos/repo/api_repos.dart';
 
 abstract class AppRouter {
   static GoRouter router = GoRouter(
-    initialLocation: '/product',
+    initialLocation: '/main',
 
     routes: [
       GoRoute(path: '/', builder: (context, state) => const LoginScreen()),

@@ -13,10 +13,21 @@ class CustomDoubleText extends StatelessWidget {
     this.ttl = "Total amount: ",
     this.b = "",
     this.isNum = false,
+    this.isPrc = false,
   });
   final String ttl;
   final String b;
   final bool isNum;
+  final bool isPrc;
+
+  String dec() {
+    if (isNum) {
+      return "$b \$";
+    } else if (isPrc) {
+      return "$b \%";
+    }
+    return b;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +36,7 @@ class CustomDoubleText extends StatelessWidget {
         children: [
           TextSpan(text: ttl, style: txs),
           TextSpan(
-            text: isNum ? "$b \$" : b,
+            text: dec(),
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,

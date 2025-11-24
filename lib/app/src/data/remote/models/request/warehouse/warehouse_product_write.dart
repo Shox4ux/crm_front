@@ -1,15 +1,15 @@
 import 'dart:convert';
-
 import 'package:json_annotation/json_annotation.dart';
-
 part 'warehouse_product_write.g.dart';
 
 @JsonSerializable()
 class WarehouseProductWrite {
+  final int warehouseId;
   final int productId;
   final int status;
   final int quantity;
   WarehouseProductWrite({
+    required this.warehouseId,
     required this.productId,
     required this.status,
     required this.quantity,
