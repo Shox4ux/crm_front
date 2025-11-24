@@ -4,8 +4,11 @@ import 'package:crm_app/app/src/data/remote/models/request/product/product_expen
 import 'package:crm_app/app/src/data/remote/models/response/product/product_expense_read.dart';
 
 import 'package:crm_app/app/utils/conts/api_urls.dart';
+import 'package:crm_app/feature/product/data/model/product_read.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+
+part 'product_api_service.g.dart';
 
 @RestApi(baseUrl: ApiUrls.baseUrl, parser: Parser.MapSerializable)
 abstract class ProductApiService {
