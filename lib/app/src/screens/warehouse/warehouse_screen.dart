@@ -34,24 +34,24 @@ class _WarehouseScreenState extends State<WarehouseScreen> {
     super.dispose();
   }
 
+  void onSearch(String? val) {
+    setState(() {
+      context.read<WarehouseCubit>().filter(val);
+    });
+  }
+
+  void onAdd() {
+    showAddWare(context, _nameCtrl, _addressCtrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
-
       child: Column(
         spacing: 20,
         children: [
-          CustomSearchAdd(
-            btnTxt: "Add Ware",
-            onSearch: (val) {
-              setState(() {
-                context.read<WarehouseCubit>().filter(val);
-              });
-            },
-            onAdd: () => showAddWare(context, _nameCtrl, _addressCtrl),
-          ),
-
+          CustomSearchAdd(btnTxt: "Add Ware", onSearch: onSearch, onAdd: onAdd),
           Flexible(
             child: BlocConsumer<WarehouseCubit, WarehouseState>(
               listener: (context, state) {
@@ -70,10 +70,7 @@ class _WarehouseScreenState extends State<WarehouseScreen> {
                     crossAxisCount: 6,
                   ),
                   itemCount: list.length,
-                  itemBuilder: (_, int i) => Container(
-                    margin: EdgeInsets.only(right: 10),
-                    child: WarehouseCard(warehouse: list[i]),
-                  ),
+                  itemBuilder: (_, int i) => WarehouseCard(warehouse: list[i]),
                 );
               },
             ),
@@ -152,39 +149,43 @@ class WarehouseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        InkWell(
-          onTap: () {
-            context.read<WarehouseCubit>().onWPessed(warehouse.id);
-            context.push("/warehouse_products");
-          },
-          child: Card(
-            color: Colors.white,
-            elevation: 8,
+    return Container(
+      margin: EdgeInsets.only(right: 10),
 
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [Text(warehouse.name), Text(warehouse.address)],
+      child: Stack(
+        children: [
+          InkWell(
+            onTap: () {
+              context.read<WarehouseCubit>().onWPessed(warehouse.id);
+              context.push("/warehouse_products", extra: warehouse);
+            },
+            child: Card(
+              color: Colors.white,
+              elevation: 8,
+
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Text(warehouse.name), Text(warehouse.address)],
+                ),
               ),
             ),
           ),
-        ),
-        Positioned(
-          right: 5,
-          child: IconButton(
-            onPressed: () {
-              showDelConfrm(context, () {
-                context.read<WarehouseCubit>().deleteWarehouse(warehouse.id);
-                context.pop();
-              });
-            },
-            icon: Icon(Icons.delete, color: Colors.red),
+          Positioned(
+            right: 5,
+            child: IconButton(
+              onPressed: () {
+                showDelConfrm(context, () {
+                  context.read<WarehouseCubit>().deleteWarehouse(warehouse.id);
+                  context.pop();
+                });
+              },
+              icon: Icon(Icons.delete, color: Colors.red),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

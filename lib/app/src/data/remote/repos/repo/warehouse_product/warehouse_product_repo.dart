@@ -35,4 +35,11 @@ class WarehouseProductRepo extends BaseRepo
   }) => getStateOf<WarehouseProductRead>(
     request: () => _service.getWProductById(id: id),
   );
+
+  @override
+  Future<DataState<List<WarehouseProductRead>>> getAllWarehouseProductByWareId({
+    required int wareId,
+  }) => getStateOf<List<WarehouseProductRead>>(
+    request: () => _service.getAllWProductByWareId(wareId: wareId),
+  );
 }

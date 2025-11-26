@@ -418,7 +418,7 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
             BlocConsumer<ProductCubit, ProductState>(
               listener: (context, state) {
                 if (state.status == ProdStatus.success) {
-                  context.push('/product');
+                  context.pop();
                 }
               },
               builder: (context, state) {

@@ -1,5 +1,6 @@
 import 'package:crm_app/app/src/data/remote/models/response/order/order_read.dart';
 import 'package:crm_app/app/src/data/remote/models/response/product/product_read.dart';
+import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_read.dart';
 import 'package:crm_app/app/src/logic/order_product_cubit/order_product_cubit.dart';
 import 'package:crm_app/app/src/screens.dart';
 import 'package:crm_app/app/src/screens/auth/login_screen.dart';
@@ -69,7 +70,10 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: '/warehouse_products',
-        builder: (context, state) => const WarehouseProductListScreen(),
+        builder: (context, state) {
+          var warehouse = state.extra as WarehouseRead;
+          return WarehouseProductListScreen(warehouse: warehouse);
+        },
       ),
       GoRoute(
         path: '/clients',

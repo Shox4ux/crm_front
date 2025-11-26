@@ -1,6 +1,7 @@
 import 'package:crm_app/api_logger.dart';
 import 'package:crm_app/app/src/data/remote/repos/repo/api_repos.dart';
 import 'package:crm_app/app/src/data/remote/service/api_service.dart';
+import 'package:crm_app/offline_interceptor.dart';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -9,8 +10,7 @@ final locator = GetIt.instance;
 
 Future<void> setupLocator() async {
   final dio = Dio();
-  dio.interceptors.add(ApiLogger());
-
+  dio.interceptors.addAll([ApiLogger(), OfflineInterceptor()]);
   locator.registerSingleton<Dio>(dio);
   locator.registerSingleton<ApiService>(ApiService(locator<Dio>()));
   // locator.registerLazySingleton<Database>(() => Database());

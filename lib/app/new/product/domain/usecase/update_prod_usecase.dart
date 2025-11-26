@@ -1,6 +1,6 @@
-import 'package:crm_app/common/data_state.dart';
-import 'package:crm_app/feature/product/data/model/product_write.dart';
-import 'package:crm_app/feature/product/domain/repo/product_repo_impl.dart';
+import 'package:crm_app/app/new/common/data_state.dart';
+import 'package:crm_app/app/new/product/data/model/product_write.dart';
+import 'package:crm_app/app/new/product/domain/repo/product_repo_impl.dart';
 
 class UpdateProdUsecase {
   final ProductRepo _repo;

@@ -1,4 +1,3 @@
-import 'package:crm_app/app/src/data/remote/models/request/warehouse/warehouse_product_write.dart';
 import 'package:crm_app/app/src/data/remote/models/request/warehouse/warehouse_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_product_read.dart';
 import 'package:crm_app/app/src/data/remote/repos/base_repo/data_state.dart';
@@ -10,13 +9,12 @@ import '../../data/remote/repos/repo/api_repos.dart';
 part 'warehouse_state.dart';
 
 class WarehouseCubit extends Cubit<WarehouseState> {
-  final WarehouseProductRepo _wpRepo;
   final WarehouseRepo _wRepo;
 
   late int _wId;
   late List<WarehouseRead> _filtered;
 
-  WarehouseCubit(this._wRepo, this._wpRepo)
+  WarehouseCubit(this._wRepo)
     : super(WarehouseState(list: [], status: WareStatus.init)) {
     _filtered = [];
     _getAllWarehouse();
@@ -36,6 +34,7 @@ class WarehouseCubit extends Cubit<WarehouseState> {
   }
 
   void onWPessed(int id) => _wId = id;
+
   int getWID() => _wId;
 
   void _getAllWarehouse() async {
@@ -74,23 +73,8 @@ class WarehouseCubit extends Cubit<WarehouseState> {
 
   // void _getAllWareProd() async {}
 
-  void addWareProd(WarehouseProductWrite body) async {
-    emit(state.copyWith(status: WareStatus.loading));
-    var res = await _wpRepo.createWarehouseProduct(body: body);
-    if (res is DataSuccess) {
-    } else {
-      emit(state.copyWith(status: WareStatus.failure, msg: res.errorMsg));
-    }
-  }
-
-  void delWareProd(int id) async {
-    emit(state.copyWith(status: WareStatus.loading));
-    var res = await _wpRepo.deleteWarehouseProduct(id: id);
-    if (res is DataSuccess) {
-    } else {
-      emit(state.copyWith(status: WareStatus.failure, msg: res.errorMsg));
-    }
-  }
+  // ==========================================================//
+  //Warehouse Products Methods
 
   // Future<void> loadWarehouses() async {
   //   emit(state.copyWith(status: WareStatus.loading));

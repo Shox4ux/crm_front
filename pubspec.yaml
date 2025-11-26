@@ -39,6 +39,7 @@ dependencies:
   meta: ^1.16.0
   drift: ^2.28.2
   drift_flutter: ^0.2.7
+  
   path_provider: ^2.1.5
   get_it: ^8.2.0
   path: ^1.9.1
@@ -51,6 +52,7 @@ dependencies:
   fluttertoast: ^9.0.0
   flutter_awesome_logger: ^1.2.1
   intl: ^0.20.2
+  connectivity_plus: ^7.0.0
 
  
 

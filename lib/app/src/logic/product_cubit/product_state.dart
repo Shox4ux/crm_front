@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'product_cubit.dart';
 
-enum ProdStatus { init, loading, success, error }
+enum ProdStatus { init, loading, success, error, disconnected }
 
 class ProductState {
   final ProdStatus status;

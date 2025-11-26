@@ -3,6 +3,7 @@ import 'package:crm_app/app/src/logic/logic.dart';
 import 'package:crm_app/app/utils/funcs/show_toast.dart';
 import 'package:crm_app/app/utils/img_handler/img_handler.dart';
 import 'package:crm_app/app/utils/utils.dart';
+import 'package:crm_app/app/utils/widgets/custom_retry.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -198,6 +199,14 @@ class _ProductScreenState extends State<ProductScreen> {
                 builder: (context, state) {
                   if (state.status == ProdStatus.loading) {
                     return CusProgress();
+                  }
+                  if (state.status == ProdStatus.disconnected) {
+                    return RetryWidget(
+                      message: state.msg,
+                      onRetry: () {
+                        context.read<ProductCubit>().getAllProduct();
+                      },
+                    );
                   }
 
                   var list = context.watch<ProductCubit>().getFiltList();

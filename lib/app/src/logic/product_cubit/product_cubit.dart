@@ -50,7 +50,13 @@ class ProductCubit extends Cubit<ProductState> {
       _filtered = res.data ?? [];
       emit(state.copyWith(status: ProdStatus.success, list: res.data));
     } else {
-      emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
+      if (res.code == 101) {
+        emit(
+          state.copyWith(status: ProdStatus.disconnected, msg: res.errorMsg),
+        );
+      } else {
+        emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
+      }
     }
   }
 

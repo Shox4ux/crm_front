@@ -30,6 +30,7 @@ abstract class BaseRepo {
       }
     } on DioException catch (e) {
       String errorMessage = "Unknown error";
+      int code = 0;
 
       if (e.response != null && e.response?.data != null) {
         // If backend sends a JSON like {"message": "something went wrong"}
@@ -42,10 +43,13 @@ abstract class BaseRepo {
         errorMessage = "Connection timed out";
       } else if (e.type == DioExceptionType.receiveTimeout) {
         errorMessage = "Response timeout";
+      } else if (e.type == DioExceptionType.unknown) {
+        errorMessage = "No internet connection";
+        code = 101;
       }
 
       print("API error: $errorMessage");
-      return DataFailed(errorMessage);
+      return DataFailed(errorMessage, code: code);
     }
   }
 }

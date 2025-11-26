@@ -5,7 +5,6 @@ enum WareStatus { init, loading, success, failure }
 
 class WarehouseState {
   final List<WarehouseRead> list;
-
   final WareStatus status;
   final String? msg;
   WarehouseState({required this.list, required this.status, this.msg});

@@ -9,6 +9,11 @@ abstract class WarehouseProductRepoImpl {
   });
   Future<DataState<DelRead>> deleteWarehouseProduct({required int id});
   Future<DataState<List<WarehouseProductRead>>> getAllWarehouseProduct();
+
+  Future<DataState<List<WarehouseProductRead>>> getAllWarehouseProductByWareId({
+    required int wareId,
+  });
+
   Future<DataState<WarehouseProductRead>> getWarehouseProduct({
     required int id,
   });

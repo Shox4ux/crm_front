@@ -1,7 +1,9 @@
 import 'package:crm_app/app/src/data/remote/models/request/warehouse/warehouse_product_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/product/product_read.dart';
 import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_product_read.dart';
+import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_read.dart';
 import 'package:crm_app/app/src/logic/logic.dart';
+import 'package:crm_app/app/src/logic/ware_prod_cubit/ware_prod_cubit.dart';
 import 'package:crm_app/app/utils/enums/warehouse_product_status.dart';
 import 'package:crm_app/app/utils/extensions/full_url.dart';
 import 'package:crm_app/app/utils/funcs/del_confrm.dart';
@@ -14,12 +16,33 @@ import 'package:go_router/go_router.dart';
 showAddWProductDialog(
   BuildContext context, {
   required TextEditingController quantityCtrl,
+  required int wId,
 }) {
   showDialog(
     context: context,
     builder: (_) {
       ProductRead? slktdP;
       WarehouseProductStatus? slktdStatus;
+
+      void onCancel() {
+        slktdP = null;
+        slktdStatus = null;
+        quantityCtrl.clear();
+        context.pop();
+      }
+
+      void onAdd() {
+        context.read<WareProdCubit>().addWareProd(
+          WarehouseProductWrite(
+            warehouseId: wId,
+            productId: slktdP!.id,
+            status: slktdStatus?.index ?? 0,
+            quantity: int.tryParse(quantityCtrl.text) ?? 0,
+          ),
+        );
+        onCancel();
+      }
+
       return StatefulBuilder(
         builder: (context, state) {
           return AlertDialog(
@@ -28,6 +51,7 @@ showAddWProductDialog(
             content: StatefulBuilder(
               builder: (context, setState) {
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ProductDrop(
@@ -47,6 +71,10 @@ showAddWProductDialog(
                         });
                       },
                     ),
+                    CustomDoubleText(
+                      ttl: "Available Quantity: ",
+                      b: slktdP?.active_quantity.toString() ?? "0",
+                    ),
                     CustomField(
                       isDense: false,
                       ctrl: quantityCtrl,
@@ -60,32 +88,8 @@ showAddWProductDialog(
             ),
             actionsAlignment: MainAxisAlignment.spaceAround,
             actions: [
-              CustomBtn(
-                txt: "Confirm",
-                onPressed: () {
-                  context.read<WarehouseCubit>().addWareProd(
-                    WarehouseProductWrite(
-                      warehouseId: context.read<WarehouseCubit>().getWID(),
-                      productId: slktdP!.id,
-                      status: slktdStatus?.index ?? 0,
-                      quantity: int.tryParse(quantityCtrl.text) ?? 0,
-                    ),
-                  );
-                  slktdP = null;
-                  slktdStatus = null;
-                  quantityCtrl.clear();
-                  context.pop();
-                },
-              ),
-              CustomBtn(
-                txt: "Cancel",
-                onPressed: () {
-                  slktdP = null;
-                  slktdStatus = null;
-                  quantityCtrl.clear();
-                  context.pop();
-                },
-              ),
+              CustomBtn(txt: "Confirm", onPressed: onAdd),
+              CustomBtn(txt: "Cancel", onPressed: onCancel),
             ],
           );
         },
@@ -95,7 +99,8 @@ showAddWProductDialog(
 }
 
 class WarehouseProductListScreen extends StatefulWidget {
-  const WarehouseProductListScreen({super.key});
+  const WarehouseProductListScreen({super.key, this.warehouse});
+  final WarehouseRead? warehouse;
 
   @override
   State<WarehouseProductListScreen> createState() =>
@@ -106,11 +111,21 @@ class _WarehouseProductListScreenState
     extends State<WarehouseProductListScreen> {
   late TextEditingController _quantityCtrl;
   late String imagePath;
-  @override
-  void initState() {
+
+  void setUp() {
     _quantityCtrl = TextEditingController();
     imagePath = "";
+    if (widget.warehouse != null) {
+      context.read<WareProdCubit>().getAllWareProdByWareId(
+        widget.warehouse!.id,
+      );
+    }
     context.read<ProductCubit>().getAllProduct();
+  }
+
+  @override
+  void initState() {
+    setUp();
     super.initState();
   }
 
@@ -118,6 +133,20 @@ class _WarehouseProductListScreenState
   void dispose() {
     _quantityCtrl.dispose();
     super.dispose();
+  }
+
+  void onSearch(String? val) {
+    setState(() {
+      context.read<WareProdCubit>().filter(val);
+    });
+  }
+
+  void onAdd() {
+    showAddWProductDialog(
+      context,
+      quantityCtrl: _quantityCtrl,
+      wId: widget.warehouse!.id,
+    );
   }
 
   @override
@@ -131,20 +160,12 @@ class _WarehouseProductListScreenState
           children: [
             CustomSearchAdd(
               btnTxt: "Add Product",
-              onAdd: () {
-                setState(() {
-                  showAddWProductDialog(context, quantityCtrl: _quantityCtrl);
-                });
-              },
-              onSearch: (val) {
-                setState(() {
-                  context.read<ProductCubit>().filter(val);
-                });
-              },
+              onAdd: onAdd,
+              onSearch: onSearch,
             ),
 
             Flexible(
-              child: BlocConsumer<ProductCubit, ProductState>(
+              child: BlocConsumer<WareProdCubit, WareProdState>(
                 listener: (context, state) {
                   if (state.status == ProdStatus.error) {
                     showToast(context, state.msg);
@@ -155,12 +176,12 @@ class _WarehouseProductListScreenState
                     return CusProgress();
                   }
 
-                  var list = context.watch<WarehouseCubit>().getWpList();
+                  var list = context.watch<WareProdCubit>().getFiltList();
                   if (list.isEmpty) return NoData();
                   return GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 6,
+                          crossAxisCount: 5,
                         ),
                     itemCount: list.length,
                     itemBuilder: (_, int i) => WPCard(wp: list[i]),
@@ -229,7 +250,7 @@ class WPCard extends StatelessWidget {
             onPressed: () {
               showDelConfrm(context, () {
                 context.pop();
-                context.read<ProductCubit>().deleteProduct(id: wp.id);
+                context.read<WareProdCubit>().delWareProd(wp.id);
               });
             },
             icon: Icon(Icons.delete, color: Colors.red),

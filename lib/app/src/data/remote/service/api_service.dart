@@ -181,6 +181,11 @@ abstract class ApiService {
   @GET('/warehouse_products/get_all')
   Future<HttpResponse<List<WarehouseProductRead>>> getAllWProduct();
 
+  @GET('/warehouse_products/get_all/{ware_id}')
+  Future<HttpResponse<List<WarehouseProductRead>>> getAllWProductByWareId({
+    @Path("ware_id") required int wareId,
+  });
+
   @DELETE('/warehouse_products/delete/{id}')
   Future<HttpResponse<DelRead>> deleteWProduct({@Path("id") required int id});
 
