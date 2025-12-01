@@ -1,4 +1,4 @@
-import 'package:crm_app/app/new/common/data_state.dart';
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
 import 'package:crm_app/app/new/product/data/model/product_read.dart';
 import 'package:crm_app/app/new/product/data/model/product_write.dart';
 import 'package:crm_app/app/new/product/domain/repo/product_repo_impl.dart';

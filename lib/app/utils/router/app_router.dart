@@ -1,3 +1,4 @@
+import 'package:crm_app/app/new/home/presentation/screen/homex.dart';
 import 'package:crm_app/app/src/data/remote/models/response/order/order_read.dart';
 import 'package:crm_app/app/src/data/remote/models/response/product/product_read.dart';
 import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_read.dart';
@@ -19,9 +20,10 @@ import '../../src/data/remote/repos/repo/api_repos.dart';
 
 abstract class AppRouter {
   static GoRouter router = GoRouter(
-    initialLocation: '/main',
+    initialLocation: '/homex',
 
     routes: [
+      GoRoute(path: '/homex', builder: (context, state) => const HomeXScreen()),
       GoRoute(path: '/', builder: (context, state) => const LoginScreen()),
       GoRoute(path: '/main', builder: (context, state) => const MianScreen()),
       GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),

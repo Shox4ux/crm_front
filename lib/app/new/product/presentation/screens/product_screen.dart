@@ -100,16 +100,6 @@ showAddProductDialog(
             onPressed: () {
               if (imgPath == "") return;
 
-              // context.read<ProductCubit>().createProduct(
-              //   body: ProductWrite(
-              //     img: img,
-              //     name: nameCtrl.text,
-              //     buyPice: double.tryParse(buyPriceCtrl.text) ?? 0,
-              //     sellPice: double.tryParse(sellPriceCtrl.text) ?? 0,
-              //   ),
-              // );
-
-              //Clear the left data
               nameCtrl.clear();
               buyPriceCtrl.clear();
               sellPriceCtrl.clear();
@@ -122,8 +112,6 @@ showAddProductDialog(
             width: 120,
             txt: "Cancel",
             onPressed: () {
-              //Clear the left data
-
               nameCtrl.clear();
               buyPriceCtrl.clear();
               sellPriceCtrl.clear();

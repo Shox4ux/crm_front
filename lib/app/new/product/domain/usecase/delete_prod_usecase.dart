@@ -2,7 +2,7 @@
 
 //   Future<DataState<ProductRead>> getProduct({required int id});
 
-import 'package:crm_app/app/new/common/data_state.dart';
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
 import 'package:crm_app/app/new/product/domain/repo/product_repo_impl.dart';
 
 class DeleteProdUsecase {

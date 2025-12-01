@@ -2,12 +2,12 @@ import 'package:crm_app/app/src/data/remote/models/request/product/product_expen
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk_update.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/product/product_expense_read.dart';
-import 'package:crm_app/app/new/common/base_repo.dart';
+import 'package:crm_app/app/new/common/data/repo/base_repo.dart';
 import 'package:crm_app/app/new/product/data/model/product_read.dart';
 import 'package:crm_app/app/new/product/data/model/product_write.dart';
 import 'package:crm_app/app/new/product/data/source/remote/product_api_service.dart';
 
-import '../../../common/data_state.dart';
+import '../../../common/data/repo/data_state.dart';
 import '../../domain/repo/product_repo_impl.dart';
 
 class ProductRepoImpl extends BaseRepo implements ProductRepo {

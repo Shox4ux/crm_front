@@ -5,7 +5,7 @@ import 'package:crm_app/app/src/data/remote/models/response/product/product_expe
 import 'package:crm_app/app/new/product/data/model/product_read.dart';
 import 'package:crm_app/app/new/product/data/model/product_write.dart';
 
-import '../../../common/data_state.dart';
+import '../../../common/data/repo/data_state.dart';
 
 abstract class ProductRepo {
   Future<DataState<ProductRead>> createProduct({required ProductWrite body});

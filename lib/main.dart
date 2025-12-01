@@ -1,8 +1,9 @@
+import 'package:crm_app/app/new/core/theme/app_themex.dart';
+import 'package:crm_app/app/new/home/presentation/bloc/cubit/drawerx_cubit.dart';
 import 'package:crm_app/app/src/logic/ware_prod_cubit/ware_prod_cubit.dart';
 import 'package:crm_app/app_bloc_observer.dart';
 import 'package:crm_app/app/src/logic/logic.dart';
 import 'package:crm_app/app/utils/router/app_router.dart';
-import 'package:crm_app/app/utils/theme/app_theme.dart';
 import 'package:crm_app/app_locator.dart';
 import 'package:crm_app/connectivity_service.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class CRMApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
     providers: [
+      BlocProvider(create: (_) => DrawerXCubit()),
       BlocProvider(create: (_) => DrawerCubit()),
       BlocProvider(create: (_) => ProductCubit(locator<ProductRepo>())),
       BlocProvider(create: (_) => OrderCubit(locator<OrderRepo>())),
@@ -42,7 +44,9 @@ class CRMApp extends StatelessWidget {
 
     child: MaterialApp.router(
       title: 'CRM App',
-      theme: AppTheme.theme,
+      theme: AppThemeX.light,
+      darkTheme: AppThemeX.dark,
+      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       routerConfig: AppRouter.router,
     ),
