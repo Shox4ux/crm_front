@@ -44,6 +44,9 @@ class CRMApp extends StatelessWidget {
 
     child: MaterialApp.router(
       title: 'CRM App',
+      scrollBehavior: ScrollConfiguration.of(
+        context,
+      ).copyWith(scrollbars: false),
       theme: AppThemeX.light,
       darkTheme: AppThemeX.dark,
       themeMode: ThemeMode.system,

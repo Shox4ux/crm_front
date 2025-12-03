@@ -17,6 +17,7 @@ class UserCubit extends Cubit<UserState> {
     var res = await _repo.loginUser(body: body);
     if (res is DataSuccess) {
       _verifyToken(res.data!.accessToken);
+      emit(state.copyWith(status: UserSStatus.success));
     } else {
       emit(state.copyWith(status: UserSStatus.error, msg: res.errorMsg));
     }

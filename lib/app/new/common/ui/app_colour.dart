@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColour {
-  static const Color stroke = Color(0xff979797);
+  static const Color dashClient = Colors.deepPurpleAccent;
+  static const Color dashOrder = Colors.amber;
+  static const Color dashChart = Colors.green;
+  static const Color dashPending = Colors.deepOrangeAccent;
+  static final Color whiteStroke = Color(0xffCFCFCF).withValues(alpha: 0.1);
+  // ---------------
+  static const Color stroke = Color(0xff313D4F);
   static const Color white = Color(0xffffffff);
   static const Color black = Color(0xff000000);
   static const Color red = Color(0xffF93C65);

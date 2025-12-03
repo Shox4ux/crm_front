@@ -1,7 +1,20 @@
-import 'package:crm_app/app/new/home/presentation/bloc/cubit/drawerx_cubit.dart';
-import 'package:crm_app/app/new/home/presentation/widget/drawerx.dart';
+import 'package:crm_app/app/new/client/presentation/screens/client_list.dart';
+import 'package:crm_app/app/new/home/presentation/screen/home_holder.dart';
+import 'package:crm_app/app/new/order/presentation/screens/order_list.dart';
+import 'package:crm_app/app/new/product/presentation/screens/product_list.dart';
+import 'package:crm_app/app/new/warehouse/presentation/screens/warehouse_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:crm_app/app/new/home/presentation/bloc/cubit/drawerx_cubit.dart';
+import 'package:crm_app/app/new/home/presentation/widget/drawerx.dart';
+
+List<Widget> screens = [
+  HomeHolder(),
+  ProductList(),
+  WarehouseList(),
+  ClientList(),
+  OrderList(),
+];
 
 class HomeXScreen extends StatelessWidget {
   const HomeXScreen({super.key});
@@ -18,7 +31,7 @@ class HomeXScreen extends StatelessWidget {
       },
       child: Scaffold(
         key: _scaffoldKey,
-        drawer: const D(),
+        drawer: const DrawerX(),
         appBar: AppBar(
           leading: Builder(
             builder: (context) {
@@ -30,28 +43,8 @@ class HomeXScreen extends StatelessWidget {
               );
             },
           ),
-          title: const Text("Home Screen"),
         ),
-        body: Row(
-          children: [
-            Expanded(
-              child: BlocBuilder<DrawerXCubit, DrawerXState>(
-                builder: (context, state) {
-                  return IndexedStack(
-                    index: state.selectedIndex,
-                    children: const [
-                      Center(child: Text("Dashboard Screen")),
-                      Center(child: Text("Orders Screen")),
-                      Center(child: Text("Products Screen")),
-                      Center(child: Text("Clients Screen")),
-                      Center(child: Text("Settings Screen")),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+        body: screens[context.watch<DrawerXCubit>().state.selectedIndex],
       ),
     );
   }

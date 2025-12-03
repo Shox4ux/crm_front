@@ -1,5 +1,6 @@
 import 'package:crm_app/app/new/common/ui/app_colour.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 abstract class AppThemeX {
   static ThemeData light = ThemeData(
@@ -44,9 +45,13 @@ abstract class AppThemeX {
     // ---------------------
     // Global Text Styles
     // ---------------------
-    textTheme: const TextTheme(
-      bodyMedium: TextStyle(fontSize: 16, color: AppColour.textLight),
-      bodySmall: TextStyle(fontSize: 14, color: AppColour.textSecondaryLight),
+    textTheme: GoogleFonts.nunitoSansTextTheme().copyWith(
+      titleLarge: const TextStyle(color: AppColour.textLight),
+      titleMedium: const TextStyle(color: AppColour.textLight),
+      titleSmall: const TextStyle(color: AppColour.textLight),
+      bodySmall: const TextStyle(color: AppColour.textSecondaryLight),
+      bodyLarge: const TextStyle(color: AppColour.textLight),
+      bodyMedium: const TextStyle(color: AppColour.textSecondaryLight),
     ),
 
     // ---------------------
@@ -94,9 +99,13 @@ abstract class AppThemeX {
       elevation: 0,
     ),
 
-    textTheme: const TextTheme(
-      bodyMedium: TextStyle(fontSize: 16, color: AppColour.textDark),
-      bodySmall: TextStyle(fontSize: 14, color: AppColour.textSecondaryDark),
+    textTheme: GoogleFonts.nunitoSansTextTheme().copyWith(
+      titleLarge: const TextStyle(color: AppColour.textDark),
+      titleMedium: const TextStyle(color: AppColour.textDark),
+      titleSmall: const TextStyle(color: AppColour.textDark),
+      bodySmall: const TextStyle(color: AppColour.textSecondaryDark),
+      bodyLarge: const TextStyle(color: AppColour.textDark),
+      bodyMedium: const TextStyle(color: AppColour.textSecondaryDark),
     ),
 
     // listTileTheme: ListTileThemeData(

@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 abstract class AppTextStyle {
   static TextStyle small = TextStyle(fontSize: 12, fontWeight: FontWeight.w500);
@@ -6,5 +6,5 @@ abstract class AppTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.w600,
   );
-  static TextStyle large = TextStyle(fontSize: 32, fontWeight: FontWeight.w700);
+  static TextStyle large = TextStyle(fontSize: 32, fontWeight: FontWeight.bold);
 }
