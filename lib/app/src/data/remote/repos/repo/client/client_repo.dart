@@ -1,10 +1,11 @@
+import 'package:crm_app/app/new/common/data/repo/base_repo.dart';
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
+
 import '../../../models/request/client/client_prod_update.dart';
 import '../../../models/request/client/client_update.dart';
 import '../../../models/request/client/client_write.dart';
 import '../../../models/response/client/client_read.dart';
 import '../../../models/response/del_read.dart';
-import '../../base_repo/base_repo.dart';
-import '../../base_repo/data_state.dart';
 import 'client_repo_impl.dart';
 import '../../../service/api_service.dart';
 

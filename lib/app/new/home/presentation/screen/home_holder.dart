@@ -1,10 +1,9 @@
+import 'package:crm_app/app/new/common/widget/custom_footer.dart';
+import 'package:crm_app/app/new/home/presentation/widget/custom_data_table.dart';
 import 'package:flutter/material.dart';
 import 'package:crm_app/app/new/common/ui/app_radius.dart';
-import 'package:crm_app/app/new/common/ui/app_text_style.dart';
 import 'package:crm_app/app/new/home/data/fake_data.dart';
-import 'package:crm_app/app/new/home/presentation/widget/arrow_buttons.dart';
 import 'package:crm_app/app/new/home/presentation/widget/bordered_container.dart';
-import 'package:crm_app/app/new/home/presentation/widget/custom_data_table.dart';
 import 'package:crm_app/app/new/common/widget/custom_title.dart';
 import 'package:crm_app/app/new/home/presentation/widget/month_drop.dart';
 import 'package:crm_app/app/new/home/presentation/widget/order_chart.dart';
@@ -79,16 +78,11 @@ class HomeHolder extends StatelessWidget {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Showing 1-09 of 78",
-                  style: AppTextStyle.medium.copyWith(fontSize: 14),
-                ),
-                ArrowButtons(onLeftPressed: () {}, onRightPressed: () {}),
-              ],
+            CustomFooter(
+              totalCount: 12,
+              pageCount: 12,
+              onLeftPressed: () {},
+              onRightPressed: () {},
             ),
           ],
         ),

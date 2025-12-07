@@ -1,3 +1,5 @@
+import 'package:crm_app/app/new/common/widget/custom_progress.dart';
+import 'package:crm_app/app/new/common/widget/custon_no_data.dart';
 import 'package:crm_app/app/src/data/remote/models/request/warehouse/warehouse_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_read.dart';
 import 'package:crm_app/app/src/logic/logic.dart';
@@ -61,7 +63,7 @@ class _WarehouseScreenState extends State<WarehouseScreen> {
               },
               builder: (context, state) {
                 if (state.status == WareStatus.loading) {
-                  return CusProgress();
+                  return CustomProgress();
                 }
                 var list = context.watch<WarehouseCubit>().getFiltList();
                 if (list.isEmpty) return NoData();

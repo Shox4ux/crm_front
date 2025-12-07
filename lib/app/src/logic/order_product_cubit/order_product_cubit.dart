@@ -1,3 +1,4 @@
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
 import 'package:crm_app/app/src/data/remote/models/request/order/order_bulk_write.dart';
 import 'package:crm_app/app/src/data/remote/models/request/order/order_prod_updt.dart';
 import 'package:crm_app/app/src/data/remote/models/request/order/order_prod_write.dart';
@@ -6,7 +7,6 @@ import 'package:crm_app/app/src/data/remote/models/response/client/client_read.d
 import 'package:crm_app/app/src/data/remote/models/response/order/order_read.dart';
 import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_product_read.dart';
 import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_read.dart';
-import 'package:crm_app/app/src/data/remote/repos/base_repo/data_state.dart';
 import 'package:crm_app/app/src/screens/orders/data/order_row_data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

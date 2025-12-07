@@ -20,11 +20,17 @@ linter:
   # or a specific dart file by using the `// ignore: name_of_lint` and
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
+  linter:
   rules:
+    unnecessary_null_checks: true
+    unnecessary_null_aware_operator: false
+    unnecessary_nullable_return_type: false
+    unnecessary_cast: false
     ignore: 
       - avoid_function_literals_in_foreach_calls
       - unused_field
-
+      - unnecessary_null_checks
+        
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 

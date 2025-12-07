@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
 import 'package:crm_app/app/src/data/remote/models/request/warehouse/warehouse_product_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_product_read.dart';
-import 'package:crm_app/app/src/data/remote/repos/base_repo/data_state.dart';
 import 'package:crm_app/app/src/data/remote/repos/repo/warehouse_product/warehouse_product_repo.dart';
 
 part 'ware_prod_state.dart';

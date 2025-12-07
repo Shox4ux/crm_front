@@ -1,7 +1,8 @@
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
+
 import '../../../models/request/admin_write.dart';
 import '../../../models/response/admin/admin_read.dart';
 import '../../../models/response/del_read.dart';
-import '../../base_repo/data_state.dart';
 
 abstract class AdminRepoImpl {
   Future<DataState<List<AdminRead>>> getAllAdmin();

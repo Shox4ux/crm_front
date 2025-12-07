@@ -1,8 +1,9 @@
+import 'package:crm_app/app/new/common/data/repo/base_repo.dart';
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
+
 import '../../../models/request/order/order_write.dart';
 import '../../../models/response/del_read.dart';
 import '../../../models/response/order/order_read.dart';
-import '../../base_repo/base_repo.dart';
-import '../../base_repo/data_state.dart';
 import 'order_repo_impl.dart';
 import '../../../service/api_service.dart';
 

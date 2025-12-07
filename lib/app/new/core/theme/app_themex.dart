@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 abstract class AppThemeX {
   static ThemeData light = ThemeData(
     brightness: Brightness.light,
+    disabledColor: AppColour.stroke,
 
     // ---------------------
     // Global Colors
@@ -72,13 +73,12 @@ abstract class AppThemeX {
   // ---------------------
   static ThemeData dark = ThemeData(
     brightness: Brightness.dark,
-
+    disabledColor: AppColour.stroke,
     colorScheme: ColorScheme.dark(
       primary: AppColour.secondaryDark,
       secondary: AppColour.primaryDark,
       surface: AppColour.backgroundDark,
     ),
-
     scaffoldBackgroundColor: AppColour.backgroundDark,
 
     appBarTheme: const AppBarTheme(
@@ -98,7 +98,10 @@ abstract class AppThemeX {
       width: 260,
       elevation: 0,
     ),
-
+    buttonTheme: ButtonThemeData(
+      buttonColor: AppColour.secondaryDark,
+      colorScheme: ColorScheme.dark(),
+    ),
     textTheme: GoogleFonts.nunitoSansTextTheme().copyWith(
       titleLarge: const TextStyle(color: AppColour.textDark),
       titleMedium: const TextStyle(color: AppColour.textDark),

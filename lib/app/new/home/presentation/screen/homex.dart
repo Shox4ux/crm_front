@@ -16,11 +16,17 @@ List<Widget> screens = [
   OrderList(),
 ];
 
-class HomeXScreen extends StatelessWidget {
+class HomeXScreen extends StatefulWidget {
   const HomeXScreen({super.key});
 
+  @override
+  State<HomeXScreen> createState() => _HomeXScreenState();
+}
+
+class _HomeXScreenState extends State<HomeXScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return BlocListener<DrawerXCubit, DrawerXState>(
       listener: (context, state) {
         if (state.isDrawerOpen) {

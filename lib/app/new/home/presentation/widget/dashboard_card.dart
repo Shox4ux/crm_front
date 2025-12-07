@@ -1,5 +1,6 @@
 import 'package:crm_app/app/new/common/ui/app_assets.dart';
 import 'package:crm_app/app/new/common/ui/app_colour.dart';
+import 'package:crm_app/app/new/common/ui/app_radius.dart';
 import 'package:crm_app/app/new/common/ui/app_text_style.dart';
 import 'package:crm_app/app/new/home/data/fake_data.dart';
 import 'package:crm_app/app/new/home/presentation/widget/bordered_container.dart';
@@ -15,6 +16,7 @@ class DashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BorderedContainer(
       padding: const EdgeInsets.all(20),
+      borderRadius: AppRadius.cardRadius,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

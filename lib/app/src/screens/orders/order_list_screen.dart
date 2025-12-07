@@ -1,3 +1,5 @@
+import 'package:crm_app/app/new/common/widget/custom_progress.dart';
+import 'package:crm_app/app/new/common/widget/custon_no_data.dart';
 import 'package:crm_app/app/src/data/remote/models/request/order/order_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/order/order_prod_read.dart';
 import 'package:crm_app/app/src/data/remote/models/response/order/order_read.dart';
@@ -107,7 +109,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
               builder: (context, state) {
                 var list = _cubit.getFiltList();
                 if (state.status == OrderSttStatus.loading) {
-                  return Expanded(child: CusProgress());
+                  return Expanded(child: CustomProgress());
                 }
                 if (list.isEmpty) {
                   return Expanded(child: NoData());

@@ -14,7 +14,7 @@ class DrawerData {
 List<DrawerData> drawerList = [
   DrawerData(title: "Home", screen: const HomeScreen()),
   DrawerData(title: "Warehouse", screen: const WarehouseScreen()),
-  DrawerData(title: "Clients", screen: const ClientListScreen()),
+  // DrawerData(title: "Clients", screen: const ClientListScreen()),
   DrawerData(title: "Orders", screen: const OrderListScreen()),
   DrawerData(title: "Products", screen: const ProductScreen()),
 ];

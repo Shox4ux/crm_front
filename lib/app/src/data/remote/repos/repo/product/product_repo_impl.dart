@@ -1,12 +1,11 @@
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk_update.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/product/product_expense_read.dart';
-
 import '../../../models/request/product/product_write.dart';
 import '../../../models/response/del_read.dart';
 import '../../../models/response/product/product_read.dart';
-import '../../base_repo/data_state.dart';
 
 abstract class ProductRepoImpl {
   Future<DataState<ProductRead>> createProduct({required ProductWrite body});

@@ -1,5 +1,10 @@
 import 'package:crm_app/api_logger.dart';
-import 'package:crm_app/app/src/data/remote/repos/repo/api_repos.dart';
+import 'package:crm_app/app/new/client/data/source/client_api_service.dart';
+import 'package:crm_app/app/new/client/domain/repo/client_repo.dart';
+import 'package:crm_app/app/new/user/data/source/user_api_service.dart';
+import 'package:crm_app/app/new/user/domain/repo/user_repo.dart';
+import 'package:crm_app/app/src/data/remote/repos/repo/api_repos.dart'
+    hide ClientRepo;
 import 'package:crm_app/app/src/data/remote/service/api_service.dart';
 import 'package:crm_app/offline_interceptor.dart';
 
@@ -13,10 +18,6 @@ Future<void> setupLocator() async {
   dio.interceptors.addAll([ApiLogger(), OfflineInterceptor()]);
   locator.registerSingleton<Dio>(dio);
   locator.registerSingleton<ApiService>(ApiService(locator<Dio>()));
-  // locator.registerLazySingleton<Database>(() => Database());
-  // Register DAOs
-  // locator.registerSingleton<WarehouseDao>(WarehouseDao(locator<Database>()));
-  // locator.registerSingleton<ProductDao>(ProductDao(locator<Database>()));
   locator.registerSingleton<AdminRepo>(AdminRepo(locator<ApiService>()));
   locator.registerSingleton<OrderRepo>(OrderRepo(locator<ApiService>()));
   locator.registerSingleton<OrderProductRepo>(
@@ -29,11 +30,13 @@ Future<void> setupLocator() async {
     WarehouseProductRepo(locator<ApiService>()),
   );
   locator.registerSingleton<ProductRepo>(ProductRepo(locator<ApiService>()));
-  locator.registerSingleton<UserRepo>(UserRepo(locator<ApiService>()));
-  locator.registerSingleton<ClientRepo>(ClientRepo(locator<ApiService>()));
 
-  // getIt.registerSingleton<ProductDao>(db.productDao);
-  // getIt.registerSingleton<ClientDao>(db.clientDao);
-  // getIt.registerSingleton<OrderDao>(db.orderDao);
-  // getIt.registerSingleton<AdminDao>(db.adminDao);
+  // ==================================NEW==============================
+  locator.registerSingleton<UserApiService>(UserApiService(locator<Dio>()));
+  locator.registerSingleton<UserRepo>(UserRepo(locator<UserApiService>()));
+  locator.registerSingleton<ClientApiService>(ClientApiService(locator<Dio>()));
+
+  locator.registerSingleton<ClientRepo>(
+    ClientRepo(locator<ClientApiService>()),
+  );
 }

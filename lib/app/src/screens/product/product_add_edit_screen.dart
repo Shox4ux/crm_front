@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:crm_app/app/new/common/widget/custom_progress.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk_update.dart';
 import 'package:crm_app/app/src/screens/product/data/add_edit_utils.dart';
 import 'package:dio/dio.dart';
@@ -423,7 +424,7 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
               },
               builder: (context, state) {
                 if (state.status == ProdStatus.loading) {
-                  return CusProgress();
+                  return CustomProgress();
                 }
                 return widget.isEdit
                     ? CustomBtn(

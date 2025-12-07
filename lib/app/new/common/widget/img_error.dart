@@ -10,9 +10,10 @@ class OnImgError extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       AppAssets.defaultImg,
+
       width: width ?? double.maxFinite,
       height: height ?? double.maxFinite,
-      fit: BoxFit.cover,
+      fit: BoxFit.contain,
     );
   }
 }

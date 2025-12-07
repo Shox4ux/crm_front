@@ -1,3 +1,5 @@
+import 'package:crm_app/app/new/common/data/repo/base_repo.dart';
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk_update.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_write.dart';
@@ -5,8 +7,6 @@ import 'package:crm_app/app/src/data/remote/models/response/product/product_expe
 import '../../../models/request/product/product_write.dart';
 import '../../../models/response/del_read.dart';
 import '../../../models/response/product/product_read.dart';
-import '../../base_repo/base_repo.dart';
-import '../../base_repo/data_state.dart';
 import 'product_repo_impl.dart';
 import '../../../service/api_service.dart';
 

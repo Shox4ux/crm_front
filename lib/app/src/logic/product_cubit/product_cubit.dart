@@ -1,9 +1,9 @@
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk_update.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_write.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/product/product_read.dart';
-import 'package:crm_app/app/src/data/remote/repos/base_repo/data_state.dart';
 import 'package:crm_app/app/src/screens/product/data/add_edit_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,13 +50,14 @@ class ProductCubit extends Cubit<ProductState> {
       _filtered = res.data ?? [];
       emit(state.copyWith(status: ProdStatus.success, list: res.data));
     } else {
-      if (res.code == 101) {
-        emit(
-          state.copyWith(status: ProdStatus.disconnected, msg: res.errorMsg),
-        );
-      } else {
-        emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
-      }
+      emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
+
+      // if (res.code == 101) {
+      //   emit(
+      //     state.copyWith(status: ProdStatus.disconnected, msg: res.errorMsg),
+      //   );
+      // } else {
+      // }
     }
   }
 

@@ -1,6 +1,6 @@
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
 import 'package:crm_app/app/src/data/remote/models/request/warehouse/warehouse_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_product_read.dart';
-import 'package:crm_app/app/src/data/remote/repos/base_repo/data_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/remote/models/response/warehouse/warehouse_read.dart';

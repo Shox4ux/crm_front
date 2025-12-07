@@ -7,4 +7,5 @@ abstract class AppRadius {
   static BorderRadius filterRadius = BorderRadius.circular(10.0);
   static BorderRadius tableRadius = BorderRadius.circular(14.0);
   static BorderRadius cardRadius = BorderRadius.circular(18.0);
+  static Radius customRadius = Radius.circular(18.0);
 }

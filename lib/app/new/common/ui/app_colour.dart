@@ -12,9 +12,10 @@ abstract class AppColour {
   static const Color black = Color(0xff000000);
   static const Color red = Color(0xffF93C65);
   static const Color green = Color(0xff00B69B);
-
+  static const Color avatarBg = Color(0xffECECEE);
   // Light Theme
   static const backgroundLight = Color(0xFFF5F6FA);
+
   static const primaryLight = Color(0xFFffffff);
   static const secondaryLight = Color(0xFF4880FF);
   static const textLight = Color(0xFF202224);
@@ -40,4 +41,16 @@ abstract class AppColour {
   static const inprocessDark = Color(0xFF6226EF);
   static const onholdDark = Color(0xFFFFA756);
   static const intransitDark = Color(0xFFBA29FF);
+
+  static const clSecond = Color(0xFF273143);
+  static const clStroke = Color(0xFF364050);
+  static const clTxtBg = Color(0xFF323d4f);
+  static const clHint = Color(0xFFb6b6b6);
+
+  // big bg {#1b2431} yes
+  //second {#273143}
+  //stroke {#364050}
+  //txt field bg {#323d4f}
+  //hint txt {#b6b6b6}
+  //label txt {white}
 }

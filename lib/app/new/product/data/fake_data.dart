@@ -13,10 +13,52 @@ class ProdData {
 }
 
 List<ProdData> prodList = [
-  ProdData(name: "name0", finalPrice: 150.3, quantity: 100, imgUrl: "imgUrl"),
-  ProdData(name: "name1", finalPrice: 150.3, quantity: 100, imgUrl: "imgUrl"),
-  ProdData(name: "name2", finalPrice: 150.3, quantity: 100, imgUrl: "imgUrl"),
-  ProdData(name: "name3", finalPrice: 150.3, quantity: 100, imgUrl: "imgUrl"),
-  ProdData(name: "name4", finalPrice: 150.3, quantity: 100, imgUrl: "imgUrl"),
-  ProdData(name: "name5", finalPrice: 150.3, quantity: 100, imgUrl: "imgUrl"),
+  ProdData(
+    name: "name0 name0",
+    finalPrice: 150.3,
+    quantity: 100,
+    imgUrl: "imgUrl",
+  ),
+  ProdData(
+    name: "name1 name0",
+    finalPrice: 150.3,
+    quantity: 100,
+    imgUrl: "imgUrl",
+  ),
+  ProdData(
+    name: "name2 name0",
+    finalPrice: 150.3,
+    quantity: 100,
+    imgUrl: "imgUrl",
+  ),
+  ProdData(
+    name: "name3 name0",
+    finalPrice: 150.3,
+    quantity: 100,
+    imgUrl: "imgUrl",
+  ),
+  ProdData(
+    name: "name4 name0",
+    finalPrice: 150.3,
+    quantity: 100,
+    imgUrl: "imgUrl",
+  ),
+  ProdData(
+    name: "name3 name0",
+    finalPrice: 150.3,
+    quantity: 100,
+    imgUrl: "imgUrl",
+  ),
+  ProdData(
+    name: "name4 name0",
+    finalPrice: 150.3,
+    quantity: 100,
+    imgUrl: "imgUrl",
+  ),
+  ProdData(
+    name: "name5 name0",
+    finalPrice: 150.3,
+    quantity: 100,
+    imgUrl: "imgUrl",
+  ),
 ];

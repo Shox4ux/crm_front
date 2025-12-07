@@ -1,3 +1,5 @@
+import 'package:crm_app/app/new/common/widget/custom_progress.dart';
+import 'package:crm_app/app/new/common/widget/custon_no_data.dart';
 import 'package:crm_app/app/src/data/remote/models/request/warehouse/warehouse_product_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/product/product_read.dart';
 import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_product_read.dart';
@@ -173,7 +175,7 @@ class _WarehouseProductListScreenState
                 },
                 builder: (context, state) {
                   if (state.status == ProdStatus.loading) {
-                    return CusProgress();
+                    return CustomProgress();
                   }
 
                   var list = context.watch<WareProdCubit>().getFiltList();

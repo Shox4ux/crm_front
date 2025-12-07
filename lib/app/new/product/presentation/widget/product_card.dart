@@ -1,8 +1,14 @@
+import 'package:crm_app/app/new/common/functions/del_confrm.dart';
+import 'package:crm_app/app/new/common/ui/app_assets.dart';
+import 'package:crm_app/app/new/common/ui/app_colour.dart';
 import 'package:crm_app/app/new/common/ui/app_radius.dart';
+import 'package:crm_app/app/new/common/ui/app_text_style.dart';
+import 'package:crm_app/app/new/common/ui/extensions/capitilize.dart';
 import 'package:crm_app/app/new/common/widget/img_error.dart';
 import 'package:crm_app/app/new/home/presentation/widget/bordered_container.dart';
 import 'package:crm_app/app/new/product/data/fake_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.item});
@@ -15,23 +21,52 @@ class ProductCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
+            padding: EdgeInsets.all(5),
+            color: AppColour.backgroundLight,
             child: Image.network(
               item.imgUrl,
-              errorBuilder: (c, e, s) => OnImgError(height: 200),
+              errorBuilder: (c, e, s) => OnImgError(height: 196),
             ),
           ),
           BorderedContainer(
+            padding: EdgeInsets.all(10),
+            borderRadius: BorderRadius.only(
+              bottomLeft: AppRadius.customRadius,
+              bottomRight: AppRadius.customRadius,
+            ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
+                  spacing: 6,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(item.name),
+                    Text(
+                      item.name.capitalize(),
+                      style: AppTextStyle.medium.copyWith(
+                        fontSize: 18,
+                        color: AppColour.backgroundLight,
+                      ),
+                    ),
                     Text("\$ " + item.finalPrice.toString()),
-                    TextButton(onPressed: () {}, child: Text("Edit")),
+                    Text(item.quantity.toString() + " units"),
                   ],
                 ),
-                Text(item.quantity.toString()),
+                CircleAvatar(
+                  backgroundColor: AppColour.textFieldBgDark,
+                  child: IconButton(
+                    onPressed: () {
+                      showDelConfrm(
+                        ctx: context,
+                        onDel: () {
+                          print("object");
+                        },
+                      );
+                    },
+                    icon: SvgPicture.asset(AppAssets.delete),
+                  ),
+                ),
               ],
             ),
           ),

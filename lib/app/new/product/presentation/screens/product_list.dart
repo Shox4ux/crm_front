@@ -1,6 +1,9 @@
+import 'package:crm_app/app/new/common/widget/custom_btn.dart';
+import 'package:crm_app/app/new/common/widget/custom_search.dart';
 import 'package:crm_app/app/new/common/widget/custom_title.dart';
 import 'package:crm_app/app/new/product/data/fake_data.dart';
 import 'package:crm_app/app/new/product/presentation/widget/product_card.dart';
+
 import 'package:flutter/material.dart';
 
 class ProductList extends StatefulWidget {
@@ -14,25 +17,35 @@ class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(40),
       child: Column(
+        spacing: 30,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomTitle(title: "Products"),
-              TextButton(onPressed: () {}, child: Text("Add")),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 10,
+                children: [
+                  CustomSearch(),
+                  CustomBtn(onPress: () {}, txt: "Add"),
+                ],
+              ),
             ],
           ),
-          GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              crossAxisSpacing: 40,
-              childAspectRatio: 250 / 140,
+          Flexible(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 5,
+                crossAxisSpacing: 24,
+                mainAxisSpacing: 24,
+              ),
+              shrinkWrap: true,
+              itemCount: prodList.length,
+              itemBuilder: (_, i) => ProductCard(item: prodList[i]),
             ),
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: prodList.length,
-            itemBuilder: (_, i) => ProductCard(item: prodList[i]),
           ),
         ],
       ),

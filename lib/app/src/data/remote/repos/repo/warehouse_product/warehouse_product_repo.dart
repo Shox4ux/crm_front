@@ -1,8 +1,8 @@
+import 'package:crm_app/app/new/common/data/repo/base_repo.dart';
+import 'package:crm_app/app/new/common/data/repo/data_state.dart';
 import '../../../models/request/warehouse/warehouse_product_write.dart';
 import '../../../models/response/del_read.dart';
 import '../../../models/response/warehouse/warehouse_product_read.dart';
-import '../../base_repo/base_repo.dart';
-import '../../base_repo/data_state.dart';
 import 'warehouse_product_repo_impl.dart';
 import '../../../service/api_service.dart';
 
