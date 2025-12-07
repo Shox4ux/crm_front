@@ -28,7 +28,7 @@ class ClientList extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 spacing: 10,
                 children: [
-                  CustomSearch(),
+                  CustomSearch(onChanged: context.read<ClientCubit>().filter),
                   CustomBtn(
                     onPress: () {
                       context.push("/client_add_edit");
@@ -43,7 +43,7 @@ class ClientList extends StatelessWidget {
             child: BlocBuilder<ClientCubit, ClientState>(
               builder: (context, state) {
                 if (state.status == ClientStatus.success) {
-                  var list = state.list;
+                  var list = context.watch<ClientCubit>().getFiltList();
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 5,
