@@ -1,8 +1,8 @@
 import 'package:crm_app/api_logger.dart';
-import 'package:crm_app/app/new/client/data/source/client_api_service.dart';
-import 'package:crm_app/app/new/client/domain/repo/client_repo.dart';
-import 'package:crm_app/app/new/user/data/source/user_api_service.dart';
-import 'package:crm_app/app/new/user/domain/repo/user_repo.dart';
+import 'package:crm_app/app/features/client/data/source/client_api_service.dart';
+import 'package:crm_app/app/features/client/domain/repo/client_repo.dart';
+import 'package:crm_app/app/features/user/data/source/user_api_service.dart';
+import 'package:crm_app/app/features/user/domain/repo/user_repo.dart';
 import 'package:crm_app/app/src/data/remote/repos/repo/api_repos.dart'
     hide ClientRepo;
 import 'package:crm_app/app/src/data/remote/service/api_service.dart';

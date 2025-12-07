@@ -1,9 +1,9 @@
-import 'package:crm_app/app/new/client/domain/repo/client_repo.dart';
-import 'package:crm_app/app/new/client/presentation/bloc/client_cubit.dart';
-import 'package:crm_app/app/new/core/theme/app_themex.dart';
-import 'package:crm_app/app/new/home/presentation/bloc/cubit/drawerx_cubit.dart';
-import 'package:crm_app/app/new/user/domain/repo/user_repo.dart';
-import 'package:crm_app/app/new/user/presentation/bloc/user_cubit.dart';
+import 'package:crm_app/app/features/client/domain/repo/client_repo.dart';
+import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
+import 'package:crm_app/app/features/core/theme/app_themex.dart';
+import 'package:crm_app/app/features/home/presentation/bloc/cubit/drawerx_cubit.dart';
+import 'package:crm_app/app/features/user/domain/repo/user_repo.dart';
+import 'package:crm_app/app/features/user/presentation/bloc/user_cubit.dart';
 import 'package:crm_app/app/src/data/remote/repos/repo/order/order_repo.dart';
 import 'package:crm_app/app/src/data/remote/repos/repo/warehouse/warehouse_repo.dart';
 import 'package:crm_app/app/src/data/remote/repos/repo/warehouse_product/warehouse_product_repo.dart';

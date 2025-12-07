@@ -1,5 +1,5 @@
-import 'package:crm_app/app/new/common/data/repo/base_repo.dart';
-import 'package:crm_app/app/new/common/data/repo/data_state.dart';
+import 'package:crm_app/app/features/common/data/repo/base_repo.dart';
+import 'package:crm_app/app/features/common/data/repo/data_state.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk_update.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_write.dart';

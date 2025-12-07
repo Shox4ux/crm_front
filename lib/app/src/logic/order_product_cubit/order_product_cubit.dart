@@ -1,4 +1,4 @@
-import 'package:crm_app/app/new/common/data/repo/data_state.dart';
+import 'package:crm_app/app/features/common/data/repo/data_state.dart';
 import 'package:crm_app/app/src/data/remote/models/request/order/order_bulk_write.dart';
 import 'package:crm_app/app/src/data/remote/models/request/order/order_prod_updt.dart';
 import 'package:crm_app/app/src/data/remote/models/request/order/order_prod_write.dart';

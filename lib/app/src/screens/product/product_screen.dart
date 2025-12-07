@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:crm_app/app/new/common/widget/custom_progress.dart';
-import 'package:crm_app/app/new/common/widget/custon_no_data.dart';
+import 'package:crm_app/app/features/common/widget/custom_progress.dart';
+import 'package:crm_app/app/features/common/widget/custon_no_data.dart';
 import 'package:crm_app/app/src/logic/logic.dart';
 import 'package:crm_app/app/utils/funcs/show_toast.dart';
 import 'package:crm_app/app/utils/img_handler/img_handler.dart';

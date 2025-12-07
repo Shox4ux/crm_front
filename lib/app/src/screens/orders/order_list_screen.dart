@@ -1,5 +1,5 @@
-import 'package:crm_app/app/new/common/widget/custom_progress.dart';
-import 'package:crm_app/app/new/common/widget/custon_no_data.dart';
+import 'package:crm_app/app/features/common/widget/custom_progress.dart';
+import 'package:crm_app/app/features/common/widget/custon_no_data.dart';
 import 'package:crm_app/app/src/data/remote/models/request/order/order_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/order/order_prod_read.dart';
 import 'package:crm_app/app/src/data/remote/models/response/order/order_read.dart';

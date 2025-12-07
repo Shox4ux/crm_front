@@ -1,4 +1,4 @@
-import 'package:crm_app/app/new/common/data/repo/data_state.dart';
+import 'package:crm_app/app/features/common/data/repo/data_state.dart';
 import 'package:crm_app/app/src/data/remote/models/request/order/order_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/order/order_read.dart';
 import 'package:crm_app/app/utils/enums/order_tab_status.dart';

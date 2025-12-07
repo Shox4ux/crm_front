@@ -1,4 +1,4 @@
-import 'package:crm_app/app/new/common/data/repo/data_state.dart';
+import 'package:crm_app/app/features/common/data/repo/data_state.dart';
 
 import '../../../models/request/client/client_prod_update.dart';
 import '../../../models/request/client/client_update.dart';

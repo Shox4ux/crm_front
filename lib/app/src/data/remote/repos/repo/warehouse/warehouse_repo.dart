@@ -1,5 +1,5 @@
-import 'package:crm_app/app/new/common/data/repo/base_repo.dart';
-import 'package:crm_app/app/new/common/data/repo/data_state.dart';
+import 'package:crm_app/app/features/common/data/repo/base_repo.dart';
+import 'package:crm_app/app/features/common/data/repo/data_state.dart';
 
 import '../../../models/request/warehouse/warehouse_write.dart';
 import '../../../models/response/del_read.dart';
