@@ -424,7 +424,7 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
               },
               builder: (context, state) {
                 if (state.status == ProdStatus.loading) {
-                  return CustomProgress();
+                  return CustomLoading();
                 }
                 return widget.isEdit
                     ? CustomBtn(

@@ -109,7 +109,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
               builder: (context, state) {
                 var list = _cubit.getFiltList();
                 if (state.status == OrderSttStatus.loading) {
-                  return Expanded(child: CustomProgress());
+                  return Expanded(child: CustomLoading());
                 }
                 if (list.isEmpty) {
                   return Expanded(child: NoData());

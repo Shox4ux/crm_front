@@ -63,7 +63,7 @@ class _WarehouseScreenState extends State<WarehouseScreen> {
               },
               builder: (context, state) {
                 if (state.status == WareStatus.loading) {
-                  return CustomProgress();
+                  return CustomLoading();
                 }
                 var list = context.watch<WarehouseCubit>().getFiltList();
                 if (list.isEmpty) return NoData();

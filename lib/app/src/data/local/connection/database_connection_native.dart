@@ -11,3 +11,11 @@ QueryExecutor createDriftConnection() {
     return NativeDatabase(File(path));
   });
 }
+
+int getTotal(List<int> d) {
+  int total = 0;
+  for (int i = 0; i < d.length; i++) {
+    total += d[i];
+  }
+  return total;
+}

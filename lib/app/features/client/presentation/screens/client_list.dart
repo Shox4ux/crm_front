@@ -10,9 +10,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../common/widget/custom_search.dart';
 
-class ClientList extends StatelessWidget {
+class ClientList extends StatefulWidget {
   const ClientList({super.key});
 
+  @override
+  State<ClientList> createState() => _ClientListState();
+}
+
+class _ClientListState extends State<ClientList> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +33,13 @@ class ClientList extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 spacing: 10,
                 children: [
-                  CustomSearch(onChanged: context.read<ClientCubit>().filter),
+                  CustomSearch(
+                    onChanged: (val) {
+                      setState(() {
+                        context.read<ClientCubit>().filter(val);
+                      });
+                    },
+                  ),
                   CustomBtn(
                     onPress: () {
                       context.push("/client_add_edit");
@@ -61,7 +72,7 @@ class ClientList extends StatelessWidget {
                   );
                 }
                 if (state.status == ClientStatus.loading) {
-                  return CustomProgress();
+                  return CustomLoading();
                 }
                 return NoData();
               },

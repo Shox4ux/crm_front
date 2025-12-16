@@ -1,17 +1,21 @@
 class UserEntity {
-  final int id;
-  final String username;
-  final String password;
-  final String? hashedPassword;
-  final bool isActive;
-  final DateTime createdAt;
+  final int? id;
+  final String? username;
+  final int? role;
+  final String? img;
+  final String? phone;
+  final bool? isActive;
+  final String? address;
+  final DateTime? createdAt;
 
-  UserEntity({
-    required this.id,
-    required this.username,
-    required this.password,
-    required this.hashedPassword,
-    required this.isActive,
-    required this.createdAt,
+  const UserEntity({
+    this.id,
+    this.username,
+    this.role,
+    this.img,
+    this.phone,
+    this.isActive,
+    this.address,
+    this.createdAt,
   });
 }

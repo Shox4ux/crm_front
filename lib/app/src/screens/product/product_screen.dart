@@ -200,7 +200,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 },
                 builder: (context, state) {
                   if (state.status == ProdStatus.loading) {
-                    return CustomProgress();
+                    return CustomLoading();
                   }
                   if (state.status == ProdStatus.disconnected) {
                     return RetryWidget(

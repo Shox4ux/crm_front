@@ -3,10 +3,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 import 'package:crm_app/app/src/data/remote/models/response/product/product_expense_read.dart';
 
-part 'product_read.g.dart';
+part 'product_response.g.dart';
 
 @JsonSerializable()
-class ProductRead {
+class ProductResponse {
   final int id;
   final String name;
   final String? imgUrl;
@@ -17,7 +17,7 @@ class ProductRead {
   final int total_quantity;
   final int active_quantity;
   final DateTime createdAt;
-  ProductRead(
+  ProductResponse(
     this.measure,
     this.total_quantity,
     this.active_quantity, {
@@ -30,13 +30,13 @@ class ProductRead {
     required this.createdAt,
   });
 
-  Map<String, dynamic> toJson() => _$ProductReadToJson(this);
+  Map<String, dynamic> toJson() => _$ProductResponseToJson(this);
 
-  factory ProductRead.fromJson(Map<String, dynamic> map) =>
-      _$ProductReadFromJson(map);
+  factory ProductResponse.fromJson(Map<String, dynamic> map) =>
+      _$ProductResponseFromJson(map);
 
-  Map<String, dynamic> toMap() => _$ProductReadToJson(this);
+  Map<String, dynamic> toMap() => _$ProductResponseToJson(this);
 
-  factory ProductRead.fromMap(Map<String, dynamic> map) =>
-      _$ProductReadFromJson(map);
+  factory ProductResponse.fromMap(Map<String, dynamic> map) =>
+      _$ProductResponseFromJson(map);
 }

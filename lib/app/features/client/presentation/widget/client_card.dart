@@ -25,13 +25,13 @@ class ClientCard extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Text(
-            item.user.username,
+            item.user.username ?? "",
             style: AppTextStyle.medium.copyWith(
               fontSize: 18,
               color: AppColour.backgroundLight,
             ),
           ),
-          Text("\$ " + item.phone.toString()),
+          Text("\$ " + item.user.phone.toString()),
         ],
       ),
     );

@@ -175,7 +175,7 @@ class _WarehouseProductListScreenState
                 },
                 builder: (context, state) {
                   if (state.status == ProdStatus.loading) {
-                    return CustomProgress();
+                    return CustomLoading();
                   }
 
                   var list = context.watch<WareProdCubit>().getFiltList();

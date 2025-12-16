@@ -6,7 +6,7 @@ class GetAllProdUsecase {
   final ProductRepo _repo;
   GetAllProdUsecase(this._repo);
 
-  Future<DataState<List<ProductRead>>> call() async {
+  Future<DataState<List<ProductResponse>>> call() async {
     return await _repo.getAllProduct();
   }
 }

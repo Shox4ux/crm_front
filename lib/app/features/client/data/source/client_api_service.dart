@@ -1,11 +1,10 @@
-import 'package:crm_app/app/features/client/data/model/client_create.dart';
 import 'package:crm_app/app/features/client/data/model/client_prod_update.dart';
 import 'package:crm_app/app/features/client/data/model/client_response.dart';
 import 'package:crm_app/app/features/client/data/model/client_update.dart';
+import 'package:crm_app/app/features/client/data/model/create_as_client.dart';
 import 'package:crm_app/app/utils/conts/api_urls.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
-import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
 part 'client_api_service.g.dart';
@@ -18,7 +17,7 @@ abstract class ClientApiService {
 
   @POST('/clients/create')
   Future<HttpResponse<dynamic>> createClient({
-    @Body() required ClientCreate body,
+    @Body() required CreateAsClient body,
   });
 
   @GET('/clients/get_by_user_id/{user_id}')

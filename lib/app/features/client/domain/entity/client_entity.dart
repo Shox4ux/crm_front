@@ -4,17 +4,13 @@ import 'package:crm_app/app/src/data/remote/models/response/order/order_read.dar
 
 class ClientEntity {
   final int id;
-  final String phone;
-  final String address;
   final UserEntity user;
   final List<ClientProductRead>? products;
   final List<OrderRead>? orders;
-  final DateTime createdAt;
+  final String createdAt;
 
   ClientEntity({
     required this.id,
-    required this.phone,
-    required this.address,
     required this.user,
     required this.products,
     required this.orders,

@@ -22,7 +22,7 @@ class _ProductApiService implements ProductApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<ProductRead>> createProduct({
+  Future<HttpResponse<ProductResponse>> createProduct({
     MultipartFile? img,
     required String name,
     required double basePrice,
@@ -45,7 +45,7 @@ class _ProductApiService implements ProductApiService {
     _data.fields.add(MapEntry('measure', measure.toString()));
     _data.fields.add(MapEntry('total_quantity', totalQuantity.toString()));
     _data.fields.add(MapEntry('active_quantity', activeQuantity.toString()));
-    final _options = _setStreamType<HttpResponse<ProductRead>>(
+    final _options = _setStreamType<HttpResponse<ProductResponse>>(
       Options(
             method: 'POST',
             headers: _headers,
@@ -61,9 +61,9 @@ class _ProductApiService implements ProductApiService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ProductRead _value;
+    late ProductResponse _value;
     try {
-      _value = ProductRead.fromMap(_result.data!);
+      _value = ProductResponse.fromMap(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -73,12 +73,14 @@ class _ProductApiService implements ProductApiService {
   }
 
   @override
-  Future<HttpResponse<ProductRead>> getProductById({required int id}) async {
+  Future<HttpResponse<ProductResponse>> getProductById({
+    required int id,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<ProductRead>>(
+    final _options = _setStreamType<HttpResponse<ProductResponse>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -89,9 +91,9 @@ class _ProductApiService implements ProductApiService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ProductRead _value;
+    late ProductResponse _value;
     try {
-      _value = ProductRead.fromMap(_result.data!);
+      _value = ProductResponse.fromMap(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -101,12 +103,12 @@ class _ProductApiService implements ProductApiService {
   }
 
   @override
-  Future<HttpResponse<List<ProductRead>>> getAllProduct() async {
+  Future<HttpResponse<List<ProductResponse>>> getAllProduct() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<List<ProductRead>>>(
+    final _options = _setStreamType<HttpResponse<List<ProductResponse>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -117,10 +119,12 @@ class _ProductApiService implements ProductApiService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<ProductRead> _value;
+    late List<ProductResponse> _value;
     try {
       _value = _result.data!
-          .map((dynamic i) => ProductRead.fromMap(i as Map<String, dynamic>))
+          .map(
+            (dynamic i) => ProductResponse.fromMap(i as Map<String, dynamic>),
+          )
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

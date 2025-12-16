@@ -2,19 +2,21 @@ import 'package:crm_app/app/src/data/remote/models/request/product/product_expen
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk_update.dart';
 import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_write.dart';
 import 'package:crm_app/app/src/data/remote/models/response/product/product_expense_read.dart';
-import 'package:crm_app/app/features/product/data/model/product_read.dart';
+import 'package:crm_app/app/features/product/data/model/product_response.dart';
 import 'package:crm_app/app/features/product/data/model/product_write.dart';
 
 import '../../../common/data/repo/data_state.dart';
 
 abstract class ProductRepo {
-  Future<DataState<ProductRead>> createProduct({required ProductWrite body});
+  Future<DataState<ProductResponse>> createProduct({
+    required ProductWrite body,
+  });
 
   Future<DataState<dynamic>> deleteProduct({required int id});
 
-  Future<DataState<List<ProductRead>>> getAllProduct();
+  Future<DataState<List<ProductResponse>>> getAllProduct();
 
-  Future<DataState<ProductRead>> getProduct({required int id});
+  Future<DataState<ProductResponse>> getProduct({required int id});
 
   Future<DataState<dynamic>> updateProduct({
     required int id,

@@ -4,7 +4,7 @@ import 'package:crm_app/app/src/data/remote/models/request/product/product_expen
 import 'package:crm_app/app/src/data/remote/models/response/product/product_expense_read.dart';
 
 import 'package:crm_app/app/utils/conts/api_urls.dart';
-import 'package:crm_app/app/features/product/data/model/product_read.dart';
+import 'package:crm_app/app/features/product/data/model/product_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -18,7 +18,7 @@ abstract class ProductApiService {
 
   @POST('/products/create')
   @MultiPart()
-  Future<HttpResponse<ProductRead>> createProduct({
+  Future<HttpResponse<ProductResponse>> createProduct({
     @Part() MultipartFile? img,
     @Part() required String name,
     @Part(name: "base_price") required double basePrice,
@@ -29,12 +29,12 @@ abstract class ProductApiService {
   });
 
   @GET('/products/get_by_id/{id}')
-  Future<HttpResponse<ProductRead>> getProductById({
+  Future<HttpResponse<ProductResponse>> getProductById({
     @Path("id") required int id,
   });
 
   @GET('/products/get_all')
-  Future<HttpResponse<List<ProductRead>>> getAllProduct();
+  Future<HttpResponse<List<ProductResponse>>> getAllProduct();
 
   @PATCH('/products/update/{id}')
   Future<HttpResponse<dynamic>> updateProduct({

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:crm_app/app/features/user/domain/entity/user_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -6,25 +5,23 @@ part 'user_response.g.dart';
 
 @JsonSerializable()
 class UserResponse extends UserEntity {
-  final int id;
-  final String username;
-  final String password;
-  final String? hashedPassword;
-  final bool isActive;
-  final DateTime createdAt;
-  UserResponse({
-    required this.id,
-    required this.username,
-    required this.password,
-    this.hashedPassword,
-    required this.isActive,
-    required this.createdAt,
+  const UserResponse({
+    int? id,
+    String? username,
+    int? role,
+    String? img,
+    String? phone,
+    bool? isActive,
+    String? address,
+    DateTime? createdAt,
   }) : super(
          id: id,
          username: username,
-         password: password,
-         hashedPassword: hashedPassword,
+         role: role,
+         img: img,
+         phone: phone,
          isActive: isActive,
+         address: address,
          createdAt: createdAt,
        );
 

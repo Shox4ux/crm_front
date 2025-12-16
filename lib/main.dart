@@ -36,9 +36,7 @@ class CRMApp extends StatelessWidget {
       BlocProvider(create: (_) => ProductCubit(locator<ProductRepo>())),
       BlocProvider(create: (_) => OrderCubit(locator<OrderRepo>())),
       BlocProvider(create: (_) => UserCubit(locator<UserRepo>())),
-      BlocProvider(
-        create: (_) => ClientCubit(locator<ClientRepo>(), locator<UserRepo>()),
-      ),
+      BlocProvider(create: (_) => ClientCubit(locator<ClientRepo>())),
       BlocProvider(create: (_) => WarehouseCubit(locator<WarehouseRepo>())),
       BlocProvider(
         create: (_) => WareProdCubit(locator<WarehouseProductRepo>()),

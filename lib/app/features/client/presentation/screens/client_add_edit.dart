@@ -1,4 +1,4 @@
-import 'package:crm_app/app/features/client/data/model/client_create.dart';
+import 'package:crm_app/app/features/client/data/model/create_as_client.dart';
 import 'package:crm_app/app/features/client/domain/entity/client_entity.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
 import 'package:crm_app/app/features/client/presentation/widget/client_button.dart';
@@ -8,13 +8,14 @@ import 'package:crm_app/app/features/common/ui/app_assets.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/widget/custom_footer.dart';
+import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
 import 'package:crm_app/app/features/home/presentation/widget/custom_data_table.dart';
-import 'package:crm_app/app/features/user/data/model/user_create.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class ClientAddEdit extends StatefulWidget {
   const ClientAddEdit({super.key, this.data, this.isEdit = false});
@@ -30,9 +31,9 @@ class _ClientAddEditState extends State<ClientAddEdit> {
     if (widget.isEdit) {
       var data = widget.data;
       _nameCtrl = TextEditingController(text: data?.user.username);
-      _passwCtrl = TextEditingController(text: data?.user.password);
-      _phoneCtrl = TextEditingController(text: data?.phone);
-      _addressCtrl = TextEditingController(text: data?.address);
+      // _passwCtrl = TextEditingController(text: data?.user.password);
+      _phoneCtrl = TextEditingController(text: data?.user.phone);
+      _addressCtrl = TextEditingController(text: data?.user.address);
     } else {
       _nameCtrl = TextEditingController();
       _passwCtrl = TextEditingController();
@@ -74,26 +75,27 @@ class _ClientAddEditState extends State<ClientAddEdit> {
 
   void add() {
     if (_formKey.currentState!.validate()) {
-      context.read<ClientCubit>().createClient(
-        cbody: ClientCreate(phone: _phoneCtrl.text, address: _addressCtrl.text),
-        ubody: UserCreate(
-          hashedPassword: "",
-          username: _nameCtrl.text,
-          password: _passwCtrl.text,
-          role: 0,
-        ),
+      var body = CreateAsClient(
+        username: _nameCtrl.text,
+        phone: _phoneCtrl.text,
+        address: _addressCtrl.text,
+        password: _passwCtrl.text,
       );
+      context.read<ClientCubit>().createClient(body: body);
     }
   }
 
   void delete() {
-    showDelConfrm(ctx: context, onDel: () {});
+    showDelConfrm(
+      ctx: context,
+      onDel: () {
+        context.read<ClientCubit>().deleteClient(widget.data!.id);
+        context.pop();
+      },
+    );
   }
 
-  void edit() {
-    print("edit");
-    _formKey.currentState!.validate();
-  }
+  void edit() {}
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +135,7 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                           ),
                         ],
                       ),
+
                       Row(
                         spacing: 80,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -169,16 +172,31 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                           ),
                         ],
                       ),
-                      widget.isEdit
-                          ? Row(
-                              spacing: 50,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ClientButton(onPress: edit, txt: "Edit"),
-                                ClientButton(onPress: delete, txt: "Delete"),
-                              ],
-                            )
-                          : ClientButton(onPress: add, txt: "Add Now"),
+                      BlocConsumer<ClientCubit, ClientState>(
+                        listener: (context, state) {
+                          if (state.status == ClientStatus.success) {
+                            context.pop();
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state.status == ClientStatus.loading) {
+                            return CustomLoading();
+                          }
+                          return widget.isEdit
+                              ? Row(
+                                  spacing: 50,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ClientButton(onPress: edit, txt: "Edit"),
+                                    ClientButton(
+                                      onPress: delete,
+                                      txt: "Delete",
+                                    ),
+                                  ],
+                                )
+                              : ClientButton(onPress: add, txt: "Add Now");
+                        },
+                      ),
                     ],
                   ),
                 ),

@@ -1,7 +1,7 @@
-import 'package:crm_app/app/features/client/data/model/client_create.dart';
 import 'package:crm_app/app/features/client/data/model/client_prod_update.dart';
 import 'package:crm_app/app/features/client/data/model/client_response.dart';
 import 'package:crm_app/app/features/client/data/model/client_update.dart';
+import 'package:crm_app/app/features/client/data/model/create_as_client.dart';
 import 'package:crm_app/app/features/client/data/repo/client_repo_impl.dart';
 import 'package:crm_app/app/features/client/data/source/client_api_service.dart';
 import 'package:crm_app/app/features/common/data/repo/base_repo.dart';
@@ -12,7 +12,7 @@ class ClientRepo extends BaseRepo implements ClientRepoImpl {
 
   ClientRepo(this._service);
   @override
-  Future<DataState<dynamic>> createClient({required ClientCreate body}) =>
+  Future<DataState<dynamic>> createClient({required CreateAsClient body}) =>
       getStateOf(request: () => _service.createClient(body: body));
 
   @override

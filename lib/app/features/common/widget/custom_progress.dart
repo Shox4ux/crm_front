@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomProgress extends StatelessWidget {
-  const CustomProgress({super.key});
+class CustomLoading extends StatelessWidget {
+  const CustomLoading({super.key});
 
   @override
   Widget build(BuildContext context) {

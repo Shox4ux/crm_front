@@ -1,11 +1,11 @@
-import 'package:crm_app/app/features/client/data/model/client_create.dart';
 import 'package:crm_app/app/features/client/data/model/client_prod_update.dart';
 import 'package:crm_app/app/features/client/data/model/client_response.dart';
 import 'package:crm_app/app/features/client/data/model/client_update.dart';
+import 'package:crm_app/app/features/client/data/model/create_as_client.dart';
 import 'package:crm_app/app/features/common/data/repo/data_state.dart';
 
 abstract class ClientRepoImpl {
-  Future<DataState<dynamic>> createClient({required ClientCreate body});
+  Future<DataState<dynamic>> createClient({required CreateAsClient body});
   Future<DataState<dynamic>> deleteClient({required int id});
   Future<DataState<List<ClientResponse>>> getAllClient();
   Future<DataState<ClientResponse>> getClient({required int userId});

@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   BlocBuilder<UserCubit, UserState>(
                     builder: (context, state) {
                       if (state.status == UserSStatus.loading) {
-                        return CustomProgress();
+                        return CustomLoading();
                       }
                       return CustomBtn(onPressed: _login, txt: "Login");
                     },
