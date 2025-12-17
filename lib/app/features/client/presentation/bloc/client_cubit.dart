@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:crm_app/app/features/client/data/model/client_update.dart';
 import 'package:crm_app/app/features/client/data/model/create_as_client.dart';
 import 'package:crm_app/app/features/common/data/repo/data_state.dart';
 import 'package:crm_app/app/features/client/data/model/client_prod_update.dart';
@@ -45,6 +46,18 @@ class ClientCubit extends Cubit<ClientState> {
     final res = await _repo.createClient(body: body);
     if (res is DataSuccess) {
       emit(state.copyWith(status: ClientStatus.success));
+      _getAllClient();
+    } else {
+      emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
+    }
+  }
+
+  void updateClient({required ClientUpdate body, required int id}) async {
+    emit(state.copyWith(status: ClientStatus.loading));
+    final res = await _repo.updateClient(id: id, body: body);
+    if (res is DataSuccess) {
+      emit(state.copyWith(status: ClientStatus.success));
+      _getAllClient();
     } else {
       emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
     }
@@ -82,18 +95,4 @@ class ClientCubit extends Cubit<ClientState> {
       emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
     }
   }
-
-  void onClientPressed(ClientEntity client) =>
-      emit(state.copyWith(slctClient: client));
-
-  // void updateClient({ClientCreate? cbody, UserCreate? ubody}) async {
-  //   emit(state.copyWith(status: ClientStatus.loading));
-
-  //   var res = await _urepo.(body: ubody!);
-  //   if (res is DataSuccess) {
-  //     _updateActualClient(cbody!.copyWith(userId: res.data?.id));
-  //   } else {
-  //     emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
-  //   }
-  // }
 }

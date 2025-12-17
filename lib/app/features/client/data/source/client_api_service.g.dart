@@ -23,12 +23,24 @@ class _ClientApiService implements ClientApiService {
 
   @override
   Future<HttpResponse<dynamic>> createClient({
-    required CreateAsClient body,
+    MultipartFile? img,
+    required String username,
+    required String password,
+    required String address,
+    required String phone,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = body;
+    final _data = FormData();
+    if (img != null) {
+      _data.files.add(MapEntry('img', img));
+    }
+    _data.fields.add(MapEntry('username', username));
+    _data.fields.add(MapEntry('password', password));
+    _data.fields.add(MapEntry('address', address));
+    _data.fields.add(MapEntry('phone', phone));
     final _options = _setStreamType<HttpResponse<dynamic>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -130,13 +142,36 @@ class _ClientApiService implements ClientApiService {
   @override
   Future<HttpResponse<dynamic>> updateClient({
     required int id,
-    required ClientUpdate body,
+    MultipartFile? img,
+    required String? username,
+    required String? password,
+    required String? address,
+    required String? phone,
+    required bool? isActive,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toMap() ?? <String, dynamic>{});
+    final _data = FormData();
+    if (img != null) {
+      _data.files.add(MapEntry('img', img));
+    }
+    if (username != null) {
+      _data.fields.add(MapEntry('username', username));
+    }
+    if (password != null) {
+      _data.fields.add(MapEntry('password', password));
+    }
+    if (address != null) {
+      _data.fields.add(MapEntry('address', address));
+    }
+    if (phone != null) {
+      _data.fields.add(MapEntry('phone', phone));
+    }
+    if (isActive != null) {
+      _data.fields.add(MapEntry('is_active', isActive.toString()));
+    }
     final _options = _setStreamType<HttpResponse<dynamic>>(
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(

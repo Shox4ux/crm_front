@@ -4,6 +4,7 @@ import 'package:crm_app/app/features/user/data/model/user_response.dart';
 import 'package:crm_app/app/utils/conts/api_urls.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
 part 'user_api_service.g.dart';

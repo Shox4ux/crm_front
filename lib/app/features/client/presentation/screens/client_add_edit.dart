@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/client/data/model/client_update.dart';
 import 'package:crm_app/app/features/client/data/model/create_as_client.dart';
 import 'package:crm_app/app/features/client/domain/entity/client_entity.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
@@ -12,10 +13,10 @@ import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
 import 'package:crm_app/app/features/home/presentation/widget/custom_data_table.dart';
+import 'package:crm_app/app/utils/funcs/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 
 class ClientAddEdit extends StatefulWidget {
   const ClientAddEdit({super.key, this.data, this.isEdit = false});
@@ -31,7 +32,7 @@ class _ClientAddEditState extends State<ClientAddEdit> {
     if (widget.isEdit) {
       var data = widget.data;
       _nameCtrl = TextEditingController(text: data?.user.username);
-      // _passwCtrl = TextEditingController(text: data?.user.password);
+      _passwCtrl = TextEditingController(text: "");
       _phoneCtrl = TextEditingController(text: data?.user.phone);
       _addressCtrl = TextEditingController(text: data?.user.address);
     } else {
@@ -90,12 +91,22 @@ class _ClientAddEditState extends State<ClientAddEdit> {
       ctx: context,
       onDel: () {
         context.read<ClientCubit>().deleteClient(widget.data!.id);
-        context.pop();
+        goBack(context);
       },
     );
   }
 
-  void edit() {}
+  void edit() {
+    var body = ClientUpdate(
+      img: null,
+      username: _nameCtrl.text,
+      phone: _phoneCtrl.text,
+      address: _addressCtrl.text,
+      password: _passwCtrl.text,
+      isActive: isEditActive,
+    );
+    context.read<ClientCubit>().updateClient(id: widget.data!.id, body: body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,11 +159,13 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                                 valid: validateNotEmpty,
                                 txt: "Username",
                               ),
-                              ClientForm(
-                                ctrl: _passwCtrl,
-                                valid: validateNotEmpty,
-                                txt: "Password",
-                              ),
+                              widget.isEdit
+                                  ? SizedBox.shrink()
+                                  : ClientForm(
+                                      ctrl: _passwCtrl,
+                                      valid: validateNotEmpty,
+                                      txt: "Password",
+                                    ),
                             ],
                           ),
                           Column(
@@ -175,7 +188,7 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                       BlocConsumer<ClientCubit, ClientState>(
                         listener: (context, state) {
                           if (state.status == ClientStatus.success) {
-                            context.pop();
+                            goBack(context);
                           }
                         },
                         builder: (context, state) {

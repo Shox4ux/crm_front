@@ -13,7 +13,15 @@ class ClientRepo extends BaseRepo implements ClientRepoImpl {
   ClientRepo(this._service);
   @override
   Future<DataState<dynamic>> createClient({required CreateAsClient body}) =>
-      getStateOf(request: () => _service.createClient(body: body));
+      getStateOf(
+        request: () => _service.createClient(
+          username: body.username,
+          img: body.img,
+          password: body.password,
+          address: body.address,
+          phone: body.phone,
+        ),
+      );
 
   @override
   Future<DataState<dynamic>> deleteClient({required int id}) =>
@@ -42,6 +50,14 @@ class ClientRepo extends BaseRepo implements ClientRepoImpl {
     required int id,
     required ClientUpdate body,
   }) => getStateOf(
-    request: () => _service.updateClient(id: id, body: body),
+    request: () => _service.updateClient(
+      id: id,
+      username: body.username,
+      img: body.img,
+      password: body.password,
+      address: body.address,
+      phone: body.phone,
+      isActive: body.isActive,
+    ),
   );
 }

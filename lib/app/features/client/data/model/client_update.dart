@@ -1,22 +1,19 @@
-import 'dart:convert';
+import 'package:dio/dio.dart';
 
-import 'package:json_annotation/json_annotation.dart';
-
-part 'client_update.g.dart';
-
-@JsonSerializable()
 class ClientUpdate {
+  final String? username;
+  final MultipartFile? img;
   final String? phone;
   final String? address;
-  ClientUpdate({this.phone, this.address});
+  final String? password;
+  final bool? isActive;
 
-  Map<String, dynamic> toMap() => _$ClientUpdateToJson(this);
-
-  factory ClientUpdate.fromMap(Map<String, dynamic> map) =>
-      _$ClientUpdateFromJson(map);
-
-  String toJson() => json.encode(toMap());
-
-  factory ClientUpdate.fromJson(String source) =>
-      ClientUpdate.fromMap(json.decode(source) as Map<String, dynamic>);
+  ClientUpdate({
+    required this.username,
+    required this.img,
+    required this.phone,
+    required this.address,
+    required this.password,
+    required this.isActive,
+  });
 }

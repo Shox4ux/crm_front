@@ -14,14 +14,4 @@ class CreateAsClient {
     required this.address,
     required this.password,
   });
-
-  FormData toForm() {
-    return FormData.fromMap({
-      "username": username,
-      "password": password,
-      "phone": phone,
-      "address": address,
-      "img": img,
-    });
-  }
 }
