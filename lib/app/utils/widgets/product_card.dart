@@ -1,7 +1,6 @@
-import 'package:crm_app/app/src/data/remote/models/response/client/client_product_read.dart';
-import 'package:crm_app/app/src/data/remote/models/response/product/product_read.dart';
-import 'package:crm_app/app/src/data/remote/models/response/user/user_read.dart';
-import 'package:crm_app/app/src/logic/logic.dart';
+import 'package:crm_app/app/features/client/data/model/client_product_response.dart';
+import 'package:crm_app/app/features/product/data/model/product_response.dart';
+import 'package:crm_app/app/features/user/data/model/user_response.dart';
 import 'package:crm_app/app/utils/extensions/full_url.dart';
 import 'package:crm_app/app/utils/funcs/profit_percent.dart';
 import 'package:crm_app/app/utils/widgets/custom_double_text.dart';
@@ -9,14 +8,13 @@ import 'package:crm_app/app/utils/widgets/custom_ibtn.dart';
 import 'package:crm_app/app/utils/widgets/custom_field.dart';
 import 'package:crm_app/app/utils/widgets/img_error.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard({super.key, required this.product, this.cp, this.user});
-  final ProductRead product;
-  final ClientProductRead? cp;
-  final UserRead? user;
+  final ProductResponse product;
+  final ClientProductResponse? cp;
+  final UserResponse? user;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -100,7 +98,7 @@ class _ProductCardState extends State<ProductCard> {
                               ),
                         CustomDoubleText(
                           ttl: "Quantity: ",
-                          b: prod.total_quantity.toString(),
+                          b: prod.totalQuantity.toString(),
                         ),
                         CustomDoubleText(
                           isPrc: true,
@@ -119,7 +117,7 @@ class _ProductCardState extends State<ProductCard> {
           right: 23,
           child: CustomIbtn(
             onPress: () {
-              context.read<ProductCubit>().deleteProduct(id: widget.product.id);
+              // context.read<ProductCubit>().deleteProduct(id: widget.product.id);
             },
           ),
         ),

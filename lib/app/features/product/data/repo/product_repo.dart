@@ -1,7 +1,3 @@
-import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk.dart';
-import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk_update.dart';
-import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_write.dart';
-import 'package:crm_app/app/src/data/remote/models/response/product/product_expense_read.dart';
 import 'package:crm_app/app/features/common/data/repo/base_repo.dart';
 import 'package:crm_app/app/features/product/data/model/product_response.dart';
 import 'package:crm_app/app/features/product/data/model/product_write.dart';
@@ -57,26 +53,4 @@ class ProductRepoImpl extends BaseRepo implements ProductRepo {
       sellPrice: body.sellPrice,
     ),
   );
-
-  // ============================================================//
-  @override
-  Future<DataState<dynamic>> deleteProductExp({required int id}) =>
-      getStateOf<dynamic>(request: () => _service.deleteProductExp(id: id));
-
-  @override
-  Future<DataState<ProductExpenseRead>> updateProductExp({
-    required int id,
-    required ProductExpenseWrite body,
-  }) => getStateOf<ProductExpenseRead>(
-    request: () => _service.updateProductExp(id: id, body: body),
-  );
-
-  @override
-  Future<DataState<dynamic>> createProductExp({
-    required ProductExpenseBulk body,
-  }) => getStateOf(request: () => _service.createProductExp(body: body));
-
-  @override
-  Future<DataState> updateBulkProdExp({required ProdExpBulkUpdate body}) =>
-      getStateOf(request: () => _service.updateBulkProductExp(body: body));
 }

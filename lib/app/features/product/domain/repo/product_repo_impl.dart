@@ -1,7 +1,3 @@
-import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk.dart';
-import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk_update.dart';
-import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_write.dart';
-import 'package:crm_app/app/src/data/remote/models/response/product/product_expense_read.dart';
 import 'package:crm_app/app/features/product/data/model/product_response.dart';
 import 'package:crm_app/app/features/product/data/model/product_write.dart';
 
@@ -22,21 +18,4 @@ abstract class ProductRepo {
     required int id,
     required ProductWrite body,
   });
-
-  // =====================Prod Exps====================//
-
-  Future<DataState<dynamic>> createProductExp({
-    required ProductExpenseBulk body,
-  });
-
-  Future<DataState<ProductExpenseRead>> updateProductExp({
-    required int id,
-    required ProductExpenseWrite body,
-  });
-
-  Future<DataState<dynamic>> updateBulkProdExp({
-    required ProdExpBulkUpdate body,
-  });
-
-  Future<DataState<dynamic>> deleteProductExp({required int id});
 }

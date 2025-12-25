@@ -1,9 +1,11 @@
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
+import 'package:crm_app/app/features/core/router/route_names.dart';
 import 'package:crm_app/app/features/home/presentation/bloc/cubit/drawerx_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 const List<String> items = [
   "Home",
@@ -56,12 +58,29 @@ class DrawerX extends StatelessWidget {
           Divider(height: 0.5, color: AppColour.stroke),
           Column(
             children: [
-              ListTile(title: Text('Logout', textAlign: TextAlign.center)),
-              ListTile(title: Text('Settings', textAlign: TextAlign.center)),
+              DrawerFooterItem(
+                title: 'Logout',
+                onTap: () => context.go(Routes.login),
+              ),
+              DrawerFooterItem(title: 'Settings'),
             ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class DrawerFooterItem extends StatelessWidget {
+  const DrawerFooterItem({super.key, required this.title, this.onTap});
+  final String title;
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(title, textAlign: TextAlign.center),
+      onTap: onTap,
     );
   }
 }

@@ -12,7 +12,7 @@ part of 'client_api_service.dart';
 
 class _ClientApiService implements ClientApiService {
   _ClientApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://95.179.186.65:8001';
+    baseUrl ??= 'http://95.182.96.54:8001';
   }
 
   final Dio _dio;

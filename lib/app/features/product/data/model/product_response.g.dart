@@ -8,17 +8,19 @@ part of 'product_response.dart';
 
 ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) =>
     ProductResponse(
-      (json['measure'] as num?)?.toInt(),
-      (json['total_quantity'] as num).toInt(),
-      (json['active_quantity'] as num).toInt(),
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       imgUrl: json['img_url'] as String?,
       basePrice: (json['base_price'] as num).toDouble(),
       sellPrice: (json['sell_price'] as num).toDouble(),
-      base_expenses: (json['base_expenses'] as List<dynamic>?)
-          ?.map((e) => ProductExpenseRead.fromJson(e as Map<String, dynamic>))
+      baseExpenses: (json['base_expenses'] as List<dynamic>?)
+          ?.map(
+            (e) => ProductExpenseResponse.fromJson(e as Map<String, dynamic>),
+          )
           .toList(),
+      measure: (json['measure'] as num?)?.toInt(),
+      totalQuantity: (json['total_quantity'] as num).toInt(),
+      activeQuantity: (json['active_quantity'] as num).toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
@@ -29,9 +31,9 @@ Map<String, dynamic> _$ProductResponseToJson(ProductResponse instance) =>
       'img_url': ?instance.imgUrl,
       'base_price': instance.basePrice,
       'sell_price': instance.sellPrice,
-      'base_expenses': ?instance.base_expenses?.map((e) => e.toJson()).toList(),
+      'base_expenses': ?instance.baseExpenses?.map((e) => e.toJson()).toList(),
       'measure': ?instance.measure,
-      'total_quantity': instance.total_quantity,
-      'active_quantity': instance.active_quantity,
+      'total_quantity': instance.totalQuantity,
+      'active_quantity': instance.activeQuantity,
       'created_at': instance.createdAt.toIso8601String(),
     };

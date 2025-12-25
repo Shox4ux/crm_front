@@ -24,7 +24,7 @@ class CustomDoubleText extends StatelessWidget {
     if (isNum) {
       return "$b \$";
     } else if (isPrc) {
-      return "$b \%";
+      return "$b %";
     }
     return b;
   }

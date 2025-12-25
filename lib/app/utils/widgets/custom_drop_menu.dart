@@ -1,7 +1,6 @@
-import 'package:crm_app/app/src/data/remote/models/response/client/client_read.dart';
-import 'package:crm_app/app/src/data/remote/models/response/product/product_read.dart';
-import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_product_read.dart';
-import 'package:crm_app/app/src/data/remote/models/response/warehouse/warehouse_read.dart';
+import 'package:crm_app/app/features/client/data/model/client_response.dart';
+import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
+import 'package:crm_app/app/features/warehouse/data/model/warehouse_response.dart';
 import 'package:crm_app/app/utils/enums/admin_permission.dart';
 import 'package:crm_app/app/utils/enums/order_status.dart';
 import 'package:flutter/material.dart';
@@ -31,17 +30,20 @@ class OrderStatusDrop extends StatelessWidget {
 class WDrop extends StatelessWidget {
   const WDrop({super.key, this.sVal, this.action, this.list});
 
-  final WarehouseRead? sVal;
-  final void Function(WarehouseRead? val)? action;
-  final List<WarehouseRead>? list;
+  final WarehouseResponse? sVal;
+  final void Function(WarehouseResponse? val)? action;
+  final List<WarehouseResponse>? list;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<WarehouseRead>(
+    return DropdownButton<WarehouseResponse>(
       value: sVal,
       hint: Text("Select"),
       items: list?.map((v) {
-        return DropdownMenuItem<WarehouseRead>(value: v, child: Text(v.name));
+        return DropdownMenuItem<WarehouseResponse>(
+          value: v,
+          child: Text(v.name),
+        );
       }).toList(),
       onChanged: action,
     );
@@ -50,19 +52,19 @@ class WDrop extends StatelessWidget {
 
 class ClientDrop extends StatelessWidget {
   const ClientDrop({super.key, this.selectedVal, this.onChanged, this.list});
-  final List<ClientRead>? list;
-  final ClientRead? selectedVal;
-  final void Function(ClientRead? val)? onChanged;
+  final List<ClientResponse>? list;
+  final ClientResponse? selectedVal;
+  final void Function(ClientResponse? val)? onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<ClientRead>(
+    return DropdownButton<ClientResponse>(
       value: selectedVal,
       hint: Text("Select"),
       items: list?.map((v) {
-        return DropdownMenuItem<ClientRead>(
+        return DropdownMenuItem<ClientResponse>(
           value: v,
-          child: Text(v.user.username),
+          child: Text(v.user.username ?? ""),
         );
       }).toList(),
       onChanged: onChanged,
@@ -70,41 +72,37 @@ class ClientDrop extends StatelessWidget {
   }
 }
 
-class ProductDrop extends StatelessWidget {
+class ProductDrop<T extends ProductEntity> extends StatelessWidget {
   const ProductDrop({super.key, this.selectedVal, this.list, this.onChanged});
-  final ProductRead? selectedVal;
-  final List<ProductRead>? list;
-  final void Function(ProductRead? val)? onChanged;
-
+  final T? selectedVal;
+  final List<T>? list;
+  final void Function(T? val)? onChanged;
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<ProductRead>(
+    return DropdownButton<T>(
       value: selectedVal,
       hint: Text("Select"),
       items: list?.map((v) {
-        return DropdownMenuItem<ProductRead>(value: v, child: Text(v.name));
+        return DropdownMenuItem<T>(value: v, child: Text(v.name));
       }).toList(),
       onChanged: onChanged,
     );
   }
 }
 
-class WPDrop extends StatelessWidget {
+class WPDrop<T extends ProductEntity> extends StatelessWidget {
   const WPDrop({super.key, this.sVal, this.list, this.action});
-  final WarehouseProductRead? sVal;
-  final List<WarehouseProductRead>? list;
-  final void Function(WarehouseProductRead? val)? action;
+  final T? sVal;
+  final List<T>? list;
+  final void Function(T? val)? action;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<WarehouseProductRead>(
+    return DropdownButton<T>(
       value: sVal,
       hint: Text("Select"),
       items: list?.map((v) {
-        return DropdownMenuItem<WarehouseProductRead>(
-          value: v,
-          child: Text(v.product?.name ?? ""),
-        );
+        return DropdownMenuItem<T>(value: v, child: Text(v.name));
       }).toList(),
       onChanged: action,
     );

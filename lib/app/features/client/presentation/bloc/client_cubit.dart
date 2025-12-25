@@ -35,6 +35,10 @@ class ClientCubit extends Cubit<ClientState> {
     var res = await _repo.getAllClient();
     if (res is DataSuccess) {
       _filtered = res.data ?? [];
+      if (res.data == null || res.data!.isEmpty) {
+        emit(state.copyWith(status: ClientStatus.empty, list: []));
+        return;
+      }
       emit(state.copyWith(status: ClientStatus.success, list: res.data));
     } else {
       emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));

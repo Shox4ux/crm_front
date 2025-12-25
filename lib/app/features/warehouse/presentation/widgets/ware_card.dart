@@ -30,7 +30,7 @@ class WareCard extends StatelessWidget {
                       color: AppColour.backgroundLight,
                     ),
                   ),
-                  Text("\$ " + item.address.toString()),
+                  Text("\$ ${item.address}"),
                 ],
               ),
             ),

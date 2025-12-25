@@ -41,9 +41,7 @@ class _ClientListState extends State<ClientList> {
                     },
                   ),
                   CustomBtn(
-                    onPress: () {
-                      context.push("/client_add_edit");
-                    },
+                    onPress: () => context.push("/client_add_edit"),
                     txt: "Add",
                   ),
                 ],
@@ -65,7 +63,7 @@ class _ClientListState extends State<ClientList> {
                     itemCount: list.length,
                     itemBuilder: (_, i) => InkWell(
                       onTap: () {
-                        context.push(RouteNames.clientAddEdit, extra: list[i]);
+                        context.push(Routes.clientAddEdit, extra: list[i]);
                       },
                       child: ClientCard(item: list[i]),
                     ),

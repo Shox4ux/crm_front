@@ -11,10 +11,12 @@ ClientResponse _$ClientResponseFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num).toInt(),
       user: UserResponse.fromJson(json['user'] as Map<String, dynamic>),
       products: (json['products'] as List<dynamic>?)
-          ?.map((e) => ClientProductRead.fromJson(e as Map<String, dynamic>))
+          ?.map(
+            (e) => ClientProductResponse.fromJson(e as Map<String, dynamic>),
+          )
           .toList(),
       orders: (json['orders'] as List<dynamic>?)
-          ?.map((e) => OrderRead.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => OrderResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       createdAt: json['created_at'] as String,
     );

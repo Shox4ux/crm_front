@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'user_cubit.dart';
 
-enum UserSStatus { error, loading, success, init }
+enum UserSStatus { error, loading, login, init }
 
 class UserState {
   final UserEntity? vUser;

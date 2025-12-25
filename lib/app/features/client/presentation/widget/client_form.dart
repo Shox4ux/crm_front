@@ -24,7 +24,7 @@ class ClientForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          txt + ":",
+          "$txt:",
           style: AppTextStyle.medium.copyWith(color: AppColour.white),
         ),
         SizedBox(
@@ -36,7 +36,7 @@ class ClientForm extends StatelessWidget {
             decoration: InputDecoration(
               filled: true, // enables background color
               fillColor: AppColour.clTxtBg,
-              hint: Text("Enter your " + txt),
+              hint: Text("Enter your $txt"),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: AppColour.clStroke, // stroke color when not focused

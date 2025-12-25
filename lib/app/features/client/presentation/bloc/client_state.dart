@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'client_cubit.dart';
 
-enum ClientStatus { init, loading, success, error }
+enum ClientStatus { init, loading, empty, success, error }
 
 class ClientState {
   final ClientStatus status;

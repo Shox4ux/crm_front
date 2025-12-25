@@ -9,7 +9,7 @@ import 'package:retrofit/http.dart';
 
 part 'user_api_service.g.dart';
 
-@RestApi(baseUrl: ApiUrls.baseUrl, parser: Parser.MapSerializable)
+@RestApi(baseUrl: ApiUrls.baseUrl)
 abstract class UserApiService {
   factory UserApiService(Dio dio, {String baseUrl}) = _UserApiService;
 

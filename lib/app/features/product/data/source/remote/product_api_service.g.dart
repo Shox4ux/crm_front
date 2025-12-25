@@ -12,7 +12,7 @@ part of 'product_api_service.dart';
 
 class _ProductApiService implements ProductApiService {
   _ProductApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://95.179.186.65:8001';
+    baseUrl ??= 'http://95.182.96.54:8001';
   }
 
   final Dio _dio;
@@ -63,7 +63,7 @@ class _ProductApiService implements ProductApiService {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ProductResponse _value;
     try {
-      _value = ProductResponse.fromMap(_result.data!);
+      _value = ProductResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -93,7 +93,7 @@ class _ProductApiService implements ProductApiService {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ProductResponse _value;
     try {
-      _value = ProductResponse.fromMap(_result.data!);
+      _value = ProductResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -123,7 +123,7 @@ class _ProductApiService implements ProductApiService {
     try {
       _value = _result.data!
           .map(
-            (dynamic i) => ProductResponse.fromMap(i as Map<String, dynamic>),
+            (dynamic i) => ProductResponse.fromJson(i as Map<String, dynamic>),
           )
           .toList();
     } on Object catch (e, s) {
@@ -194,110 +194,6 @@ class _ProductApiService implements ProductApiService {
           .compose(
             _dio.options,
             '/products/delete/${id}',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch(_options);
-    final _value = _result.data;
-    final httpResponse = HttpResponse(_value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<dynamic>> createProductExp({
-    required ProductExpenseBulk body,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toMap() ?? <String, dynamic>{});
-    final _options = _setStreamType<HttpResponse<dynamic>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/product_expense/create',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch(_options);
-    final _value = _result.data;
-    final httpResponse = HttpResponse(_value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<dynamic>> updateBulkProductExp({
-    required ProdExpBulkUpdate body,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toMap() ?? <String, dynamic>{});
-    final _options = _setStreamType<HttpResponse<dynamic>>(
-      Options(method: 'PATCH', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/product_expense/update_bulk',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch(_options);
-    final _value = _result.data;
-    final httpResponse = HttpResponse(_value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<ProductExpenseRead>> updateProductExp({
-    required int id,
-    required ProductExpenseWrite body,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toMap() ?? <String, dynamic>{});
-    final _options = _setStreamType<HttpResponse<ProductExpenseRead>>(
-      Options(method: 'DELETE', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/product_expense/update/${id}',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ProductExpenseRead _value;
-    try {
-      _value = ProductExpenseRead.fromMap(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    final httpResponse = HttpResponse(_value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<dynamic>> deleteProductExp({required int id}) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<dynamic>>(
-      Options(method: 'DELETE', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/product_expense/delete/${id}',
             queryParameters: queryParameters,
             data: _data,
           )

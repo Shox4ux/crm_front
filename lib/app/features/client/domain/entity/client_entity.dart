@@ -1,12 +1,12 @@
-import 'package:crm_app/app/features/user/domain/entity/user_entity.dart';
+import 'package:crm_app/app/features/order/data/model/order_response.dart';
+import 'package:crm_app/app/features/user/data/model/user_response.dart';
 import 'package:crm_app/app/features/client/data/model/client_product_response.dart';
-import 'package:crm_app/app/src/data/remote/models/response/order/order_read.dart';
 
 class ClientEntity {
   final int id;
-  final UserEntity user;
-  final List<ClientProductRead>? products;
-  final List<OrderRead>? orders;
+  final UserResponse user;
+  final List<ClientProductResponse>? products;
+  final List<OrderResponse>? orders;
   final String createdAt;
 
   ClientEntity({

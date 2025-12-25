@@ -26,6 +26,7 @@ class HomeXScreen extends StatefulWidget {
 class _HomeXScreenState extends State<HomeXScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  @override
   Widget build(BuildContext context) {
     return BlocListener<DrawerXCubit, DrawerXState>(
       listener: (context, state) {

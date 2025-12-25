@@ -19,9 +19,9 @@ class ClientCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            child: SvgPicture.asset(AppAssets.clients),
             radius: 55,
             backgroundColor: AppColour.backgroundDark,
+            child: SvgPicture.asset(AppAssets.clients),
           ),
           SizedBox(height: 10),
           Text(
@@ -31,7 +31,7 @@ class ClientCard extends StatelessWidget {
               color: AppColour.backgroundLight,
             ),
           ),
-          Text("\$ " + item.user.phone.toString()),
+          Text("\$ ${item.user.phone}"),
         ],
       ),
     );

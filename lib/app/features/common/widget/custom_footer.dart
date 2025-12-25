@@ -22,7 +22,7 @@ class CustomFooter extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          "Showing ${pageCount} of ${totalCount}",
+          "Showing $pageCount of $totalCount",
           style: AppTextStyle.medium.copyWith(fontSize: 14),
         ),
         ArrowButtons(onLeft: onLeftPressed, onRight: onRightPressed),

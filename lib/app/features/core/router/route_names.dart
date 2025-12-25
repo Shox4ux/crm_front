@@ -1,4 +1,4 @@
-abstract class RouteNames {
+abstract class Routes {
   static const String home = "/homex";
   static const String login = "/";
 

@@ -1,7 +1,5 @@
-import 'package:crm_app/app/src/logic/order_cubit/order_cubit.dart';
 import 'package:crm_app/app/utils/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class FromToDate extends StatefulWidget {
@@ -63,7 +61,7 @@ class _FromToDateState extends State<FromToDate> {
           onTap: () {
             _pickDate(_fromController).then((v) {
               setState(() {
-                context.read<OrderCubit>().setToDate(v);
+                // context.read<OrderCubit>().setToDate(v);
               });
             });
           },
@@ -76,7 +74,7 @@ class _FromToDateState extends State<FromToDate> {
           hint: "End Date",
           onTap: () => _pickDate(_toController).then((v) {
             setState(() {
-              context.read<OrderCubit>().setToDate(v);
+              // context.read<OrderCubit>().setToDate(v);
             });
           }),
         ),

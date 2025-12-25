@@ -50,16 +50,16 @@ class DashboardCard extends StatelessWidget {
                 height: 70,
                 width: 70,
                 padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: item.iconColor,
+                  borderRadius: BorderRadius.circular(24),
+                ),
                 child: SvgPicture.asset(
                   item.icon,
                   colorFilter: ColorFilter.mode(
                     AppColour.white,
                     BlendMode.srcIn,
                   ),
-                ),
-                decoration: BoxDecoration(
-                  color: item.iconColor,
-                  borderRadius: BorderRadius.circular(24),
                 ),
               ),
             ],

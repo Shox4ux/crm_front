@@ -1,5 +1,7 @@
 import 'dart:io' show HttpStatus;
 
+import 'package:crm_app/app/features/common/data/repo/exception_handling.dart';
+
 import 'data_state.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
@@ -29,23 +31,7 @@ abstract class BaseRepo {
         );
       }
     } on DioException catch (e) {
-      String errorMessage = "Unknown error";
-
-      if (e.response != null && e.response?.data != null) {
-        // If backend sends a JSON like {"message": "something went wrong"}
-        if (e.response?.data is Map<String, dynamic>) {
-          errorMessage = e.response?.data['message'] ?? 'Server error';
-        } else {
-          errorMessage = e.response?.data.toString() ?? "";
-        }
-      } else if (e.type == DioExceptionType.connectionTimeout) {
-        errorMessage = "Connection timed out";
-      } else if (e.type == DioExceptionType.receiveTimeout) {
-        errorMessage = "Response timeout";
-      }
-
-      print("API error: $errorMessage");
-      return DataFailed(errorMessage);
+      return DataFailed(handleDioError(e));
     }
   }
 }

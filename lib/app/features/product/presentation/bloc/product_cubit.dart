@@ -1,22 +1,28 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
 import 'package:crm_app/app/features/common/data/repo/data_state.dart';
 import 'package:crm_app/app/features/product/data/model/product_write.dart';
-import 'package:meta/meta.dart';
-
-import 'package:crm_app/app/features/product/domain/usecase/create_prod_usecase.dart';
+import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
+import 'package:crm_app/app/features/product/domain/repo/product_repo_impl.dart';
 
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
-  CreateProdUsecase createProdUsecase;
-
-  ProductCubit(this.createProdUsecase) : super(ProductInitial());
+  final ProductRepo _repo;
+  ProductCubit(this._repo)
+    : super(ProductState(status: ProdStatus.init, msg: null));
 
   void createProd(ProductWrite body) async {
-    var res = await createProdUsecase(body: body);
+    var res = await _repo.createProduct(body: body);
 
     if (res is DataSuccess) {
-    } else {}
+      emit(state.copyWith(status: ProdStatus.success));
+    } else {
+      emit(
+        state.copyWith(
+          status: ProdStatus.error,
+          msg: (res as DataFailed).errorMsg,
+        ),
+      );
+    }
   }
 }

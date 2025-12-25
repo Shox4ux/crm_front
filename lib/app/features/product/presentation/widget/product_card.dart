@@ -49,8 +49,8 @@ class ProductCard extends StatelessWidget {
                         color: AppColour.backgroundLight,
                       ),
                     ),
-                    Text("\$ " + item.finalPrice.toString()),
-                    Text(item.quantity.toString() + " units"),
+                    Text("\$ ${item.finalPrice}"),
+                    Text("${item.quantity} units"),
                   ],
                 ),
                 CircleAvatar(

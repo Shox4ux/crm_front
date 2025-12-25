@@ -12,7 +12,7 @@ part of 'user_api_service.dart';
 
 class _UserApiService implements UserApiService {
   _UserApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://95.179.186.65:8001';
+    baseUrl ??= 'http://95.182.96.54:8001';
   }
 
   final Dio _dio;
@@ -29,7 +29,7 @@ class _UserApiService implements UserApiService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body?.toMap() ?? <String, dynamic>{});
+    _data.addAll(body.toJson());
     final _options = _setStreamType<HttpResponse<LoginResponse>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -43,7 +43,7 @@ class _UserApiService implements UserApiService {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late LoginResponse _value;
     try {
-      _value = LoginResponse.fromMap(_result.data!);
+      _value = LoginResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -71,7 +71,7 @@ class _UserApiService implements UserApiService {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late UserResponse _value;
     try {
-      _value = UserResponse.fromMap(_result.data!);
+      _value = UserResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

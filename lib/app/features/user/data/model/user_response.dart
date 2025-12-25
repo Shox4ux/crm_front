@@ -6,24 +6,15 @@ part 'user_response.g.dart';
 @JsonSerializable()
 class UserResponse extends UserEntity {
   const UserResponse({
-    int? id,
-    String? username,
-    int? role,
-    String? img,
-    String? phone,
-    bool? isActive,
-    String? address,
-    DateTime? createdAt,
-  }) : super(
-         id: id,
-         username: username,
-         role: role,
-         img: img,
-         phone: phone,
-         isActive: isActive,
-         address: address,
-         createdAt: createdAt,
-       );
+    super.id,
+    super.username,
+    super.role,
+    super.img,
+    super.phone,
+    super.isActive,
+    super.address,
+    super.createdAt,
+  });
 
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 

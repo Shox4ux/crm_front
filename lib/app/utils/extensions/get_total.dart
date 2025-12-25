@@ -1,6 +1,6 @@
-import 'package:crm_app/app/src/data/remote/models/response/order/order_prod_read.dart';
+import 'package:crm_app/app/features/order_prod/data/model/order_pro_response.dart';
 
-extension GetTotal on List<OrderProdRead>? {
+extension GetTotal on List<OrderProResponse>? {
   String getTotal() {
     num t = 0;
     if (this != null) {

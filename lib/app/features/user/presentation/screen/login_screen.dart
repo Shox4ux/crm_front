@@ -45,10 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  String? validateNotEmpty(String? value) {
+  String? validateNotEmpty(String? value, {bool isPass = false}) {
     if (value == null || value.trim().isEmpty) {
       return 'This field cannot be empty';
     }
+
     return null;
   }
 
@@ -65,8 +66,8 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: const Color.fromARGB(255, 17, 26, 39),
       body: BlocListener<UserCubit, UserState>(
         listener: (context, state) {
-          if (state.status == UserSStatus.success) {
-            context.go(RouteNames.home);
+          if (state.status == UserSStatus.login) {
+            context.go(Routes.home);
           }
           if (state.status == UserSStatus.error) {
             showToast(context, state.msg ?? "");
@@ -87,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
               key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+
                 children: [
                   CustomTitle(title: "CRM Login"),
                   SizedBox(height: 40),
@@ -110,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   BlocBuilder<UserCubit, UserState>(
                     builder: (context, state) {
                       if (state.status == UserSStatus.loading) {
-                        return CustomLoading();
+                        return SizedBox(width: 200, child: CustomLoading());
                       }
                       return CustomBtn(onPressed: _login, txt: "Login");
                     },
