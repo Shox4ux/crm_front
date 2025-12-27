@@ -16,14 +16,14 @@ List<Widget> screens = [
   OrderList(),
 ];
 
-class HomeXScreen extends StatefulWidget {
-  const HomeXScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<HomeXScreen> createState() => _HomeXScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeXScreenState extends State<HomeXScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

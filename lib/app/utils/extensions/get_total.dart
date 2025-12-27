@@ -1,4 +1,4 @@
-import 'package:crm_app/app/features/order_prod/data/model/order_pro_response.dart';
+import 'package:crm_app/app/features/order_product/data/model/order_pro_response.dart';
 
 extension GetTotal on List<OrderProResponse>? {
   String getTotal() {

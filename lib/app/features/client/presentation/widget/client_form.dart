@@ -2,20 +2,28 @@ import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:flutter/material.dart';
 
-class ClientForm extends StatelessWidget {
-  const ClientForm({
+class CustomForm extends StatelessWidget {
+  const CustomForm({
     super.key,
     this.ctrl,
     required this.txt,
     this.labelTxt = "data",
     this.isPass = false,
     this.valid,
+    this.readOnly = false,
+    this.onChanged,
+    this.prefix,
+    this.suffix,
   });
   final TextEditingController? ctrl;
   final String txt;
   final String labelTxt;
   final bool isPass;
   final String? Function(String?)? valid;
+  final void Function(String?)? onChanged;
+  final bool readOnly;
+  final String? prefix;
+  final String? suffix;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +39,17 @@ class ClientForm extends StatelessWidget {
           height: 60,
           width: 360,
           child: TextFormField(
+            readOnly: readOnly,
+            onChanged: onChanged,
             validator: valid,
             controller: ctrl,
+
             decoration: InputDecoration(
               filled: true, // enables background color
               fillColor: AppColour.clTxtBg,
-              hint: Text("Enter your $txt"),
+              hint: Text("Enter $txt"),
+              prefixText: prefix,
+              suffixText: suffix,
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: AppColour.clStroke, // stroke color when not focused

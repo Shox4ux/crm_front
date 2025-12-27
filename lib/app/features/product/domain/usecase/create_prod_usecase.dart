@@ -8,7 +8,7 @@ class CreateProdUsecase {
 
   CreateProdUsecase(this._repo);
 
-  Future<DataState<ProductResponse>> call({required ProductWrite body}) async {
+  Future<DataState<ProductResponse>> call({required ProductCreate body}) async {
     return await _repo.createProduct(body: body);
   }
 }

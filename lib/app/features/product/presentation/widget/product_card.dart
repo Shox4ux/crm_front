@@ -6,15 +6,22 @@ import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:crm_app/app/features/common/ui/extensions/capitilize.dart';
 import 'package:crm_app/app/features/common/widget/img_error.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
-import 'package:crm_app/app/features/product/data/fake_data.dart';
+import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
+import 'package:crm_app/app/features/product/presentation/bloc/product_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.item});
-  final ProdData item;
+  final ProductEntity item;
+
   @override
   Widget build(BuildContext context) {
+    void _delete() {
+      context.read<ProductCubit>().deleteProd(item.id);
+    }
+
     return Container(
       decoration: BoxDecoration(borderRadius: AppRadius.cardRadius),
       clipBehavior: Clip.hardEdge,
@@ -24,7 +31,7 @@ class ProductCard extends StatelessWidget {
             padding: EdgeInsets.all(5),
             color: AppColour.backgroundLight,
             child: Image.network(
-              item.imgUrl,
+              item.imgUrl ?? "",
               errorBuilder: (c, e, s) => OnImgError(height: 196),
             ),
           ),
@@ -49,8 +56,8 @@ class ProductCard extends StatelessWidget {
                         color: AppColour.backgroundLight,
                       ),
                     ),
-                    Text("\$ ${item.finalPrice}"),
-                    Text("${item.quantity} units"),
+                    Text("\$ ${item.sellPrice}"),
+                    Text("${item.totalQuantity} units"),
                   ],
                 ),
                 CircleAvatar(
@@ -59,9 +66,8 @@ class ProductCard extends StatelessWidget {
                     onPressed: () {
                       showDelConfrm(
                         ctx: context,
-                        onDel: () {
-                          print("object");
-                        },
+                        onDel: () =>
+                            showDelConfrm(ctx: context, onDel: _delete),
                       );
                     },
                     icon: SvgPicture.asset(AppAssets.delete),

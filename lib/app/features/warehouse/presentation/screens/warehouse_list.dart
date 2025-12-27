@@ -1,11 +1,13 @@
+import 'package:crm_app/app/features/common/functions/show_toast.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
+import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_search.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
-import 'package:crm_app/app/features/warehouse/data/fake_data.dart';
 import 'package:crm_app/app/features/warehouse/data/model/warehouse_create.dart';
 import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit/warehouse_cubit.dart';
-import 'package:crm_app/app/features/warehouse/presentation/widgets/add_ware.dart';
+import 'package:crm_app/app/features/warehouse/presentation/widgets/add_edit_ware.dart';
 import 'package:crm_app/app/features/warehouse/presentation/widgets/ware_card.dart';
+import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +22,12 @@ class _WarehouseListState extends State<WarehouseList> {
   late GlobalKey<FormState> _formKey;
   late TextEditingController _nameCtrl;
   late TextEditingController _passwCtrl;
+
+  void _search(String val) {
+    setState(() {
+      context.read<WarehouseCubit>().filter(val.toLowerCase());
+    });
+  }
 
   @override
   void initState() {
@@ -37,12 +45,13 @@ class _WarehouseListState extends State<WarehouseList> {
   }
 
   void showAddWarehouseDialog() {
-    showCreateWarehouseDialog(
-      context: context,
-      onCreate: _createWarehouse,
+    addEditWarehouseDialog(
+      ctx: context,
+      action: _createWarehouse,
       nameController: _nameCtrl,
       addressController: _passwCtrl,
       valid: _validateNotEmpty,
+      key: _formKey,
     );
   }
 
@@ -79,22 +88,40 @@ class _WarehouseListState extends State<WarehouseList> {
                 mainAxisSize: MainAxisSize.min,
                 spacing: 10,
                 children: [
-                  CustomSearch(),
+                  CustomSearch(onChanged: _search),
                   CustomBtn(onPress: showAddWarehouseDialog, txt: "Add"),
                 ],
               ),
             ],
           ),
           Flexible(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5,
-                crossAxisSpacing: 30,
-                mainAxisSpacing: 30,
-              ),
-              shrinkWrap: true,
-              itemCount: wareList.length,
-              itemBuilder: (_, i) => WareCard(item: wareList[i]),
+            child: BlocConsumer<WarehouseCubit, WarehouseState>(
+              listener: (context, state) {
+                if (state.status == WareStatus.success) {
+                  goBack(context);
+                  _nameCtrl.clear();
+                  _passwCtrl.clear();
+                }
+                if (state.status == WareStatus.failure) {
+                  showToast(context, state.msg ?? "");
+                }
+              },
+              builder: (context, state) {
+                if (state.status == WareStatus.getall) {
+                  return CustomLoading();
+                }
+                var list = context.watch<WarehouseCubit>().getFiltList();
+                return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    crossAxisSpacing: 30,
+                    mainAxisSpacing: 30,
+                  ),
+                  shrinkWrap: true,
+                  itemCount: list.length,
+                  itemBuilder: (_, i) => WareCard(item: list[i]),
+                );
+              },
             ),
           ),
         ],

@@ -12,9 +12,7 @@ class CustomTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(spacing: 15, children: [_buildHeader(), ..._buildRows()]),
-    );
+    return Column(spacing: 15, children: [_buildHeader(), ..._buildRows()]);
   }
 
   // ---------------- HEADER ----------------

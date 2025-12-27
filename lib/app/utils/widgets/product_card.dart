@@ -1,8 +1,8 @@
 import 'package:crm_app/app/features/client/data/model/client_product_response.dart';
+import 'package:crm_app/app/features/common/functions/profit_percent.dart';
 import 'package:crm_app/app/features/product/data/model/product_response.dart';
 import 'package:crm_app/app/features/user/data/model/user_response.dart';
 import 'package:crm_app/app/utils/extensions/full_url.dart';
-import 'package:crm_app/app/utils/funcs/profit_percent.dart';
 import 'package:crm_app/app/utils/widgets/custom_double_text.dart';
 import 'package:crm_app/app/utils/widgets/custom_ibtn.dart';
 import 'package:crm_app/app/utils/widgets/custom_field.dart';

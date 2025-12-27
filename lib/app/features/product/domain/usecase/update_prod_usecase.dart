@@ -6,7 +6,7 @@ class UpdateProdUsecase {
   final ProductRepo _repo;
   UpdateProdUsecase(this._repo);
 
-  Future<DataState> call({required int id, required ProductWrite body}) async {
+  Future<DataState> call({required int id, required ProductCreate body}) async {
     return await _repo.updateProduct(id: id, body: body);
   }
 }

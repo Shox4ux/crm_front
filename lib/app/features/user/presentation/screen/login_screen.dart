@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/functions/show_toast.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/widget/custom_progress.dart';
@@ -7,7 +8,6 @@ import 'package:crm_app/app/features/core/router/route_names.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
 import 'package:crm_app/app/features/user/data/model/login_request.dart';
 import 'package:crm_app/app/features/user/presentation/bloc/user_cubit.dart';
-import 'package:crm_app/app/utils/funcs/show_toast.dart';
 import 'package:crm_app/app/utils/utils.dart';
 
 import 'package:flutter/material.dart';

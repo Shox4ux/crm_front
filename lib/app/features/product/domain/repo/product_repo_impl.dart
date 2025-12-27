@@ -5,7 +5,7 @@ import '../../../common/data/repo/data_state.dart';
 
 abstract class ProductRepo {
   Future<DataState<ProductResponse>> createProduct({
-    required ProductWrite body,
+    required ProductCreate body,
   });
 
   Future<DataState<dynamic>> deleteProduct({required int id});
@@ -16,6 +16,6 @@ abstract class ProductRepo {
 
   Future<DataState<dynamic>> updateProduct({
     required int id,
-    required ProductWrite body,
+    required ProductCreate body,
   });
 }

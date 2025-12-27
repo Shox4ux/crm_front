@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
-class ProductWrite {
+class ProductCreate {
   final MultipartFile? img;
   final String? name;
   final double? basePrice;
@@ -12,7 +12,7 @@ class ProductWrite {
   final int? totalQuantity;
   final int? activeQuantity;
 
-  ProductWrite({
+  ProductCreate({
     this.img,
     required this.name,
     required this.basePrice,
@@ -34,8 +34,8 @@ class ProductWrite {
     };
   }
 
-  factory ProductWrite.fromMap(Map<String, dynamic> map) {
-    return ProductWrite(
+  factory ProductCreate.fromMap(Map<String, dynamic> map) {
+    return ProductCreate(
       img: map['img'],
       name: map['name'] != null ? map['name'] as String : null,
       basePrice: map['basePrice'] != null ? map['basePrice'] as double : null,
@@ -52,6 +52,6 @@ class ProductWrite {
 
   String toJson() => json.encode(toMap());
 
-  factory ProductWrite.fromJson(String source) =>
-      ProductWrite.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory ProductCreate.fromJson(String source) =>
+      ProductCreate.fromMap(json.decode(source) as Map<String, dynamic>);
 }

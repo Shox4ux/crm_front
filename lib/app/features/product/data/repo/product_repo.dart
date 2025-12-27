@@ -12,7 +12,7 @@ class ProductRepoImpl extends BaseRepo implements ProductRepo {
   final ProductApiService _service;
   @override
   Future<DataState<ProductResponse>> createProduct({
-    required ProductWrite body,
+    required ProductCreate body,
   }) => getStateOf<ProductResponse>(
     request: () => _service.createProduct(
       totalQuantity: body.totalQuantity!,
@@ -41,7 +41,7 @@ class ProductRepoImpl extends BaseRepo implements ProductRepo {
   @override
   Future<DataState> updateProduct({
     required int id,
-    required ProductWrite body,
+    required ProductCreate body,
   }) => getStateOf(
     request: () => _service.updateProduct(
       id: id,

@@ -13,7 +13,7 @@ import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
 import 'package:crm_app/app/features/home/presentation/widget/custom_data_table.dart';
-import 'package:crm_app/app/utils/funcs/go_back.dart';
+import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -116,6 +116,7 @@ class _ClientAddEditState extends State<ClientAddEdit> {
       ),
       body: Container(
         padding: EdgeInsets.all(40),
+        alignment: Alignment.topCenter,
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -148,35 +149,42 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                       ),
 
                       Row(
-                        spacing: 80,
+                        spacing: widget.isEdit ? 0 : 80,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Column(
-                            spacing: 30,
-                            children: [
-                              ClientForm(
-                                ctrl: _nameCtrl,
-                                valid: validateNotEmpty,
-                                txt: "Username",
-                              ),
-                              widget.isEdit
-                                  ? SizedBox.shrink()
-                                  : ClientForm(
+                          widget.isEdit
+                              ? SizedBox.shrink()
+                              : Column(
+                                  spacing: 30,
+                                  children: [
+                                    CustomForm(
+                                      ctrl: _nameCtrl,
+                                      valid: validateNotEmpty,
+                                      txt: "Username",
+                                    ),
+                                    CustomForm(
                                       ctrl: _passwCtrl,
                                       valid: validateNotEmpty,
                                       txt: "Password",
                                     ),
-                            ],
-                          ),
+                                  ],
+                                ),
                           Column(
                             spacing: 30,
                             children: [
-                              ClientForm(
+                              !widget.isEdit
+                                  ? SizedBox.shrink()
+                                  : CustomForm(
+                                      ctrl: _nameCtrl,
+                                      valid: validateNotEmpty,
+                                      txt: "Username",
+                                    ),
+                              CustomForm(
                                 valid: validateNotEmpty,
                                 txt: "Phone",
                                 ctrl: _phoneCtrl,
                               ),
-                              ClientForm(
+                              CustomForm(
                                 ctrl: _addressCtrl,
                                 valid: validateNotEmpty,
                                 txt: "Address",

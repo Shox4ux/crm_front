@@ -7,8 +7,8 @@ class WarehouseCreate {
   final String address;
   WarehouseCreate({required this.name, required this.address});
 
-  Map<String, dynamic> toMap() => _$WarehouseCreateToJson(this);
+  Map<String, dynamic> toJson() => _$WarehouseCreateToJson(this);
 
-  factory WarehouseCreate.fromMap(Map<String, dynamic> map) =>
+  factory WarehouseCreate.fromJson(Map<String, dynamic> map) =>
       _$WarehouseCreateFromJson(map);
 }

@@ -1,30 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-part of 'product_cubit.dart';
+part of 'expense_cubit.dart';
 
 enum ProdStatus { init, loading, success, error, disconnected }
 
-class ProductState {
+class ExpenseState {
   final ProdStatus status;
-  final List<ProductEntity> list;
   final String msg;
   final ProductChanges changes;
 
-  const ProductState({
+  const ExpenseState({
     required this.changes,
     this.status = ProdStatus.init,
-    this.list = const [],
     this.msg = "",
   });
 
-  ProductState copyWith({
+  ExpenseState copyWith({
     ProdStatus? status,
-    List<ProductEntity>? list,
     String? msg,
     ProductChanges? changes,
   }) {
-    return ProductState(
+    return ExpenseState(
       status: status ?? this.status,
-      list: list ?? this.list,
       msg: msg ?? this.msg,
       changes: changes ?? this.changes,
     );
