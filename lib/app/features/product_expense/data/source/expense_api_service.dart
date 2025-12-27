@@ -14,7 +14,7 @@ abstract class ExpenseApiService {
 
   @POST('/product_expense/create')
   Future<HttpResponse> createProductExp({
-    @Body() required ProductExpenseBulkCreate body,
+    @Body() required ExpenseBulkCreate body,
   });
 
   @PATCH('/product_expense/update_bulk')
@@ -23,9 +23,9 @@ abstract class ExpenseApiService {
   });
 
   @DELETE('/product_expense/update/{id}')
-  Future<HttpResponse<ProductExpenseResponse>> updateProductExp({
+  Future<HttpResponse<ExpenseResponse>> updateProductExp({
     @Path("id") required int id,
-    @Body() required ProductExpenseCreate body,
+    @Body() required ExpenseCreate body,
   });
 
   @DELETE('/product_expense/delete/{id}')

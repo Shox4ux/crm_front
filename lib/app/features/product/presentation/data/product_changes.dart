@@ -1,9 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:crm_app/app/features/product_expense/data/model/expense_bulk_update.dart';
 import 'package:dio/dio.dart';
-
-import 'package:crm_app/app/src/data/remote/models/request/product/product_expense_bulk_update.dart';
 
 class ProductChanges {
   int? totalQty;
@@ -51,31 +50,27 @@ class ProductChanges {
     );
   }
 
-  bool isNotEmpty() =>
-      !(this.newExp == null && this.deleted == null && this.updated == null);
+  bool isNotEmpty() => !(newExp == null && deleted == null && updated == null);
 
-  ProductChanges setQty(int qty) =>
-      this.copyWith(totalQty: qty, activeQty: qty);
+  ProductChanges setQty(int qty) => copyWith(totalQty: qty, activeQty: qty);
 
-  ProductChanges setName(String? name) => this.copyWith(name: name);
+  ProductChanges setName(String? name) => copyWith(name: name);
 
   ProductChanges setSellPrice(double? sellPice) =>
-      this.copyWith(sellPrice: sellPice);
+      copyWith(sellPrice: sellPice);
 
   ProductChanges setBasePrice(double? basePrice) =>
-      this.copyWith(basePrice: basePrice);
+      copyWith(basePrice: basePrice);
 
-  ProductChanges setImage(MultipartFile? img) => this.copyWith(img: img);
-  ProductChanges setNewList(int productId, List<NewExpItem>? list) =>
-      this.copyWith(
-        newExp: NewExp(productId: productId, items: list),
-      );
+  ProductChanges setImage(MultipartFile? img) => copyWith(img: img);
+  ProductChanges setNewList(int productId, List<NewExpItem>? list) => copyWith(
+    newExp: NewExp(productId: productId, items: list),
+  );
   ProductChanges setUpdatedList(List<ProdItemUp>? list) =>
-      this.copyWith(updated: list);
-  ProductChanges setDeletedList(List<int>? list) =>
-      this.copyWith(deleted: list);
+      copyWith(updated: list);
+  ProductChanges setDeletedList(List<int>? list) => copyWith(deleted: list);
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'totalQuantity': totalQty,
       'activeQuantity': activeQty,

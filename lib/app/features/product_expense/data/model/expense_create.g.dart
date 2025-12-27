@@ -6,13 +6,11 @@ part of 'expense_create.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProductExpenseCreate _$ProductExpenseCreateFromJson(
-  Map<String, dynamic> json,
-) => ProductExpenseCreate(
-  name: json['name'] as String,
-  amount: (json['amount'] as num).toDouble(),
-);
+ExpenseCreate _$ExpenseCreateFromJson(Map<String, dynamic> json) =>
+    ExpenseCreate(
+      name: json['name'] as String,
+      amount: (json['amount'] as num).toDouble(),
+    );
 
-Map<String, dynamic> _$ProductExpenseCreateToJson(
-  ProductExpenseCreate instance,
-) => <String, dynamic>{'name': instance.name, 'amount': instance.amount};
+Map<String, dynamic> _$ExpenseCreateToJson(ExpenseCreate instance) =>
+    <String, dynamic>{'name': instance.name, 'amount': instance.amount};

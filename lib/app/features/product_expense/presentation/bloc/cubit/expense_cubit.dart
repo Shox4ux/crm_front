@@ -1,43 +1,41 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-
+import 'package:crm_app/app/features/common/data/repo/data_state.dart';
+import 'package:crm_app/app/features/product/presentation/data/product_changes.dart';
+import 'package:crm_app/app/features/product_expense/data/model/expense_bulk_create.dart';
+import 'package:crm_app/app/features/product_expense/data/model/expense_bulk_update.dart';
+import 'package:crm_app/app/features/product_expense/data/model/expense_create.dart';
+import 'package:crm_app/app/features/product_expense/data/repo/expense_repo.dart';
 part 'expense_state.dart';
 
 class ExpenseCubit extends Cubit<ExpenseState> {
-  ExpenseCubit() : super(ExpenseInitial());
-
-  //=====================================================//
+  final ExpenseRepo _repo;
+  ExpenseCubit(this._repo) : super(ExpenseState(changes: ProductChanges()));
 
   void updateBulkExp() async {
     emit(state.copyWith(status: ProdStatus.loading));
-    var body = ExpenseBulkUpdate.fromMap(state.changes.toMap());
-    var res = await _repo.updateBulkProdExp(body: body);
+    var body = ExpenseBulkUpdate.fromJson(state.changes.toJson());
+    var res = await _repo.updateBulkExpense(body: body);
     if (res is DataSuccess) {
       emit(state.copyWith(status: ProdStatus.success));
-      print("product exps updated successfully");
-
-      getAllProduct();
     } else {
       emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
     }
   }
 
-  void _createExps(int pId, List<ProductExpenseWrite>? exps) async {
-    var res = await _repo.createProductExp(
-      body: ProductExpenseBulk(productId: pId, items: exps),
+  void createBulkExps(int pId, List<ExpenseCreate>? exps) async {
+    var res = await _repo.createExpense(
+      body: ExpenseBulkCreate(productId: pId, items: exps),
     );
     if (res is DataSuccess) {
       emit(state.copyWith(status: ProdStatus.success));
-
-      getAllProduct();
     } else {
       emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
     }
   }
 
-  void updateExp(int id, ProductExpenseWrite exps) async {
+  void updateExp(int id, ExpenseCreate exps) async {
     emit(state.copyWith(status: ProdStatus.loading));
-    var res = await _repo.updateProductExp(id: id, body: exps);
+    var res = await _repo.updateExpense(id: id, body: exps);
     if (res is DataSuccess) {
       emit(state.copyWith(status: ProdStatus.success));
     } else {
@@ -47,7 +45,7 @@ class ExpenseCubit extends Cubit<ExpenseState> {
 
   void deleteExp(int id) async {
     emit(state.copyWith(status: ProdStatus.loading));
-    var res = await _repo.deleteProductExp(id: id);
+    var res = await _repo.deleteExpense(id: id);
     if (res is DataSuccess) {
       emit(state.copyWith(status: ProdStatus.success));
     } else {

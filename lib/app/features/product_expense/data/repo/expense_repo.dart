@@ -12,12 +12,12 @@ class ExpenseRepo extends BaseRepo implements ExpenseRepoImpl {
   ExpenseRepo(this._service);
 
   @override
-  Future<DataState> createExpense({required ProductExpenseBulkCreate body}) =>
+  Future<DataState> createExpense({required ExpenseBulkCreate body}) =>
       getStateOf(request: () => _service.createProductExp(body: body));
   @override
-  Future<DataState<ProductExpenseResponse>> updateExpense({
+  Future<DataState<ExpenseResponse>> updateExpense({
     required int id,
-    required ProductExpenseCreate body,
+    required ExpenseCreate body,
   }) => getStateOf(
     request: () => _service.updateProductExp(id: id, body: body),
   );

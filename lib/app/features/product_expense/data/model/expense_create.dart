@@ -2,18 +2,12 @@ import 'package:json_annotation/json_annotation.dart';
 part 'expense_create.g.dart';
 
 @JsonSerializable()
-class ProductExpenseCreate {
+class ExpenseCreate {
   final String name;
   final double amount;
-  ProductExpenseCreate({required this.name, required this.amount});
+  ExpenseCreate({required this.name, required this.amount});
 
-  Map<String, dynamic> toJson() => _$ProductExpenseCreateToJson(this);
-
-  factory ProductExpenseCreate.fromJson(Map<String, dynamic> map) =>
-      _$ProductExpenseCreateFromJson(map);
-
-  Map<String, dynamic> toMap() => _$ProductExpenseCreateToJson(this);
-
-  factory ProductExpenseCreate.fromMap(Map<String, dynamic> map) =>
-      _$ProductExpenseCreateFromJson(map);
+  Map<String, dynamic> toJson() => _$ExpenseCreateToJson(this);
+  factory ExpenseCreate.fromJson(Map<String, dynamic> map) =>
+      _$ExpenseCreateFromJson(map);
 }

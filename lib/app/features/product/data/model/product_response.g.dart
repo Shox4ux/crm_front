@@ -14,9 +14,7 @@ ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) =>
       basePrice: (json['base_price'] as num).toDouble(),
       sellPrice: (json['sell_price'] as num).toDouble(),
       baseExpenses: (json['base_expenses'] as List<dynamic>?)
-          ?.map(
-            (e) => ProductExpenseResponse.fromJson(e as Map<String, dynamic>),
-          )
+          ?.map((e) => ExpenseResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       measure: (json['measure'] as num?)?.toInt(),
       totalQuantity: (json['total_quantity'] as num).toInt(),

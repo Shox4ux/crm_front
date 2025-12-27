@@ -19,7 +19,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _delete() {
-      context.read<ProductCubit>().deleteProd(item.id);
+      context.read<ProductCubit>().deleteProduct(id: item.id);
     }
 
     return Container(

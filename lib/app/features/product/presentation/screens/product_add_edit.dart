@@ -1,6 +1,11 @@
 import 'dart:io';
+import 'package:crm_app/app/features/common/widget/custom_progress.dart';
+import 'package:crm_app/app/features/product/data/model/product_write.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/product/presentation/bloc/product_cubit.dart';
+import 'package:crm_app/app/features/product/presentation/data/product_changes.dart';
+import 'package:crm_app/app/features/product_expense/data/model/expense_bulk_update.dart';
+import 'package:crm_app/app/features/product_expense/data/model/expense_create.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,20 +15,20 @@ import 'package:path/path.dart';
 import 'package:crm_app/app/utils/extensions/full_url.dart';
 import 'package:crm_app/app/utils/utils.dart';
 
-class ProductAddEditScreen extends StatefulWidget {
-  const ProductAddEditScreen({super.key, this.isEdit = false, this.product});
+class ProductAddEdit extends StatefulWidget {
+  const ProductAddEdit({super.key, this.isEdit = false, this.product});
   final bool isEdit;
   final ProductEntity? product;
 
   @override
-  State<ProductAddEditScreen> createState() => _ProductAddEditScreenState();
+  State<ProductAddEdit> createState() => _ProductAddEditState();
 }
 
-class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
+class _ProductAddEditState extends State<ProductAddEdit> {
   File? _image;
   final picker = ImagePicker();
   MultipartFile? img;
-  String? _initialUrl = null;
+  String? _initialUrl;
   final TextEditingController nameCtrl = TextEditingController();
   final TextEditingController quantityCtrl = TextEditingController(text: "1");
   final TextEditingController sellPriceCtrl = TextEditingController();
@@ -55,7 +60,7 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
 
   void detectRemovedExp(ProductCubit cubit) {
     List<int> deleted = [];
-    for (var oldExp in widget.product!.base_expenses!) {
+    for (var oldExp in widget.product!.baseExpenses!) {
       bool stillExists = expenses.any((e) => e['id'] == oldExp.id);
       if (!stillExists) deleted.add(oldExp.id);
     }
@@ -88,7 +93,7 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
     for (var exp in expenses) {
       var id = exp['id'];
       if (id != null) {
-        var old = widget.product!.base_expenses!.firstWhere((e) => e.id == id);
+        var old = widget.product!.baseExpenses!.firstWhere((e) => e.id == id);
         if (exp['name'] != old.name || exp['amount'] != old.amount.toString()) {
           updated.add(
             ProdItemUp(
@@ -145,7 +150,7 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
 
   void prefillCtrlText() {
     nameCtrl.text = widget.product!.name;
-    quantityCtrl.text = widget.product!.total_quantity.toString();
+    quantityCtrl.text = widget.product!.totalQuantity.toString();
     sellPriceCtrl.text = widget.product!.sellPrice.toString();
   }
 
@@ -160,7 +165,7 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
   }
 
   void prefillExpenseList() {
-    final expenseList = widget.product!.base_expenses
+    final expenseList = widget.product!.baseExpenses
         ?.map(
           (e) => {"id": e.id, "name": e.name, "amount": e.amount.toString()},
         )
@@ -173,7 +178,7 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
   void nullImgUrl() => _initialUrl = null;
 
   void createProduct(ProductCubit cubit) {
-    var b = ProductWrite(
+    var b = ProductCreate(
       img: img,
       name: nameCtrl.text,
       sellPrice: double.tryParse(sellPriceCtrl.text) ?? 0,
@@ -183,7 +188,7 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
     );
     var items = expenses
         .map(
-          (v) => ProductExpenseWrite(
+          (v) => ExpenseCreate(
             amount: double.tryParse(v['amount']) ?? 0,
             name: v['name'],
           ),
@@ -194,19 +199,13 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
 
   void updateProduct(ProductCubit cubit) {
     detectProdChange(cubit);
-    print("0");
-
     detectRemovedExp(cubit);
-    print("2");
-
     detectUpdated(cubit);
-    print("1");
     detectNew(cubit);
-    print("10");
 
     cubit.updateProduct(id: widget.product!.id).then((v) {
       if (cubit.state.changes.isNotEmpty()) {
-        cubit.updateBulkExp();
+        print(cubit.state.changes.toJson());
       }
     });
   }
@@ -419,7 +418,7 @@ class _ProductAddEditScreenState extends State<ProductAddEditScreen> {
               },
               builder: (context, state) {
                 if (state.status == ProdStatus.loading) {
-                  return CustomProgress();
+                  return CustomLoading();
                 }
                 return widget.isEdit
                     ? CustomBtn(

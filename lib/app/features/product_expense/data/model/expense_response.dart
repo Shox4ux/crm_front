@@ -3,14 +3,14 @@ import 'package:json_annotation/json_annotation.dart';
 part 'expense_response.g.dart';
 
 @JsonSerializable()
-class ProductExpenseResponse extends ExpenseEntity {
-  ProductExpenseResponse({
+class ExpenseResponse extends ExpenseEntity {
+  ExpenseResponse({
     required super.id,
     required super.name,
     required super.amount,
   });
-  Map<String, dynamic> toJson() => _$ProductExpenseResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ExpenseResponseToJson(this);
 
-  factory ProductExpenseResponse.fromJson(Map<String, dynamic> map) =>
-      _$ProductExpenseResponseFromJson(map);
+  factory ExpenseResponse.fromJson(Map<String, dynamic> map) =>
+      _$ExpenseResponseFromJson(map);
 }

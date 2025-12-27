@@ -6,7 +6,7 @@ class ProductEntity {
   final String? imgUrl;
   final double basePrice;
   final double sellPrice;
-  final List<ProductExpenseResponse>? baseExpenses;
+  final List<ExpenseResponse>? baseExpenses;
   final int? measure;
   final int totalQuantity;
   final int activeQuantity;

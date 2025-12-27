@@ -4,13 +4,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'expense_bulk_create.g.dart';
 
 @JsonSerializable()
-class ProductExpenseBulkCreate {
+class ExpenseBulkCreate {
   final int productId;
-  final List<ProductExpenseCreate>? items;
-  ProductExpenseBulkCreate({required this.productId, this.items});
+  final List<ExpenseCreate>? items;
+  ExpenseBulkCreate({required this.productId, this.items});
 
-  Map<String, dynamic> toJson() => _$ProductExpenseBulkCreateToJson(this);
+  Map<String, dynamic> toJson() => _$ExpenseBulkCreateToJson(this);
 
-  factory ProductExpenseBulkCreate.fromJson(Map<String, dynamic> map) =>
-      _$ProductExpenseBulkCreateFromJson(map);
+  factory ExpenseBulkCreate.fromJson(Map<String, dynamic> map) =>
+      _$ExpenseBulkCreateFromJson(map);
 }

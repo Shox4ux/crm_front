@@ -6,8 +6,8 @@ import 'package:crm_app/app/features/product/data/source/remote/product_api_serv
 import '../../../common/data/repo/data_state.dart';
 import '../../domain/repo/product_repo_impl.dart';
 
-class ProductRepoImpl extends BaseRepo implements ProductRepo {
-  ProductRepoImpl(this._service);
+class ProductRepo extends BaseRepo implements ProductRepoImpl {
+  ProductRepo(this._service);
 
   final ProductApiService _service;
   @override

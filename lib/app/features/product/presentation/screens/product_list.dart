@@ -49,7 +49,7 @@ class _ProductListState extends State<ProductList> {
             child: BlocConsumer<ProductCubit, ProductState>(
               listener: (context, state) {
                 if (state.status == ProdStatus.error) {
-                  showToast(context, state.msg ?? "");
+                  showToast(context, state.msg);
                 } else if (state.status == ProdStatus.success) {
                   // showToast(context, "Operation successful");
                 }

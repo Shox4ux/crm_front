@@ -3,7 +3,7 @@ import 'package:crm_app/app/features/product/data/model/product_write.dart';
 
 import '../../../common/data/repo/data_state.dart';
 
-abstract class ProductRepo {
+abstract class ProductRepoImpl {
   Future<DataState<ProductResponse>> createProduct({
     required ProductCreate body,
   });

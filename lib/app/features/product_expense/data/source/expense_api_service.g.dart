@@ -23,7 +23,7 @@ class _ExpenseApiService implements ExpenseApiService {
 
   @override
   Future<HttpResponse<dynamic>> createProductExp({
-    required ProductExpenseBulkCreate body,
+    required ExpenseBulkCreate body,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -72,16 +72,16 @@ class _ExpenseApiService implements ExpenseApiService {
   }
 
   @override
-  Future<HttpResponse<ProductExpenseResponse>> updateProductExp({
+  Future<HttpResponse<ExpenseResponse>> updateProductExp({
     required int id,
-    required ProductExpenseCreate body,
+    required ExpenseCreate body,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
-    final _options = _setStreamType<HttpResponse<ProductExpenseResponse>>(
+    final _options = _setStreamType<HttpResponse<ExpenseResponse>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -92,9 +92,9 @@ class _ExpenseApiService implements ExpenseApiService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ProductExpenseResponse _value;
+    late ExpenseResponse _value;
     try {
-      _value = ProductExpenseResponse.fromJson(_result.data!);
+      _value = ExpenseResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
