@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'product_cubit.dart';
 
 enum ProdStatus { init, loading, success, error, disconnected, empty }
@@ -15,6 +14,14 @@ class ProductState {
     this.list = const [],
     this.msg = "",
   });
+
+  ProdStatus isEmpty(List<ProductEntity>? list) {
+    if (list == null || list.isEmpty) {
+      return ProdStatus.empty;
+    } else {
+      return ProdStatus.success;
+    }
+  }
 
   ProductState copyWith({
     ProdStatus? status,

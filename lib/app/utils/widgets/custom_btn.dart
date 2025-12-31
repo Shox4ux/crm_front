@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class CustomBtn extends StatelessWidget {
   const CustomBtn({
     super.key,
-    this.onPressed,
+    this.action,
     required this.txt,
     this.width = 200,
     this.height = 43,
   });
-  final void Function()? onPressed;
+  final void Function()? action;
   final String txt;
   final double width;
   final double height;
@@ -22,7 +22,7 @@ class CustomBtn extends StatelessWidget {
         fixedSize: Size(width, height),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
-      onPressed: onPressed,
+      onPressed: action,
       child: Text(txt),
     );
   }

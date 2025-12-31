@@ -1,5 +1,5 @@
 import 'package:crm_app/app/features/product/data/model/product_response.dart';
-import 'package:crm_app/app/features/product/data/model/product_write.dart';
+import 'package:crm_app/app/features/product/data/model/product_create.dart';
 
 import '../../../common/data/repo/data_state.dart';
 

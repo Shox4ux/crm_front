@@ -3,6 +3,8 @@ import 'package:crm_app/app/features/client/data/source/client_api_service.dart'
 import 'package:crm_app/app/features/client/domain/repo/client_repo.dart';
 import 'package:crm_app/app/features/product/data/repo/product_repo.dart';
 import 'package:crm_app/app/features/product/data/source/remote/product_api_service.dart';
+import 'package:crm_app/app/features/product_expense/data/repo/expense_repo.dart';
+import 'package:crm_app/app/features/product_expense/data/source/expense_api_service.dart';
 import 'package:crm_app/app/features/user/data/source/user_api_service.dart';
 import 'package:crm_app/app/features/user/domain/repo/user_repo.dart';
 import 'package:crm_app/app/features/warehouse/data/source/warehouse_api_service.dart';
@@ -34,11 +36,18 @@ Future<void> setupLocator() async {
   locator.registerSingleton<ClientRepo>(
     ClientRepo(locator<ClientApiService>()),
   );
-
+  // ==================================Product==============================
   locator.registerSingleton<ProductApiService>(
     ProductApiService(locator<Dio>()),
   );
   locator.registerSingleton<ProductRepo>(
     ProductRepo(locator<ProductApiService>()),
+  );
+  // ==================================Expense==============================
+  locator.registerSingleton<ExpenseApiService>(
+    ExpenseApiService(locator<Dio>()),
+  );
+  locator.registerSingleton<ExpenseRepo>(
+    ExpenseRepo(locator<ExpenseApiService>()),
   );
 }

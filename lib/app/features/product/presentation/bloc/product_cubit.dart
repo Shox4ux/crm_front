@@ -1,18 +1,22 @@
 import 'package:crm_app/app/features/common/data/repo/data_state.dart';
-import 'package:crm_app/app/features/product/data/model/product_write.dart';
+import 'package:crm_app/app/features/product/data/model/product_create.dart';
 import 'package:crm_app/app/features/product/data/repo/product_repo.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/product/presentation/data/product_changes.dart';
+import 'package:crm_app/app/features/product_expense/data/model/expense_bulk_create.dart';
 import 'package:crm_app/app/features/product_expense/data/model/expense_create.dart';
+import 'package:crm_app/app/features/product_expense/data/repo/expense_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   final ProductRepo _repo;
+  final ExpenseRepo _expRepo;
   late List<ProductEntity> _filtered;
 
-  ProductCubit(this._repo) : super(ProductState(changes: ProductChanges())) {
+  ProductCubit(this._repo, this._expRepo)
+    : super(ProductState(changes: ProductChanges())) {
     _filtered = [];
     getAllProduct();
   }
@@ -45,7 +49,7 @@ class ProductCubit extends Cubit<ProductState> {
     var res = await _repo.getAllProduct();
     if (res is DataSuccess) {
       _filtered = res.data ?? [];
-      emit(state.copyWith(status: ProdStatus.success, list: res.data));
+      emit(state.copyWith(list: _filtered, status: state.isEmpty(_filtered)));
     } else {
       emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
     }
@@ -70,9 +74,15 @@ class ProductCubit extends Cubit<ProductState> {
   }) async {
     emit(state.copyWith(status: ProdStatus.loading));
     var res = await _repo.createProduct(body: body);
-
     if (res is DataSuccess) {
-      // _createExps(res.data!.id, exps);
+      if (exps != null) {
+        var expRes = await _expRepo.createExpense(
+          body: ExpenseBulkCreate(productId: res.data!.id, items: exps),
+        );
+        if (expRes is DataSuccess) {
+          emit(state.copyWith(msg: "Successfully created"));
+        }
+      }
       getAllProduct();
     } else {
       emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
@@ -83,6 +93,7 @@ class ProductCubit extends Cubit<ProductState> {
     emit(state.copyWith(status: ProdStatus.loading));
     var res = await _repo.deleteProduct(id: id);
     if (res is DataSuccess) {
+      emit(state.copyWith(msg: "Successfully deleted"));
       getAllProduct();
     } else {
       emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));

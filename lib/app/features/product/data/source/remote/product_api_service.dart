@@ -5,7 +5,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'product_api_service.g.dart';
 
-@RestApi(baseUrl: ApiUrls.baseUrl, parser: Parser.JsonSerializable)
+@RestApi(baseUrl: ApiUrls.baseUrl)
 abstract class ProductApiService {
   factory ProductApiService(Dio dio, {String baseUrl}) = _ProductApiService;
 
@@ -20,7 +20,6 @@ abstract class ProductApiService {
     @Part(name: "sell_price") required double sellPrice,
     @Part(name: "measure") required int measure,
     @Part(name: "total_quantity") required int totalQuantity,
-    @Part(name: "active_quantity") required int activeQuantity,
   });
 
   @GET('/products/get_by_id/{id}')

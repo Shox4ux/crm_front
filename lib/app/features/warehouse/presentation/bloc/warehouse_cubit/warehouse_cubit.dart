@@ -53,6 +53,7 @@ class WarehouseCubit extends Cubit<WarehouseState> {
     emit(state.copyWith(status: WareStatus.loading));
     var res = await _wRepo.createWarehouse(body: body);
     if (res is DataSuccess) {
+      emit(state.copyWith(msg: "Successfully created"));
       _getAllWarehouse();
     } else {
       emit(state.copyWith(status: WareStatus.failure, msg: res.errorMsg));
@@ -63,6 +64,7 @@ class WarehouseCubit extends Cubit<WarehouseState> {
     emit(state.copyWith(status: WareStatus.loading));
     var res = await _wRepo.deleteWarehouse(id: id);
     if (res is DataSuccess) {
+      emit(state.copyWith(msg: "Successfully deleted"));
       _getAllWarehouse();
     } else {
       emit(state.copyWith(status: WareStatus.failure, msg: res.errorMsg));

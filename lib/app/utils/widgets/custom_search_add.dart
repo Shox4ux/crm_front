@@ -15,7 +15,7 @@ class CustomSearchAdd extends StatelessWidget {
       spacing: 20,
       children: [
         Flexible(child: CustomSearch(onChanged: onSearch)),
-        CustomBtn(txt: btnTxt ?? "", height: 48, width: 150, onPressed: onAdd),
+        CustomBtn(txt: btnTxt ?? "", height: 48, width: 150, action: onAdd),
       ],
     );
   }

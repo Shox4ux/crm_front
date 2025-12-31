@@ -4,11 +4,13 @@ import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_search.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
 import 'package:crm_app/app/features/common/widget/custon_no_data.dart';
+import 'package:crm_app/app/features/core/router/route_names.dart';
 import 'package:crm_app/app/features/product/presentation/bloc/product_cubit.dart';
 import 'package:crm_app/app/features/product/presentation/widget/product_card.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({super.key});
@@ -40,7 +42,10 @@ class _ProductListState extends State<ProductList> {
                 spacing: 10,
                 children: [
                   CustomSearch(onChanged: _search),
-                  CustomBtn(onPress: () {}, txt: "Add"),
+                  CustomBtn(
+                    onPress: () => context.push(Routes.productAddEdit),
+                    txt: "Add",
+                  ),
                 ],
               ),
             ],
@@ -50,8 +55,6 @@ class _ProductListState extends State<ProductList> {
               listener: (context, state) {
                 if (state.status == ProdStatus.error) {
                   showToast(context, state.msg);
-                } else if (state.status == ProdStatus.success) {
-                  // showToast(context, "Operation successful");
                 }
               },
               builder: (context, state) {
@@ -70,7 +73,11 @@ class _ProductListState extends State<ProductList> {
                   ),
                   shrinkWrap: true,
                   itemCount: list.length,
-                  itemBuilder: (_, i) => ProductCard(item: list[i]),
+                  itemBuilder: (_, i) => InkWell(
+                    onTap: () =>
+                        context.push(Routes.productAddEdit, extra: list[i]),
+                    child: ProductCard(data: list[i]),
+                  ),
                 );
               },
             ),

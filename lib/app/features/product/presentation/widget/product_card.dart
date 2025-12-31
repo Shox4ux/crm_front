@@ -1,4 +1,5 @@
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
+import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/common/ui/app_assets.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
@@ -8,35 +9,45 @@ import 'package:crm_app/app/features/common/widget/img_error.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/product/presentation/bloc/product_cubit.dart';
+import 'package:crm_app/app/utils/extensions/full_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.item});
-  final ProductEntity item;
+class ProductCard extends StatefulWidget {
+  const ProductCard({super.key, required this.data});
+  final ProductEntity data;
+
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  void delete() {
+    if (mounted) {
+      context.read<ProductCubit>().deleteProduct(id: widget.data.id);
+      goBack(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    void _delete() {
-      context.read<ProductCubit>().deleteProduct(id: item.id);
-    }
-
     return Container(
       decoration: BoxDecoration(borderRadius: AppRadius.cardRadius),
       clipBehavior: Clip.hardEdge,
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(5),
             color: AppColour.backgroundLight,
             child: Image.network(
-              item.imgUrl ?? "",
-              errorBuilder: (c, e, s) => OnImgError(height: 196),
+              widget.data.imgUrl.fullUrl(),
+              loadingBuilder: (context, child, loadingProgress) =>
+                  OnImgError(height: 200),
+              errorBuilder: (c, e, s) => OnImgError(height: 200),
             ),
           ),
           BorderedContainer(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
             borderRadius: BorderRadius.only(
               bottomLeft: AppRadius.customRadius,
               bottomRight: AppRadius.customRadius,
@@ -50,14 +61,20 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.name.capitalize(),
+                      widget.data.name.capitalize(),
                       style: AppTextStyle.medium.copyWith(
                         fontSize: 18,
                         color: AppColour.backgroundLight,
                       ),
                     ),
-                    Text("\$ ${item.sellPrice}"),
-                    Text("${item.totalQuantity} units"),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [
+                        Text("\$ ${widget.data.sellPrice}"),
+                        Text("${widget.data.totalQuantity} units"),
+                      ],
+                    ),
                   ],
                 ),
                 CircleAvatar(
@@ -66,8 +83,8 @@ class ProductCard extends StatelessWidget {
                     onPressed: () {
                       showDelConfrm(
                         ctx: context,
-                        onDel: () =>
-                            showDelConfrm(ctx: context, onDel: _delete),
+                        action: () =>
+                            showDelConfrm(ctx: context, action: delete),
                       );
                     },
                     icon: SvgPicture.asset(AppAssets.delete),

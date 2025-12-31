@@ -8,14 +8,14 @@ class ImageHelper {
   static final _picker = ImagePicker();
 
   // Pick image from gallery
-  static Future<XFile?> pickImage() async {
+  static Future<XFile?> imageHandler() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile == null) return null;
     return pickedFile;
   }
 
   // Compress and save image locally
-  static Future<String?> compressAndSave(File file) async {
+  static Future<File?> compressAndSave(File file) async {
     final dir = await getApplicationDocumentsDirectory();
     final folder = Directory(p.join(dir.path, 'products_img'));
     if (!await folder.exists()) {
@@ -33,6 +33,6 @@ class ImageHelper {
       quality: 70, // adjust compression level
     );
 
-    return compressed?.path;
+    return File(compressed!.path);
   }
 }

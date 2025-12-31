@@ -1,18 +1,32 @@
 import 'dart:io';
+import 'package:crm_app/app/features/common/functions/del_confrm.dart';
+import 'package:crm_app/app/features/common/functions/form_empty_validation.dart';
+import 'package:crm_app/app/features/common/functions/go_back.dart';
+import 'package:crm_app/app/features/common/ui/app_radius.dart';
+import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:crm_app/app/features/common/widget/custom_progress.dart';
-import 'package:crm_app/app/features/product/data/model/product_write.dart';
+import 'package:crm_app/app/features/common/widget/custom_text_form.dart';
+import 'package:crm_app/app/features/common/widget/custom_title.dart';
+import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
+import 'package:crm_app/app/features/product/data/model/product_create.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/product/presentation/bloc/product_cubit.dart';
 import 'package:crm_app/app/features/product/presentation/data/product_changes.dart';
+import 'package:crm_app/app/features/product/presentation/widget/add_edit_expense_dialog.dart';
+import 'package:crm_app/app/features/product/presentation/widget/custom_exp_table.dart';
+import 'package:crm_app/app/features/product/presentation/widget/img_file_holder.dart';
+import 'package:crm_app/app/features/product/presentation/widget/img_url_holder.dart';
 import 'package:crm_app/app/features/product_expense/data/model/expense_bulk_update.dart';
 import 'package:crm_app/app/features/product_expense/data/model/expense_create.dart';
+import 'package:crm_app/app/utils/conts/app_colors.dart';
+import 'package:crm_app/app/utils/extensions/full_url.dart';
+import 'package:crm_app/app/utils/img_handler/img_handler.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
-import 'package:crm_app/app/utils/extensions/full_url.dart';
 import 'package:crm_app/app/utils/utils.dart';
 
 class ProductAddEdit extends StatefulWidget {
@@ -32,8 +46,10 @@ class _ProductAddEditState extends State<ProductAddEdit> {
   final TextEditingController nameCtrl = TextEditingController();
   final TextEditingController quantityCtrl = TextEditingController(text: "1");
   final TextEditingController sellPriceCtrl = TextEditingController();
-  final TextEditingController percentageCtrl = TextEditingController();
-
+  final TextEditingController profitMarginCtrl = TextEditingController();
+  final TextEditingController expName = TextEditingController();
+  final TextEditingController expAmount = TextEditingController();
+  final globalKey = GlobalKey<FormState>();
   List<Map<String, dynamic>> expenses = [];
 
   void detectProdChange(ProductCubit cubit) {
@@ -42,8 +58,8 @@ class _ProductAddEditState extends State<ProductAddEdit> {
         cubit.state.changes.setQty(int.tryParse(quantityCtrl.text) ?? 1),
       );
     }
-    if (basePrice != widget.product?.basePrice) {
-      cubit.setChanges(cubit.state.changes.setBasePrice(basePrice));
+    if (getBasePrice() != widget.product?.basePrice) {
+      cubit.setChanges(cubit.state.changes.setBasePrice(getBasePrice()));
     }
     if (nameCtrl.text != widget.product?.name) {
       cubit.setChanges(cubit.state.changes.setName(nameCtrl.text));
@@ -111,21 +127,21 @@ class _ProductAddEditState extends State<ProductAddEdit> {
   }
 
   Future pickImage() async {
-    final picked = await picker.pickImage(source: ImageSource.gallery);
+    final picked = await ImageHelper.imageHandler();
     if (picked != null) {
+      _image = await ImageHelper.compressAndSave(File(picked.path));
       setState(() {
-        _image = File(picked.path);
         img = MultipartFile.fromFileSync(
-          picked.path,
-          filename: basename(picked.path),
+          _image!.path,
+          filename: basename(_image!.path),
         );
         nullImgUrl();
       });
     }
   }
 
-  double get basePrice {
-    double sum = 0;
+  double getBasePrice() {
+    double sum = widget.product?.basePrice ?? 0;
     for (var e in expenses) {
       sum += (double.tryParse(e['amount'] ?? '0') ?? 0);
     }
@@ -133,19 +149,22 @@ class _ProductAddEditState extends State<ProductAddEdit> {
     if (qty <= 0) qty = 1;
     double end = sum / qty;
     double truncated = (end * 100).floor() / 100;
+    setState(() {});
     return truncated;
   }
 
   void updateSellPriceFromPercentage(String? val) {
-    double percent = double.tryParse(percentageCtrl.text) ?? 0;
+    double basePrice = getBasePrice();
+    double percent = double.tryParse(profitMarginCtrl.text) ?? 0;
     double price = basePrice + basePrice * (percent / 100);
     sellPriceCtrl.text = price.toStringAsFixed(2);
   }
 
   void updatePercentageFromSellPrice(String? val) {
+    double basePrice = getBasePrice();
     double sell = double.tryParse(sellPriceCtrl.text) ?? 0;
     double percent = ((sell - basePrice) / basePrice) * 100;
-    percentageCtrl.text = percent.toStringAsFixed(2);
+    profitMarginCtrl.text = percent.toStringAsFixed(2);
   }
 
   void prefillCtrlText() {
@@ -160,41 +179,40 @@ class _ProductAddEditState extends State<ProductAddEdit> {
           ((widget.product!.sellPrice - widget.product!.basePrice) /
           widget.product!.basePrice *
           100);
-      percentageCtrl.text = percent.toStringAsFixed(2);
+      profitMarginCtrl.text = percent.toStringAsFixed(2);
     }
   }
 
   void prefillExpenseList() {
-    final expenseList = widget.product!.baseExpenses
-        ?.map(
-          (e) => {"id": e.id, "name": e.name, "amount": e.amount.toString()},
-        )
-        .toList();
-
-    expenses.addAll(expenseList ?? []);
+    var list = widget.product!.baseExpenses;
+    final mapped = list?.map((e) {
+      return {"id": e.id, "name": e.name, "amount": e.amount.toString()};
+    }).toList();
+    expenses.addAll(mapped ?? []);
   }
 
   void setImgUrl() => _initialUrl = widget.product?.imgUrl;
   void nullImgUrl() => _initialUrl = null;
 
   void createProduct(ProductCubit cubit) {
-    var b = ProductCreate(
-      img: img,
-      name: nameCtrl.text,
-      sellPrice: double.tryParse(sellPriceCtrl.text) ?? 0,
-      basePrice: basePrice,
-      totalQuantity: int.tryParse(quantityCtrl.text) ?? 0,
-      activeQuantity: int.tryParse(quantityCtrl.text) ?? 0,
-    );
-    var items = expenses
-        .map(
-          (v) => ExpenseCreate(
-            amount: double.tryParse(v['amount']) ?? 0,
-            name: v['name'],
-          ),
-        )
-        .toList();
-    cubit.createProduct(body: b, exps: items);
+    if (globalKey.currentState!.validate()) {
+      var b = ProductCreate(
+        img: img,
+        name: nameCtrl.text,
+        sellPrice: double.tryParse(sellPriceCtrl.text) ?? 0,
+        basePrice: getBasePrice(),
+        totalQuantity: int.tryParse(quantityCtrl.text) ?? 0,
+      );
+      var items = expenses
+          .map(
+            (v) => ExpenseCreate(
+              amount: double.tryParse(v['amount']) ?? 0,
+              name: v['name'],
+            ),
+          )
+          .toList();
+      cubit.createProduct(body: b, exps: items);
+    }
   }
 
   void updateProduct(ProductCubit cubit) {
@@ -210,31 +228,17 @@ class _ProductAddEditState extends State<ProductAddEdit> {
     });
   }
 
-  void showDeleteDialog(BuildContext context, void Function() action) async {
-    await showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Confirm Delete"),
-          content: const Text("Are you sure you want to delete this item?"),
-          actions: [
-            TextButton(onPressed: () => context.pop(), child: const Text("No")),
-            ElevatedButton(onPressed: action, child: const Text("Yes")),
-          ],
-        );
+  void removeExp(BuildContext context, String name) {
+    showDelConfrm(
+      ctx: context,
+      action: () {
+        setState(() {
+          expenses.removeWhere((m) => m['name'] == name);
+          updateSellPriceFromPercentage("");
+          context.pop();
+        });
       },
     );
-  }
-
-  void removeExp(BuildContext context, String name) {
-    showDeleteDialog(context, () {
-      setState(() {
-        expenses.removeWhere((m) => m['name'] == name);
-        print(expenses);
-        updateSellPriceFromPercentage("");
-        context.pop();
-      });
-    });
   }
 
   @override
@@ -253,260 +257,159 @@ class _ProductAddEditState extends State<ProductAddEdit> {
     sellPriceCtrl.dispose();
     quantityCtrl.dispose();
     nameCtrl.dispose();
-    percentageCtrl.dispose();
+    profitMarginCtrl.dispose();
+    expName.dispose();
+    expAmount.dispose();
     super.dispose();
   }
+
+  void _addExpense(BuildContext ctx) => setState(() {
+    expenses.add({"name": expName.text, "amount": expAmount.text});
+    expAmount.clear();
+    expName.clear();
+    updateSellPriceFromPercentage("");
+    updatePercentageFromSellPrice("");
+    goBack(ctx);
+  });
+
+  void showAddEditDialog(BuildContext ctx) => addEditExpense(
+    ctx: ctx,
+    action: () => _addExpense(ctx),
+    name: expName,
+    amount: expAmount,
+    i: -1,
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Create Product')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                (_initialUrl != null && widget.isEdit)
-                    ? ImageUrlHolder(onTap: pickImage, url: _initialUrl!)
-                    : ImageFileHolder(
-                        onTap: pickImage,
-                        image: _image,
-                        isEdit: widget.isEdit,
-                      ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: nameCtrl,
-                        decoration: const InputDecoration(
-                          labelText: "Product Name",
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      TextField(
-                        controller: quantityCtrl,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: "Quantity",
-                        ),
-                        onChanged: (_) => setState(() {
-                          updateSellPriceFromPercentage("");
-                        }),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
+        padding: const EdgeInsets.all(40),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 30,
+            children: [
+              CustomTitle(title: "Product Info"),
+              BorderedContainer(
+                borderRadius: AppRadius.buttonRadius,
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: (_initialUrl != null && widget.isEdit)
+                          ? ImageUrlHolder(
+                              onTap: pickImage,
+                              url: _initialUrl!.fullUrl(),
+                            )
+                          : ImageFileHolder(
+                              onTap: pickImage,
+                              image: _image,
+                              isEdit: widget.isEdit,
+                            ),
+                    ),
+                    Column(
+                      spacing: 30,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              expenses.add({"name": "", "amount": ""});
-                            });
-                          },
-                          child: const Text("Add Expense"),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    flex: 2,
-                    child: ListView.builder(
-                      itemCount: expenses.length,
-                      itemBuilder: (context, i) {
-                        return Padding(
-                          key: ValueKey(expenses[i]['name']),
-                          padding: const EdgeInsets.all(8.0),
+                        Form(
+                          key: globalKey,
                           child: Row(
+                            spacing: 60,
                             children: [
-                              Expanded(
-                                child: TextFormField(
-                                  initialValue: expenses[i]['name'],
-                                  decoration: const InputDecoration(
-                                    labelText: "Name",
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 20,
+                                children: [
+                                  CustomForm(
+                                    ctrl: nameCtrl,
+                                    valid: validateNotEmpty,
+                                    txt: "Product Name",
                                   ),
-                                  onChanged: (v) => expenses[i]['name'] = v,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: TextFormField(
-                                  initialValue: expenses[i]['amount'],
-                                  decoration: const InputDecoration(
-                                    labelText: "Amount",
-                                    prefixText: "\$",
+                                  CustomForm(
+                                    ctrl: quantityCtrl,
+                                    valid: validateNotEmpty,
+                                    txt: "Quantity",
+                                    onChanged: (v) =>
+                                        updateSellPriceFromPercentage(""),
                                   ),
-                                  keyboardType: TextInputType.number,
-                                  onChanged: (v) => setState(() {
-                                    expenses[i]['amount'] = v;
-                                    updateSellPriceFromPercentage("");
-                                  }),
-                                ),
+                                  Text(
+                                    "Base Price: \$ ${getBasePrice().toString()}",
+                                    style: AppTextStyle.medium.copyWith(
+                                      fontSize: 24,
+                                      color: AppColors.appGrey,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              CustomIbtn(
-                                onPress: () =>
-                                    removeExp(context, expenses[i]['name']),
+                              Column(
+                                spacing: 20,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+
+                                children: [
+                                  CustomForm(
+                                    ctrl: sellPriceCtrl,
+                                    valid: validateNotEmpty,
+                                    txt: "Sell Price",
+                                    prefix: "\$ ",
+                                    onChanged: (v) =>
+                                        updatePercentageFromSellPrice(""),
+                                  ),
+                                  CustomForm(
+                                    prefix: "% ",
+                                    ctrl: profitMarginCtrl,
+                                    valid: validateNotEmpty,
+                                    txt: "Profit Margin",
+                                    onChanged: (v) =>
+                                        updateSellPriceFromPercentage(""),
+                                  ),
+                                  BlocBuilder<ProductCubit, ProductState>(
+                                    builder: (context, state) {
+                                      // if (state.status == ProdStatus.success) {
+                                      //   goBack(context);
+                                      // }
+                                      if (state.status == ProdStatus.loading) {
+                                        return const CustomLoading();
+                                      }
+                                      return CustomBtn(
+                                        txt: widget.isEdit ? "Edit" : "Create",
+                                        action: () => createProduct(
+                                          context.read<ProductCubit>(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomTitle(title: "Product Expenses"),
+                  CustomBtn(
+                    txt: "Add Expense",
+                    action: () => showAddEditDialog(context),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              color: Colors.grey.shade200,
-              child: Text(
-                "Base Price: \$ ${basePrice.toString()}",
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+              CustomExpTable(
+                onRemoveExp: (i) => removeExp(context, expenses[i]['name']),
+                columns: ["Number", "Expense Name", "Amount", "Action"],
+                rows: expenses,
               ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: sellPriceCtrl,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: "Sell Price",
-                      prefixText: "\$",
-                    ),
-
-                    onChanged: updatePercentageFromSellPrice,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: TextField(
-                    controller: percentageCtrl,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: "Percentage %",
-                    ),
-                    onChanged: updateSellPriceFromPercentage,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            BlocConsumer<ProductCubit, ProductState>(
-              listener: (context, state) {
-                if (state.status == ProdStatus.success) {
-                  context.pop();
-                }
-              },
-              builder: (context, state) {
-                if (state.status == ProdStatus.loading) {
-                  return CustomLoading();
-                }
-                return widget.isEdit
-                    ? CustomBtn(
-                        txt: "Update",
-                        onPressed: () {
-                          updateProduct(context.read<ProductCubit>());
-                        },
-                      )
-                    : CustomBtn(
-                        txt: "Create",
-                        onPressed: () =>
-                            createProduct(context.read<ProductCubit>()),
-                      );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ImageUrlHolder extends StatelessWidget {
-  const ImageUrlHolder({super.key, required this.onTap, required this.url});
-  final void Function() onTap;
-  final String url;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 200,
-          width: 200,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              url.fullUrl(),
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => OnImgError(),
-            ),
+            ],
           ),
         ),
-        ElevatedButton(onPressed: onTap, child: Text("Change image")),
-      ],
-    );
-  }
-}
-
-class ImageFileHolder extends StatelessWidget {
-  const ImageFileHolder({
-    super.key,
-    required this.onTap,
-    this.image,
-    this.isEdit = false,
-  });
-  final void Function() onTap;
-
-  final File? image;
-  final bool isEdit;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: isEdit ? null : onTap,
-      child: Column(
-        children: [
-          Container(
-            height: 200,
-            width: 200,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: image == null
-                ? const Icon(Icons.add, size: 40)
-                : ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.file(image!, fit: BoxFit.cover),
-                  ),
-          ),
-          if (isEdit)
-            ElevatedButton(onPressed: onTap, child: Text("Change image")),
-        ],
       ),
     );
   }

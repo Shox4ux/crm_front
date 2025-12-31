@@ -29,7 +29,6 @@ class _ProductApiService implements ProductApiService {
     required double sellPrice,
     required int measure,
     required int totalQuantity,
-    required int activeQuantity,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -44,7 +43,6 @@ class _ProductApiService implements ProductApiService {
     _data.fields.add(MapEntry('sell_price', sellPrice.toString()));
     _data.fields.add(MapEntry('measure', measure.toString()));
     _data.fields.add(MapEntry('total_quantity', totalQuantity.toString()));
-    _data.fields.add(MapEntry('active_quantity', activeQuantity.toString()));
     final _options = _setStreamType<HttpResponse<ProductResponse>>(
       Options(
             method: 'POST',

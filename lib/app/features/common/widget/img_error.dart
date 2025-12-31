@@ -8,12 +8,14 @@ class OnImgError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      AppAssets.defaultImg,
-
-      width: width ?? double.maxFinite,
-      height: height ?? double.maxFinite,
-      fit: BoxFit.contain,
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Image.asset(
+        AppAssets.defaultImg,
+        width: width ?? double.maxFinite,
+        height: height ?? double.maxFinite,
+        fit: BoxFit.contain,
+      ),
     );
   }
 }

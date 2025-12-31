@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/common/functions/show_toast.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:crm_app/app/features/common/widget/custom_progress.dart';
@@ -7,7 +8,6 @@ import 'package:crm_app/app/features/warehouse/data/model/warehouse_create.dart'
 import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit/warehouse_cubit.dart';
 import 'package:crm_app/app/features/warehouse/presentation/widgets/add_edit_ware.dart';
 import 'package:crm_app/app/features/warehouse/presentation/widgets/ware_card.dart';
-import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -70,6 +70,7 @@ class _WarehouseListState extends State<WarehouseList> {
         address: _passwCtrl.text,
       );
       context.read<WarehouseCubit>().createWarehouse(body);
+      goBack(context);
     }
   }
 
@@ -98,7 +99,7 @@ class _WarehouseListState extends State<WarehouseList> {
             child: BlocConsumer<WarehouseCubit, WarehouseState>(
               listener: (context, state) {
                 if (state.status == WareStatus.success) {
-                  goBack(context);
+                  showToast(context, state.msg ?? "");
                   _nameCtrl.clear();
                   _passwCtrl.clear();
                 }
@@ -107,7 +108,8 @@ class _WarehouseListState extends State<WarehouseList> {
                 }
               },
               builder: (context, state) {
-                if (state.status == WareStatus.getall) {
+                if (state.status == WareStatus.getall ||
+                    state.status == WareStatus.loading) {
                   return CustomLoading();
                 }
                 var list = context.watch<WarehouseCubit>().getFiltList();

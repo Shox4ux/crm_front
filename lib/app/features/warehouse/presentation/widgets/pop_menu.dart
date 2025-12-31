@@ -1,4 +1,5 @@
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
+import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/warehouse/data/model/warehouse_create.dart';
 import 'package:crm_app/app/features/warehouse/domain/entity/warehouse_entity.dart';
 import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit/warehouse_cubit.dart';
@@ -48,21 +49,20 @@ class _CustomMenuState extends State<CustomMenu> {
 
   void _editWarehouse() {
     if (_formKey!.currentState!.validate()) {
-      var body = WarehouseCreate(
-        name: _nameCtrl.text.trim(),
-        address: _addressCtrl.text.trim(),
-      );
-      print(body.toJson());
-      // context.read<WarehouseCubit>().updateWarehouse(
-      //   id: widget.data.id,
-      //   body: body,
+      // var body = WarehouseCreate(
+      //   name: _nameCtrl.text.trim(),
+      //   address: _addressCtrl.text.trim(),
       // );
-      context.pop();
+      // context.read<WarehouseCubit>();
+      goBack(context);
     }
   }
 
   void _deleteWarehouse() {
-    context.read<WarehouseCubit>().deleteWarehouse(widget.data.id);
+    if (mounted) {
+      context.read<WarehouseCubit>().deleteWarehouse(widget.data.id);
+      context.pop();
+    }
   }
 
   void showEdit() {
@@ -96,7 +96,7 @@ class _CustomMenuState extends State<CustomMenu> {
                 showEdit();
                 break;
               case MenuAction.delete:
-                showDelConfrm(ctx: context, onDel: _deleteWarehouse);
+                showDelConfrm(ctx: context, action: _deleteWarehouse);
                 break;
             }
           },

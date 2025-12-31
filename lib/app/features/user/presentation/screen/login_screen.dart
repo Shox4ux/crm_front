@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (state.status == UserSStatus.loading) {
                         return SizedBox(width: 200, child: CustomLoading());
                       }
-                      return CustomBtn(onPressed: _login, txt: "Login");
+                      return CustomBtn(action: _login, txt: "Login");
                     },
                   ),
                 ],

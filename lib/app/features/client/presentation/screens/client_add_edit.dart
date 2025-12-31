@@ -3,13 +3,14 @@ import 'package:crm_app/app/features/client/data/model/create_as_client.dart';
 import 'package:crm_app/app/features/client/domain/entity/client_entity.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
 import 'package:crm_app/app/features/client/presentation/widget/client_button.dart';
-import 'package:crm_app/app/features/client/presentation/widget/client_form.dart';
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
+import 'package:crm_app/app/features/common/functions/form_empty_validation.dart';
 import 'package:crm_app/app/features/common/ui/app_assets.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/widget/custom_footer.dart';
 import 'package:crm_app/app/features/common/widget/custom_progress.dart';
+import 'package:crm_app/app/features/common/widget/custom_text_form.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
 import 'package:crm_app/app/features/home/presentation/widget/custom_data_table.dart';
@@ -67,13 +68,6 @@ class _ClientAddEditState extends State<ClientAddEdit> {
     super.dispose();
   }
 
-  String? validateNotEmpty(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'This field cannot be empty';
-    }
-    return null;
-  }
-
   void add() {
     if (_formKey.currentState!.validate()) {
       var body = CreateAsClient(
@@ -89,7 +83,7 @@ class _ClientAddEditState extends State<ClientAddEdit> {
   void delete() {
     showDelConfrm(
       ctx: context,
-      onDel: () {
+      action: () {
         context.read<ClientCubit>().deleteClient(widget.data!.id);
         goBack(context);
       },

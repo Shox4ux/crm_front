@@ -55,7 +55,7 @@ class OrderChart extends StatelessWidget {
                 reservedSize: 40,
                 getTitlesWidget: (value, meta) {
                   return Text(
-                    "${value.toInt()}\%",
+                    "${value.toInt()}%",
                     style: TextStyle(fontSize: 12),
                   );
                 },

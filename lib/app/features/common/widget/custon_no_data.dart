@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 class NoData extends StatelessWidget {
@@ -5,6 +6,11 @@ class NoData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: const Text("No Data Found"));
+    return Center(
+      child: Text(
+        "No Data Found",
+        style: AppTextStyle.medium.copyWith(fontSize: 20),
+      ),
+    );
   }
 }

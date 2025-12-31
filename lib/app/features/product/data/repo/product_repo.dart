@@ -1,6 +1,6 @@
 import 'package:crm_app/app/features/common/data/repo/base_repo.dart';
 import 'package:crm_app/app/features/product/data/model/product_response.dart';
-import 'package:crm_app/app/features/product/data/model/product_write.dart';
+import 'package:crm_app/app/features/product/data/model/product_create.dart';
 import 'package:crm_app/app/features/product/data/source/remote/product_api_service.dart';
 
 import '../../../common/data/repo/data_state.dart';
@@ -16,7 +16,6 @@ class ProductRepo extends BaseRepo implements ProductRepoImpl {
   }) => getStateOf<ProductResponse>(
     request: () => _service.createProduct(
       totalQuantity: body.totalQuantity!,
-      activeQuantity: body.activeQuantity!,
       measure: 0,
       img: body.img,
       name: body.name!,
@@ -46,7 +45,6 @@ class ProductRepo extends BaseRepo implements ProductRepoImpl {
     request: () => _service.updateProduct(
       id: id,
       totalQuantity: body.totalQuantity,
-      activeQuantity: body.activeQuantity,
       img: body.img,
       name: body.name,
       basePrice: body.basePrice,
