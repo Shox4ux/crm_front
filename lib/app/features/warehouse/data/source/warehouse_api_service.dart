@@ -16,6 +16,12 @@ abstract class WarehouseApiService {
     @Body() required WarehouseCreate body,
   });
 
+  @PATCH('/warehouses/update/{id}')
+  Future<HttpResponse<WarehouseResponse>> updateWarehouse({
+    @Path("id") required int id,
+    @Body() required WarehouseCreate body,
+  });
+
   @GET('/warehouses/get_by_id/{id}')
   Future<HttpResponse<WarehouseResponse>> getWarehouseById({
     @Path("id") required int id,

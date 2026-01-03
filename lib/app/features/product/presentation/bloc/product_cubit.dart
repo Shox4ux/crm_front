@@ -4,6 +4,7 @@ import 'package:crm_app/app/features/product/data/repo/product_repo.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/product/presentation/data/product_changes.dart';
 import 'package:crm_app/app/features/product_expense/data/model/expense_bulk_create.dart';
+import 'package:crm_app/app/features/product_expense/data/model/expense_bulk_update.dart';
 import 'package:crm_app/app/features/product_expense/data/model/expense_create.dart';
 import 'package:crm_app/app/features/product_expense/data/repo/expense_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,7 +50,7 @@ class ProductCubit extends Cubit<ProductState> {
     var res = await _repo.getAllProduct();
     if (res is DataSuccess) {
       _filtered = res.data ?? [];
-      emit(state.copyWith(list: _filtered, status: state.isEmpty(_filtered)));
+      emit(state.copyWith(list: res.data, status: state.isEmpty(res.data)));
     } else {
       emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
     }
@@ -60,9 +61,15 @@ class ProductCubit extends Cubit<ProductState> {
     var body = ProductCreate.fromMap(state.changes.toJson());
     var res = await _repo.updateProduct(id: id, body: body);
     if (res is DataSuccess) {
-      if (!state.changes.isNotEmpty()) {
-        getAllProduct();
+      if (state.changes.isNotEmpty()) {
+        var expRes = await _expRepo.updateBulkExpense(
+          body: ExpenseBulkUpdate.fromJson(state.changes.toJson()),
+        );
+        if (expRes is DataSuccess) {
+          emit(state.copyWith(msg: "Successfully updated"));
+        }
       }
+      getAllProduct();
     } else {
       emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
     }

@@ -220,12 +220,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
     detectRemovedExp(cubit);
     detectUpdated(cubit);
     detectNew(cubit);
-
-    cubit.updateProduct(id: widget.product!.id).then((v) {
-      if (cubit.state.changes.isNotEmpty()) {
-        print(cubit.state.changes.toJson());
-      }
-    });
+    cubit.updateProduct(id: widget.product!.id);
   }
 
   void removeExp(BuildContext context, String name) {
@@ -368,17 +363,22 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                   ),
                                   BlocBuilder<ProductCubit, ProductState>(
                                     builder: (context, state) {
-                                      // if (state.status == ProdStatus.success) {
-                                      //   goBack(context);
-                                      // }
+                                      if (state.status == ProdStatus.success ||
+                                          state.status == ProdStatus.empty) {
+                                        // goBack(context);
+                                      }
                                       if (state.status == ProdStatus.loading) {
                                         return const CustomLoading();
                                       }
                                       return CustomBtn(
                                         txt: widget.isEdit ? "Edit" : "Create",
-                                        action: () => createProduct(
-                                          context.read<ProductCubit>(),
-                                        ),
+                                        action: () => widget.isEdit
+                                            ? updateProduct(
+                                                context.read<ProductCubit>(),
+                                              )
+                                            : createProduct(
+                                                context.read<ProductCubit>(),
+                                              ),
                                       );
                                     },
                                   ),
