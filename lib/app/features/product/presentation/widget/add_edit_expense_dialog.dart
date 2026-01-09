@@ -18,10 +18,7 @@ addEditExpense({
     builder: (context) => AlertDialog(
       title: Text(
         "$title Product Expense",
-        style: AppTextStyle.large.copyWith(
-          fontSize: 24,
-          color: AppColour.white,
-        ),
+        style: AppTxtStl.large.copyWith(fontSize: 24, color: AppColour.white),
       ),
       constraints: BoxConstraints(minHeight: 180, minWidth: 300),
       content: Column(

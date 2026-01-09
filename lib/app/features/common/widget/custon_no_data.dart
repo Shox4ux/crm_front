@@ -9,7 +9,7 @@ class NoData extends StatelessWidget {
     return Center(
       child: Text(
         "No Data Found",
-        style: AppTextStyle.medium.copyWith(fontSize: 20),
+        style: AppTxtStl.medium.copyWith(fontSize: 20),
       ),
     );
   }

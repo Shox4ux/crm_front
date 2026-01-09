@@ -26,7 +26,7 @@ class ClientCard extends StatelessWidget {
           SizedBox(height: 10),
           Text(
             item.user.username ?? "",
-            style: AppTextStyle.medium.copyWith(
+            style: AppTxtStl.medium.copyWith(
               fontSize: 18,
               color: AppColour.backgroundLight,
             ),

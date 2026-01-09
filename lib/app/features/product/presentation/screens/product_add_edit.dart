@@ -333,7 +333,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                   ),
                                   Text(
                                     "Base Price: \$ ${getBasePrice().toString()}",
-                                    style: AppTextStyle.medium.copyWith(
+                                    style: AppTxtStl.medium.copyWith(
                                       fontSize: 24,
                                       color: AppColors.appGrey,
                                     ),
@@ -361,12 +361,13 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                     onChanged: (v) =>
                                         updateSellPriceFromPercentage(""),
                                   ),
-                                  BlocBuilder<ProductCubit, ProductState>(
-                                    builder: (context, state) {
-                                      if (state.status == ProdStatus.success ||
-                                          state.status == ProdStatus.empty) {
-                                        // goBack(context);
+                                  BlocConsumer<ProductCubit, ProductState>(
+                                    listener: (context, state) {
+                                      if (state.status == ProdStatus.success) {
+                                        goBack(context);
                                       }
+                                    },
+                                    builder: (context, state) {
                                       if (state.status == ProdStatus.loading) {
                                         return const CustomLoading();
                                       }
@@ -404,7 +405,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
               ),
               CustomExpTable(
                 onRemoveExp: (i) => removeExp(context, expenses[i]['name']),
-                columns: ["Number", "Expense Name", "Amount", "Action"],
+                columns: ["Number", "Expense Name", "Spent Amount", "Action"],
                 rows: expenses,
               ),
             ],

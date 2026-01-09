@@ -1,4 +1,4 @@
-import 'package:crm_app/app/features/warehouse/data/model/warehouse_create.dart';
+import 'package:crm_app/app/features/warehouse/data/model/warehouse_create_update.dart';
 import 'package:crm_app/app/features/warehouse/data/model/warehouse_response.dart';
 import 'package:crm_app/app/utils/conts/api_urls.dart';
 import 'package:dio/dio.dart';
@@ -13,13 +13,13 @@ abstract class WarehouseApiService {
 
   @POST('/warehouses/create')
   Future<HttpResponse<WarehouseResponse>> createWarehouse({
-    @Body() required WarehouseCreate body,
+    @Body() required WarehouseCreateUpdate body,
   });
 
   @PATCH('/warehouses/update/{id}')
   Future<HttpResponse<WarehouseResponse>> updateWarehouse({
     @Path("id") required int id,
-    @Body() required WarehouseCreate body,
+    @Body() required WarehouseCreateUpdate body,
   });
 
   @GET('/warehouses/get_by_id/{id}')

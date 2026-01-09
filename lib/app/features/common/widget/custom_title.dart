@@ -11,7 +11,7 @@ class CustomTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: AppTextStyle.large.copyWith(
+      style: AppTxtStl.large.copyWith(
         color: AppColour.white,
         fontSize: fontSize,
       ),

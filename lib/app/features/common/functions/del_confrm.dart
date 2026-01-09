@@ -10,10 +10,7 @@ showDelConfrm({required BuildContext ctx, required void Function() action}) {
     builder: (context) => AlertDialog(
       title: Text(
         "Confirm Delete",
-        style: AppTextStyle.large.copyWith(
-          fontSize: 24,
-          color: AppColour.white,
-        ),
+        style: AppTxtStl.large.copyWith(fontSize: 24, color: AppColour.white),
       ),
       constraints: BoxConstraints(minHeight: 180, minWidth: 300),
       content: Text("Are you sure to delete this item?"),

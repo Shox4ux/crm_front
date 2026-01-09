@@ -35,7 +35,10 @@ class CustomExpTable extends StatelessWidget {
         children: List.generate(columns.length, (index) {
           return Text(
             columns[index],
-            style: AppTextStyle.medium.copyWith(color: AppColour.white),
+            style: AppTxtStl.medium.copyWith(
+              color: AppColour.white,
+              fontSize: 18,
+            ),
           );
         }),
       ),
@@ -51,13 +54,17 @@ class CustomExpTable extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
               key: ValueKey("exp_row_${rows[i]['name']}_${rows[i]['amount']}"),
               children: [
                 Expanded(child: Text(i.toString())),
 
-                Expanded(child: Text(rows[i]['name'])),
-                Expanded(child: Text(rows[i]['amount'])),
+                Expanded(child: Text(rows[i]['name'], style: AppTxtStl.medium)),
+                Expanded(
+                  child: Text(
+                    "\$ ${rows[i]["amount"]}",
+                    style: AppTxtStl.medium,
+                  ),
+                ),
                 Row(
                   children: [
                     CustomIbtn(onPress: () => onRemoveExp(i)),

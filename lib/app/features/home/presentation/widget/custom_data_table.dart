@@ -28,7 +28,7 @@ class CustomTable extends StatelessWidget {
           return Expanded(
             child: Text(
               columns[index],
-              style: AppTextStyle.medium.copyWith(color: AppColour.white),
+              style: AppTxtStl.medium.copyWith(color: AppColour.white),
             ),
           );
         }),
@@ -49,7 +49,7 @@ class CustomTable extends StatelessWidget {
                   padding: const EdgeInsets.all(12),
                   child: Text(
                     rows[rowIndex][colIndex],
-                    style: AppTextStyle.medium.copyWith(color: AppColour.white),
+                    style: AppTxtStl.medium.copyWith(color: AppColour.white),
                   ),
                 ),
               );

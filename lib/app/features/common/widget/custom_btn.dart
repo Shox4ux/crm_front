@@ -30,7 +30,7 @@ class CustomBtn extends StatelessWidget {
         padding: padding ?? EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         elevation: 3,
       ),
-      child: Text(txt, style: AppTextStyle.medium),
+      child: Text(txt, style: AppTxtStl.medium),
     );
   }
 }

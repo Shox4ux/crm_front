@@ -29,7 +29,7 @@ class CustomFilter extends StatelessWidget {
                   SvgPicture.asset(AppAssets.returnIcon, height: 20, width: 20),
                   Text(
                     "Reset filter",
-                    style: AppTextStyle.medium.copyWith(
+                    style: AppTxtStl.medium.copyWith(
                       color: AppColour.dashPending,
                     ),
                   ),
@@ -63,7 +63,7 @@ class FilterItem extends StatelessWidget {
           img ??
           Text(
             txt ?? "",
-            style: AppTextStyle.medium.copyWith(color: AppColour.white),
+            style: AppTxtStl.medium.copyWith(color: AppColour.white),
           ),
     );
   }

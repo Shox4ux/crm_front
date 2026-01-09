@@ -34,7 +34,7 @@ class CustomForm extends StatelessWidget {
         withLabel
             ? Text(
                 "$txt:",
-                style: AppTextStyle.medium.copyWith(color: AppColour.white),
+                style: AppTxtStl.medium.copyWith(color: AppColour.white),
               )
             : SizedBox.shrink(),
         SizedBox(

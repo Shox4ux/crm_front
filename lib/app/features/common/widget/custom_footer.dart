@@ -23,7 +23,7 @@ class CustomFooter extends StatelessWidget {
       children: [
         Text(
           "Showing $pageCount of $totalCount",
-          style: AppTextStyle.medium.copyWith(fontSize: 14),
+          style: AppTxtStl.medium.copyWith(fontSize: 14),
         ),
         ArrowButtons(onLeft: onLeftPressed, onRight: onRightPressed),
       ],

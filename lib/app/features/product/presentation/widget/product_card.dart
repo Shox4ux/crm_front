@@ -62,7 +62,7 @@ class _ProductCardState extends State<ProductCard> {
                   children: [
                     Text(
                       widget.data.name.capitalize(),
-                      style: AppTextStyle.medium.copyWith(
+                      style: AppTxtStl.medium.copyWith(
                         fontSize: 18,
                         color: AppColour.backgroundLight,
                       ),

@@ -1,6 +1,6 @@
 part of 'ware_prod_cubit.dart';
 
-enum WareProdStatus { init, loading, success, error }
+enum WareProdStatus { init, loading, success, error, empty }
 
 class WareProdState {
   final WareProdStatus status;

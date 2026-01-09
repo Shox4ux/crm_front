@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class AppTextStyle {
+abstract class AppTxtStl {
   static TextStyle small = TextStyle(fontSize: 12, fontWeight: FontWeight.w500);
   static TextStyle medium = TextStyle(
     fontSize: 14,

@@ -38,7 +38,7 @@ class DrawerX extends StatelessWidget {
             child: Text(
               "App Drawer",
               textAlign: TextAlign.center,
-              style: AppTextStyle.large.copyWith(fontSize: 24),
+              style: AppTxtStl.large.copyWith(fontSize: 24),
             ),
           ),
           Expanded(
@@ -125,7 +125,7 @@ class DrawerItem extends StatelessWidget {
               child: Text(
                 textAlign: TextAlign.center,
                 title,
-                style: AppTextStyle.medium,
+                style: AppTxtStl.medium,
               ),
             ),
           ),

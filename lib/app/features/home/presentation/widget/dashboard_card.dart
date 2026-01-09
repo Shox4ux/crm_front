@@ -32,16 +32,14 @@ class DashboardCard extends StatelessWidget {
                   children: [
                     Text(
                       item.primary,
-                      style: AppTextStyle.small.copyWith(
+                      style: AppTxtStl.small.copyWith(
                         color: AppColour.textSecondaryDark,
                         fontSize: 16,
                       ),
                     ),
                     Text(
                       item.isMoney ? "\$ ${item.index}" : item.index.toString(),
-                      style: AppTextStyle.large.copyWith(
-                        color: AppColour.white,
-                      ),
+                      style: AppTxtStl.large.copyWith(color: AppColour.white),
                     ),
                   ],
                 ),
@@ -73,13 +71,13 @@ class DashboardCard extends StatelessWidget {
               ),
               Text(
                 item.secondary,
-                style: AppTextStyle.medium.copyWith(
+                style: AppTxtStl.medium.copyWith(
                   color: item.isIncreased ? AppColour.green : AppColour.red,
                 ),
               ),
               Text(
                 "for this month",
-                style: AppTextStyle.medium.copyWith(
+                style: AppTxtStl.medium.copyWith(
                   color: AppColour.white,
                   fontSize: 17,
                 ),

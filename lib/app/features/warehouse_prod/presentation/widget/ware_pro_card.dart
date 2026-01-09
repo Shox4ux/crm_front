@@ -1,48 +1,49 @@
-// import 'package:crm_app/app/features/common/ui/app_colour.dart';
-// import 'package:crm_app/app/features/common/ui/app_radius.dart';
-// import 'package:crm_app/app/features/common/ui/app_text_style.dart';
-// import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
-// import 'package:crm_app/app/features/warehouse/presentation/widgets/pop_menu.dart';
-// import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
-// import 'package:flutter/material.dart';
+import 'package:crm_app/app/features/common/ui/app_colour.dart';
+import 'package:crm_app/app/features/common/ui/app_radius.dart';
+import 'package:crm_app/app/features/common/ui/app_text_style.dart';
+import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
+import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
+import 'package:flutter/material.dart';
 
-// class WareCard extends StatelessWidget {
-//   const WareCard({super.key, required this.item});
-//   final WareProEntitiy item;
+class WareProCard extends StatelessWidget {
+  const WareProCard({super.key, required this.item});
+  final WareProEntitiy item;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Stack(
-//       children: [
-//         BorderedContainer(
-//           padding: EdgeInsets.all(10),
-//           borderRadius: AppRadius.cardRadius,
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             spacing: 10,
-//             children: [
-//               Expanded(
-//                 child: Center(
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     children: [
-//                       Text(
-//                         item.name,
-//                         style: AppTextStyle.medium.copyWith(
-//                           fontSize: 18,
-//                           color: AppColour.backgroundLight,
-//                         ),
-//                       ),
-//                       Text("\$ ${item.address}"),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//         CustomMenu(data: item),
-//       ],
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        BorderedContainer(
+          padding: EdgeInsets.all(10),
+          borderRadius: AppRadius.cardRadius,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 10,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        item.product?.name ?? "",
+                        style: AppTxtStl.medium.copyWith(
+                          fontSize: 18,
+                          color: AppColour.backgroundLight,
+                        ),
+                      ),
+                      Text("\$ ${item.status}"),
+                      Text("\$ ${item.product?.sellPrice}"),
+                      Text("\$ ${item.quantity}"),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        // CustomMenu(data: item),
+      ],
+    );
+  }
+}

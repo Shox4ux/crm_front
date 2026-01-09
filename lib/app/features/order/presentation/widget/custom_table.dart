@@ -72,7 +72,7 @@ class ClnCellText extends StatelessWidget {
       child: Text(
         txt.toUpperCase(),
         textAlign: TextAlign.center,
-        style: AppTextStyle.medium.copyWith(color: AppColour.white),
+        style: AppTxtStl.medium.copyWith(color: AppColour.white),
       ),
     );
   }
@@ -98,7 +98,7 @@ class RowCellText extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
                 child: Text(
                   status?.name.toUpperCase() ?? "",
-                  style: AppTextStyle.medium.copyWith(color: AppColour.white),
+                  style: AppTxtStl.medium.copyWith(color: AppColour.white),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -109,7 +109,7 @@ class RowCellText extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 20),
               child: Text(
                 txt,
-                style: AppTextStyle.medium,
+                style: AppTxtStl.medium,
                 textAlign: TextAlign.center,
               ),
             ),

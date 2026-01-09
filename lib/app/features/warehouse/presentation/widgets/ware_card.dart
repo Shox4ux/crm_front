@@ -28,7 +28,7 @@ class WareCard extends StatelessWidget {
                     children: [
                       Text(
                         item.name,
-                        style: AppTextStyle.medium.copyWith(
+                        style: AppTxtStl.medium.copyWith(
                           fontSize: 18,
                           color: AppColour.backgroundLight,
                         ),

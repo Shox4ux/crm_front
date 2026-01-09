@@ -38,6 +38,10 @@ class WareProdCubit extends Cubit<WareProdState> {
     emit(state.copyWith(status: WareProdStatus.loading));
     var res = await _wpRepo.getAllWarehouseProductByWareId(wareId: wareId);
     if (res is DataSuccess) {
+      if (res.data == null || res.data!.isEmpty) {
+        emit(state.copyWith(status: WareProdStatus.empty));
+        return;
+      }
       emit(state.copyWith(status: WareProdStatus.success, list: res.data));
     } else {
       emit(state.copyWith(status: WareProdStatus.error, msg: res.errorMsg));

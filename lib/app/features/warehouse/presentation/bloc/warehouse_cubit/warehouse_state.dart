@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'warehouse_cubit.dart';
 
-enum WareStatus { init, loading, getall, success, failure }
+enum WareStatus { init, loading, getall, success, failure, empty }
 
 class WarehouseState {
   final List<WarehouseResponse> list;

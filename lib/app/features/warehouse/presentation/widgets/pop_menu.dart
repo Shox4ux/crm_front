@@ -1,6 +1,6 @@
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
-import 'package:crm_app/app/features/warehouse/data/model/warehouse_create.dart';
+import 'package:crm_app/app/features/warehouse/data/model/warehouse_create_update.dart';
 import 'package:crm_app/app/features/warehouse/domain/entity/warehouse_entity.dart';
 import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit/warehouse_cubit.dart';
 import 'package:crm_app/app/features/warehouse/presentation/widgets/add_edit_ware.dart';
@@ -49,11 +49,11 @@ class _CustomMenuState extends State<CustomMenu> {
 
   void _editWarehouse() {
     if (_formKey!.currentState!.validate()) {
-      // var body = WarehouseCreate(
-      //   name: _nameCtrl.text.trim(),
-      //   address: _addressCtrl.text.trim(),
-      // );
-      // context.read<WarehouseCubit>();
+      var body = WarehouseCreateUpdate(
+        name: _nameCtrl.text.trim(),
+        address: _addressCtrl.text.trim(),
+      );
+      context.read<WarehouseCubit>().updateWarehouse(widget.data.id, body);
       goBack(context);
     }
   }

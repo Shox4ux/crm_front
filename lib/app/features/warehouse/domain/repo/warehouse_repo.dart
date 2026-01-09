@@ -1,6 +1,6 @@
 import 'package:crm_app/app/features/common/data/repo/base_repo.dart';
 import 'package:crm_app/app/features/common/data/repo/data_state.dart';
-import 'package:crm_app/app/features/warehouse/data/model/warehouse_create.dart';
+import 'package:crm_app/app/features/warehouse/data/model/warehouse_create_update.dart';
 import 'package:crm_app/app/features/warehouse/data/model/warehouse_response.dart';
 import 'package:crm_app/app/features/warehouse/data/source/warehouse_api_service.dart';
 
@@ -13,7 +13,7 @@ class WarehouseRepo extends BaseRepo implements WarehouseRepoImpl {
 
   @override
   Future<DataState<WarehouseResponse>> createWarehouse({
-    required WarehouseCreate body,
+    required WarehouseCreateUpdate body,
   }) => getStateOf<WarehouseResponse>(
     request: () => _service.createWarehouse(body: body),
   );
@@ -33,4 +33,12 @@ class WarehouseRepo extends BaseRepo implements WarehouseRepoImpl {
       getStateOf<WarehouseResponse>(
         request: () => _service.getWarehouseById(id: id),
       );
+
+  @override
+  Future<DataState<dynamic>> updateWarehouse({
+    required int id,
+    required WarehouseCreateUpdate body,
+  }) => getStateOf<WarehouseResponse>(
+    request: () => _service.updateWarehouse(id: id, body: body),
+  );
 }

@@ -4,7 +4,8 @@ import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_search.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
-import 'package:crm_app/app/features/warehouse/data/model/warehouse_create.dart';
+import 'package:crm_app/app/features/common/widget/custon_no_data.dart';
+import 'package:crm_app/app/features/warehouse/data/model/warehouse_create_update.dart';
 import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit/warehouse_cubit.dart';
 import 'package:crm_app/app/features/warehouse/presentation/widgets/add_edit_ware.dart';
 import 'package:crm_app/app/features/warehouse/presentation/widgets/ware_card.dart';
@@ -65,7 +66,7 @@ class _WarehouseListState extends State<WarehouseList> {
 
   void _createWarehouse() {
     if (_formKey.currentState!.validate()) {
-      var body = WarehouseCreate(
+      var body = WarehouseCreateUpdate(
         name: _nameCtrl.text,
         address: _passwCtrl.text,
       );
@@ -112,17 +113,20 @@ class _WarehouseListState extends State<WarehouseList> {
                     state.status == WareStatus.loading) {
                   return CustomLoading();
                 }
-                var list = context.watch<WarehouseCubit>().getFiltList();
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 5,
-                    crossAxisSpacing: 30,
-                    mainAxisSpacing: 30,
-                  ),
-                  shrinkWrap: true,
-                  itemCount: list.length,
-                  itemBuilder: (_, i) => WareCard(item: list[i]),
-                );
+                if (state.status == WareStatus.success) {
+                  var list = context.watch<WarehouseCubit>().getFiltList();
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                      crossAxisSpacing: 30,
+                      mainAxisSpacing: 30,
+                    ),
+                    shrinkWrap: true,
+                    itemCount: list.length,
+                    itemBuilder: (_, i) => WareCard(item: list[i]),
+                  );
+                }
+                return NoData();
               },
             ),
           ),

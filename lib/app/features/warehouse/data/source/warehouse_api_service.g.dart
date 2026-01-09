@@ -23,7 +23,7 @@ class _WarehouseApiService implements WarehouseApiService {
 
   @override
   Future<HttpResponse<WarehouseResponse>> createWarehouse({
-    required WarehouseCreate body,
+    required WarehouseCreateUpdate body,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -35,6 +35,38 @@ class _WarehouseApiService implements WarehouseApiService {
           .compose(
             _dio.options,
             '/warehouses/create',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late WarehouseResponse _value;
+    try {
+      _value = WarehouseResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<WarehouseResponse>> updateWarehouse({
+    required int id,
+    required WarehouseCreateUpdate body,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<HttpResponse<WarehouseResponse>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/warehouses/update/${id}',
             queryParameters: queryParameters,
             data: _data,
           )

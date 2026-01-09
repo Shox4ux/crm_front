@@ -78,7 +78,7 @@ class _ClientApiService implements ClientApiService {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ClientResponse _value;
     try {
-      _value = ClientResponse.fromMap(_result.data!);
+      _value = ClientResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -107,7 +107,9 @@ class _ClientApiService implements ClientApiService {
     late List<ClientResponse> _value;
     try {
       _value = _result.data!
-          .map((dynamic i) => ClientResponse.fromMap(i as Map<String, dynamic>))
+          .map(
+            (dynamic i) => ClientResponse.fromJson(i as Map<String, dynamic>),
+          )
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -197,7 +199,7 @@ class _ClientApiService implements ClientApiService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body?.toMap() ?? <String, dynamic>{});
+    _data.addAll(body.toJson());
     final _options = _setStreamType<HttpResponse<dynamic>>(
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(
