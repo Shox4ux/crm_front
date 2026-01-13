@@ -56,6 +56,16 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
+  Future<List<ProductEntity>> prodFor() async {
+    emit(state.copyWith(status: ProdStatus.loading));
+    var res = await _repo.getAllProduct();
+    if (res is DataSuccess) {
+      return res.data ?? [];
+    } else {
+      return [];
+    }
+  }
+
   Future<void> updateProduct({required int id}) async {
     emit(state.copyWith(status: ProdStatus.loading));
     var body = ProductCreate.fromMap(state.changes.toJson());

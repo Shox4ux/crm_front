@@ -8,6 +8,7 @@ part of 'ware_pro_response.dart';
 
 WareProResponse _$WareProResponseFromJson(Map<String, dynamic> json) =>
     WareProResponse(
+      id: (json['id'] as num).toInt(),
       product: json['product'] == null
           ? null
           : ProductResponse.fromJson(json['product'] as Map<String, dynamic>),
@@ -21,6 +22,7 @@ WareProResponse _$WareProResponseFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$WareProResponseToJson(WareProResponse instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'product': ?instance.product?.toJson(),
       'warehouse_id': instance.warehouseId,
       'status': instance.status,

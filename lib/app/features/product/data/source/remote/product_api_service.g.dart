@@ -12,7 +12,7 @@ part of 'product_api_service.dart';
 
 class _ProductApiService implements ProductApiService {
   _ProductApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://95.182.96.54:8001';
+    baseUrl ??= 'http://31.57.47.156:8001';
   }
 
   final Dio _dio;

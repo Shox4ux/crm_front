@@ -3,6 +3,8 @@ import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
 import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
+import 'package:crm_app/app/features/warehouse_prod/presentation/widget/enums.dart';
+import 'package:crm_app/app/features/warehouse_prod/presentation/widget/ware_pro_menu.dart';
 import 'package:flutter/material.dart';
 
 class WareProCard extends StatelessWidget {
@@ -24,6 +26,7 @@ class WareProCard extends StatelessWidget {
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         item.product?.name ?? "",
@@ -32,9 +35,9 @@ class WareProCard extends StatelessWidget {
                           color: AppColour.backgroundLight,
                         ),
                       ),
-                      Text("\$ ${item.status}"),
                       Text("\$ ${item.product?.sellPrice}"),
-                      Text("\$ ${item.quantity}"),
+                      Text("${item.quantity} units"),
+                      StatusItem(status: statusFromInt(item.status)),
                     ],
                   ),
                 ),
@@ -42,7 +45,7 @@ class WareProCard extends StatelessWidget {
             ],
           ),
         ),
-        // CustomMenu(data: item),
+        WareProMenu(data: item),
       ],
     );
   }

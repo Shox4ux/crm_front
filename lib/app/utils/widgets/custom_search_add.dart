@@ -1,5 +1,5 @@
+import 'package:crm_app/app/features/common/widget/custom_search.dart';
 import 'package:crm_app/app/utils/widgets/custom_btn.dart';
-import 'package:crm_app/app/utils/widgets/custom_search.dart';
 import 'package:flutter/material.dart';
 
 class CustomSearchAdd extends StatelessWidget {

@@ -19,8 +19,8 @@ showDelConfrm({required BuildContext ctx, required void Function() action}) {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CustomBtn(onPress: action, txt: "Delete"),
             CustomBtn(onPress: () => goBack(context), txt: "Cancel"),
+            CustomBtn(onPress: action, txt: "Delete"),
           ],
         ),
       ],

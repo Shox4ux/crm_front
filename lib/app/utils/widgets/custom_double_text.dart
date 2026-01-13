@@ -1,4 +1,4 @@
-import 'package:crm_app/app/utils/conts/app_colors.dart';
+import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:flutter/material.dart';
 
 var txs = TextStyle(
@@ -40,7 +40,7 @@ class CustomDoubleText extends StatelessWidget {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: AppColors.appBlack,
+              color: AppColour.clSecond,
             ),
           ),
         ],

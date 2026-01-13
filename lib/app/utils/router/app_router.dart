@@ -5,12 +5,32 @@ import 'package:crm_app/app/features/home/presentation/screen/homex.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/product/presentation/screens/product_add_edit.dart';
 import 'package:crm_app/app/features/user/presentation/screen/login_screen.dart';
+import 'package:crm_app/app/features/warehouse/domain/entity/warehouse_entity.dart';
+import 'package:crm_app/app/features/warehouse_prod/presentation/screens/ware_pro_list.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
   static GoRouter router = GoRouter(
     initialLocation: Routes.home,
     routes: [
+      GoRoute(
+        path: Routes.wareProList,
+        builder: (context, state) {
+          var val = state.extra as WarehouseEntity?;
+          if (val == null) {
+            return WarehouseProductList(
+              data: WarehouseEntity(
+                address: "",
+                id: 1,
+                name: "",
+                createdAt: DateTime.now(),
+                products: [],
+              ),
+            );
+          }
+          return WarehouseProductList(data: val);
+        },
+      ),
       GoRoute(
         path: Routes.home,
         builder: (context, state) => const HomeScreen(),

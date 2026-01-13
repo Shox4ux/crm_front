@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
 import 'package:crm_app/app/features/common/functions/form_empty_validation.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
+import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:crm_app/app/features/common/widget/custom_progress.dart';
@@ -18,7 +19,6 @@ import 'package:crm_app/app/features/product/presentation/widget/img_file_holder
 import 'package:crm_app/app/features/product/presentation/widget/img_url_holder.dart';
 import 'package:crm_app/app/features/product_expense/data/model/expense_bulk_update.dart';
 import 'package:crm_app/app/features/product_expense/data/model/expense_create.dart';
-import 'package:crm_app/app/utils/conts/app_colors.dart';
 import 'package:crm_app/app/utils/extensions/full_url.dart';
 import 'package:crm_app/app/utils/img_handler/img_handler.dart';
 import 'package:dio/dio.dart';
@@ -335,7 +335,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                     "Base Price: \$ ${getBasePrice().toString()}",
                                     style: AppTxtStl.medium.copyWith(
                                       fontSize: 24,
-                                      color: AppColors.appGrey,
+                                      color: AppColour.white,
                                     ),
                                   ),
                                 ],

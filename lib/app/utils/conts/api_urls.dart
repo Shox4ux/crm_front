@@ -1,4 +1,4 @@
 abstract class ApiUrls {
   //HostVDS server
-  static const String baseUrl = "http://95.182.96.54:8001";
+  static const String baseUrl = "http://31.57.47.156:8001";
 }

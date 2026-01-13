@@ -1,6 +1,7 @@
 import 'package:crm_app/app/features/product/data/model/product_response.dart';
 
 class WareProEntitiy {
+  final int id;
   final ProductResponse? product;
   final int warehouseId;
   final int status;
@@ -8,6 +9,7 @@ class WareProEntitiy {
   final int quantity;
 
   WareProEntitiy({
+    required this.id,
     required this.product,
     required this.warehouseId,
     required this.status,

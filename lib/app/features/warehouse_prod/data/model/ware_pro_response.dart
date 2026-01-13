@@ -6,6 +6,7 @@ part 'ware_pro_response.g.dart';
 @JsonSerializable()
 class WareProResponse extends WareProEntitiy {
   WareProResponse({
+    required super.id,
     required super.product,
     required super.warehouseId,
     required super.status,

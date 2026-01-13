@@ -9,6 +9,8 @@ import 'package:crm_app/app/features/user/domain/repo/user_repo.dart';
 import 'package:crm_app/app/features/user/presentation/bloc/user_cubit.dart';
 import 'package:crm_app/app/features/warehouse/domain/repo/warehouse_repo.dart';
 import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit/warehouse_cubit.dart';
+import 'package:crm_app/app/features/warehouse_prod/domain/repo/ware_pro_repo.dart';
+import 'package:crm_app/app/features/warehouse_prod/presentation/bloc/ware_pro_cubit.dart';
 import 'package:crm_app/app_bloc_observer.dart';
 import 'package:crm_app/app/utils/router/app_router.dart';
 import 'package:crm_app/app_locator.dart';
@@ -20,7 +22,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
   NetworkStatusService.instance.initialize();
-
   await setupLocator();
   runApp(const CRMApp());
 }
@@ -33,6 +34,7 @@ class CRMApp extends StatelessWidget {
     providers: [
       BlocProvider(create: (_) => DrawerXCubit()),
       BlocProvider(create: (_) => WarehouseCubit(locator<WarehouseRepo>())),
+      BlocProvider(create: (_) => WareProCubit(locator<WareProRepo>())),
       BlocProvider(create: (_) => UserCubit(locator<UserRepo>())),
       BlocProvider(
         create: (_) =>

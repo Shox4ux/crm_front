@@ -9,6 +9,8 @@ import 'package:crm_app/app/features/user/data/source/user_api_service.dart';
 import 'package:crm_app/app/features/user/domain/repo/user_repo.dart';
 import 'package:crm_app/app/features/warehouse/data/source/warehouse_api_service.dart';
 import 'package:crm_app/app/features/warehouse/domain/repo/warehouse_repo.dart';
+import 'package:crm_app/app/features/warehouse_prod/data/source/wp_api_service.dart';
+import 'package:crm_app/app/features/warehouse_prod/domain/repo/ware_pro_repo.dart';
 import 'package:crm_app/offline_interceptor.dart';
 
 import 'package:dio/dio.dart';
@@ -21,18 +23,25 @@ Future<void> setupLocator() async {
   dio.interceptors.addAll([ApiLogger(), OfflineInterceptor()]);
   locator.registerSingleton<Dio>(dio);
 
-  // ==================================NEW==============================
+  // ==================================User==============================
   locator.registerSingleton<UserApiService>(UserApiService(locator<Dio>()));
+  locator.registerSingleton<UserRepo>(UserRepo(locator<UserApiService>()));
+
+  // ==================================Warehouse==============================
+
   locator.registerSingleton<WarehouseApiService>(
     WarehouseApiService(locator<Dio>()),
   );
-
-  locator.registerSingleton<UserRepo>(UserRepo(locator<UserApiService>()));
   locator.registerSingleton<WarehouseRepo>(
     WarehouseRepo(locator<WarehouseApiService>()),
   );
-  locator.registerSingleton<ClientApiService>(ClientApiService(locator<Dio>()));
+  // ==================================Warehouse Product==============================
 
+  locator.registerSingleton<WPApiService>(WPApiService(locator<Dio>()));
+  locator.registerSingleton<WareProRepo>(WareProRepo(locator<WPApiService>()));
+
+  // ==================================Client==============================
+  locator.registerSingleton<ClientApiService>(ClientApiService(locator<Dio>()));
   locator.registerSingleton<ClientRepo>(
     ClientRepo(locator<ClientApiService>()),
   );

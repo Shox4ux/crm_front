@@ -4,7 +4,6 @@ import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:crm_app/app/features/home/data/fake_data.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

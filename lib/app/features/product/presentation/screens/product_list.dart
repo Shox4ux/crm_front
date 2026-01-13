@@ -73,9 +73,10 @@ class _ProductListState extends State<ProductList> {
                   ),
                   shrinkWrap: true,
                   itemCount: list.length,
-                  itemBuilder: (_, i) => InkWell(
-                    onTap: () =>
-                        context.push(Routes.productAddEdit, extra: list[i]),
+                  itemBuilder: (_, i) => GestureDetector(
+                    onTap: () {
+                      context.push(Routes.productAddEdit, extra: list[i]);
+                    },
                     child: ProductCard(data: list[i]),
                   ),
                 );
