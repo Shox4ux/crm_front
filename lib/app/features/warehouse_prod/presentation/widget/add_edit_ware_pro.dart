@@ -41,8 +41,8 @@ void showWareProductDialog(
     if (key!.currentState!.validate()) {
       var b = WareProCreate(
         warehouseId: wareId!,
-        productId: selectedProduct!.id,
-        status: selectedStatus!.index,
+        productId: isEdit ? editData!.warehouseId : selectedProduct!.id,
+        status: selectedStatus?.index ?? ProductStatus.pending.index,
         quantity: int.parse(qtyCtrl.text),
       );
       action(b);
@@ -72,7 +72,7 @@ void showWareProductDialog(
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(
-              'Qty: ${product.totalQuantity} | Price: \$${product.sellPrice}',
+              'Qty: ${product.activeQuantity} | Price: \$${product.sellPrice}',
               style: const TextStyle(fontSize: 12),
             ),
           ],

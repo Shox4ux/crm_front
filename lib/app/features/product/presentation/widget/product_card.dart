@@ -41,8 +41,15 @@ class _ProductCardState extends State<ProductCard> {
             color: AppColour.backgroundLight,
             child: Image.network(
               widget.data.imgUrl.fullUrl(),
-              loadingBuilder: (context, child, loadingProgress) =>
-                  OnImgError(height: 200),
+              height: 200,
+              width: double.maxFinite,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) {
+                  return child; // IMAGE LOADED
+                }
+                return OnImgError(height: 200); // LOADING PLACEHOLDER
+              },
               errorBuilder: (c, e, s) => OnImgError(height: 200),
             ),
           ),

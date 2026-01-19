@@ -16,7 +16,7 @@ class WarehouseCubit extends Cubit<WarehouseState> {
   WarehouseCubit(this._wRepo)
     : super(WarehouseState(list: [], status: WareStatus.init)) {
     _filtered = [];
-    _getAllWarehouse();
+    getAllWarehouse();
   }
 
   List<WarehouseResponse> getFiltList() => _filtered;
@@ -35,7 +35,7 @@ class WarehouseCubit extends Cubit<WarehouseState> {
   void onWPessed(int id) => _wId = id;
   int getWID() => _wId;
 
-  void _getAllWarehouse() async {
+  void getAllWarehouse() async {
     emit(state.copyWith(status: WareStatus.getall));
     var res = await _wRepo.getAllWarehouse();
     if (res is DataSuccess) {
@@ -58,7 +58,7 @@ class WarehouseCubit extends Cubit<WarehouseState> {
     var res = await _wRepo.createWarehouse(body: body);
     if (res is DataSuccess) {
       emit(state.copyWith(msg: "Successfully created"));
-      _getAllWarehouse();
+      getAllWarehouse();
     } else {
       emit(state.copyWith(status: WareStatus.failure, msg: res.errorMsg));
     }
@@ -69,7 +69,7 @@ class WarehouseCubit extends Cubit<WarehouseState> {
     var res = await _wRepo.deleteWarehouse(id: id);
     if (res is DataSuccess) {
       emit(state.copyWith(msg: "Successfully deleted"));
-      _getAllWarehouse();
+      getAllWarehouse();
     } else {
       emit(state.copyWith(status: WareStatus.failure, msg: res.errorMsg));
     }
@@ -80,7 +80,7 @@ class WarehouseCubit extends Cubit<WarehouseState> {
     var res = await _wRepo.updateWarehouse(id: id, body: body);
     if (res is DataSuccess) {
       emit(state.copyWith(msg: "Successfully updated"));
-      _getAllWarehouse();
+      getAllWarehouse();
     } else {
       emit(state.copyWith(status: WareStatus.failure, msg: res.errorMsg));
     }

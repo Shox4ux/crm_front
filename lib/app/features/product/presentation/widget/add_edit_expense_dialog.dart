@@ -13,6 +13,14 @@ addEditExpense({
   Map<String, dynamic>? data,
   required int i,
 }) {
+  final formKey = GlobalKey<FormState>();
+  String? validate(String? val) {
+    if (val == null || val.isEmpty) {
+      return "Please Enter Value";
+    }
+    return null;
+  }
+
   return showDialog<bool>(
     context: ctx,
     builder: (context) => AlertDialog(
@@ -21,27 +29,44 @@ addEditExpense({
         style: AppTxtStl.large.copyWith(fontSize: 24, color: AppColour.white),
       ),
       constraints: BoxConstraints(minHeight: 180, minWidth: 300),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CustomForm(ctrl: name, initVal: data?['name'], txt: "Expense Name"),
-          CustomForm(
-            ctrl: amount,
-            initVal: data?['amount'],
-            txt: "Amount",
-            prefix: "\$",
-          ),
-        ],
+      content: Form(
+        key: formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomForm(
+              ctrl: name,
+              initVal: data?['name'],
+              txt: "Expense Name",
+              valid: validate,
+            ),
+            CustomForm(
+              valid: validate,
+              isDigit: true,
+              ctrl: amount,
+              initVal: data?['amount'],
+              txt: "Amount",
+              prefix: "\$ ",
+            ),
+          ],
+        ),
       ),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CustomBtn(onPress: () => action(), txt: title),
             CustomBtn(
               onPress: () => Navigator.of(context).pop(),
               txt: "Cancel",
+            ),
+            CustomBtn(
+              onPress: () {
+                if (formKey.currentState!.validate()) {
+                  action();
+                }
+              },
+              txt: title,
             ),
           ],
         ),

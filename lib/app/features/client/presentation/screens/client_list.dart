@@ -61,10 +61,9 @@ class _ClientListState extends State<ClientList> {
                     ),
                     shrinkWrap: true,
                     itemCount: list.length,
-                    itemBuilder: (_, i) => InkWell(
-                      onTap: () {
-                        context.push(Routes.clientAddEdit, extra: list[i]);
-                      },
+                    itemBuilder: (_, i) => GestureDetector(
+                      onTap: () =>
+                          context.push(Routes.clientAddEdit, extra: list[i]),
                       child: ClientCard(item: list[i]),
                     ),
                   );

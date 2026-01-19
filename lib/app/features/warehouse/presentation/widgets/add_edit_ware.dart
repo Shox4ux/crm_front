@@ -1,7 +1,7 @@
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:crm_app/app/features/common/widget/custom_text_form.dart';
 import 'package:crm_app/app/features/common/widget/dialog_title.dart';
-import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit/warehouse_cubit.dart';
+import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

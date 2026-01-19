@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 class CustomBtn extends StatelessWidget {
   const CustomBtn({
     super.key,
-    required this.onPress,
+    this.onPress,
     required this.txt,
     this.bgColor = AppColour.stroke,
     this.txtColor = AppColour.white,
     this.padding,
   });
-  final void Function() onPress;
+  final void Function()? onPress;
   final String txt;
   final Color bgColor;
   final Color txtColor;

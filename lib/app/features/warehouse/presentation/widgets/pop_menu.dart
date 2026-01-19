@@ -2,7 +2,7 @@ import 'package:crm_app/app/features/common/functions/del_confrm.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/warehouse/data/model/warehouse_create_update.dart';
 import 'package:crm_app/app/features/warehouse/domain/entity/warehouse_entity.dart';
-import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit/warehouse_cubit.dart';
+import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit.dart';
 import 'package:crm_app/app/features/warehouse/presentation/widgets/add_edit_ware.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

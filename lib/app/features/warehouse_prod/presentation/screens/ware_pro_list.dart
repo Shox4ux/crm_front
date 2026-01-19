@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WarehouseProductList extends StatefulWidget {
-  final WarehouseEntity data;
+  final WarehouseEntity? data;
   const WarehouseProductList({super.key, required this.data});
 
   @override
@@ -32,7 +32,7 @@ class _WarehouseProductListState extends State<WarehouseProductList> {
   void initState() {
     super.initState();
     fake = WareProFake();
-    context.read<WareProCubit>().getAllWareProdByWareId(widget.data.id);
+    context.read<WareProCubit>().getAllWareProdByWareId(widget.data!.id);
     //Requesting all products , and get the list
     context.read<ProductCubit>().getAllProduct();
     prodList = context.read<ProductCubit>().getFiltList();
@@ -54,7 +54,7 @@ class _WarehouseProductListState extends State<WarehouseProductList> {
       isEdit: false,
       context,
       action: onAdd,
-      wareId: widget.data.id,
+      wareId: widget.data?.id,
     );
   }
 
@@ -67,7 +67,7 @@ class _WarehouseProductListState extends State<WarehouseProductList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("${widget.data.name} Warehouse")),
+      appBar: AppBar(title: Text("${widget.data?.name} Warehouse")),
       body: Container(
         padding: EdgeInsets.all(40),
         child: Column(
@@ -99,7 +99,8 @@ class _WarehouseProductListState extends State<WarehouseProductList> {
                   if (state.status == WareProStatus.loading) {
                     return CustomLoading();
                   }
-                  if (state.status == WareProStatus.empty) {
+                  if (state.status == WareProStatus.empty ||
+                      state.status == WareProStatus.error) {
                     return NoData();
                   }
                   var list = context.watch<WareProCubit>().getFiltList();

@@ -14,7 +14,7 @@ class ClientCubit extends Cubit<ClientState> {
   ClientCubit(this._repo)
     : super(ClientState(status: ClientStatus.init, list: [])) {
     _filtered = [];
-    _getAllClient();
+    getAllClient();
   }
 
   List<ClientEntity> getFiltList() => _filtered;
@@ -30,7 +30,7 @@ class ClientCubit extends Cubit<ClientState> {
     }
   }
 
-  void _getAllClient() async {
+  void getAllClient() async {
     emit(state.copyWith(status: ClientStatus.loading));
     var res = await _repo.getAllClient();
     if (res is DataSuccess) {
@@ -50,7 +50,7 @@ class ClientCubit extends Cubit<ClientState> {
     final res = await _repo.createClient(body: body);
     if (res is DataSuccess) {
       emit(state.copyWith(status: ClientStatus.success));
-      _getAllClient();
+      getAllClient();
     } else {
       emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
     }
@@ -61,7 +61,7 @@ class ClientCubit extends Cubit<ClientState> {
     final res = await _repo.updateClient(id: id, body: body);
     if (res is DataSuccess) {
       emit(state.copyWith(status: ClientStatus.success));
-      _getAllClient();
+      getAllClient();
     } else {
       emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
     }
@@ -71,7 +71,7 @@ class ClientCubit extends Cubit<ClientState> {
     emit(state.copyWith(status: ClientStatus.loading));
     var res = await _repo.deleteClient(id: id);
     if (res is DataSuccess) {
-      _getAllClient();
+      getAllClient();
     } else {
       emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
     }

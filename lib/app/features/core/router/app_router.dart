@@ -2,6 +2,7 @@ import 'package:crm_app/app/features/client/domain/entity/client_entity.dart';
 import 'package:crm_app/app/features/client/presentation/screens/client_add_edit.dart';
 import 'package:crm_app/app/features/core/router/route_names.dart';
 import 'package:crm_app/app/features/home/presentation/screen/homex.dart';
+import 'package:crm_app/app/features/order/presentation/screens/order_add_edit.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/product/presentation/screens/product_add_edit.dart';
 import 'package:crm_app/app/features/user/presentation/screen/login_screen.dart';
@@ -17,23 +18,17 @@ abstract class AppRouter {
         path: Routes.wareProList,
         builder: (context, state) {
           var val = state.extra as WarehouseEntity?;
-          if (val == null) {
-            return WarehouseProductList(
-              data: WarehouseEntity(
-                address: "",
-                id: 1,
-                name: "",
-                createdAt: DateTime.now(),
-                products: [],
-              ),
-            );
-          }
           return WarehouseProductList(data: val);
         },
       ),
+
       GoRoute(
         path: Routes.home,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: Routes.orderAddEdit,
+        builder: (context, state) => const OrderAddEditScreen(),
       ),
       GoRoute(
         path: Routes.login,

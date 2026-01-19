@@ -49,7 +49,8 @@ class _ProductAddEditState extends State<ProductAddEdit> {
   final TextEditingController profitMarginCtrl = TextEditingController();
   final TextEditingController expName = TextEditingController();
   final TextEditingController expAmount = TextEditingController();
-  final globalKey = GlobalKey<FormState>();
+  late final GlobalKey<FormState> globalKey;
+
   List<Map<String, dynamic>> expenses = [];
 
   void detectProdChange(ProductCubit cubit) {
@@ -239,6 +240,8 @@ class _ProductAddEditState extends State<ProductAddEdit> {
   @override
   void initState() {
     super.initState();
+
+    globalKey = GlobalKey<FormState>(debugLabel: 'screen_key');
     if (widget.product != null && widget.isEdit) {
       prefillCtrlText();
       prefillPercentage();
@@ -325,6 +328,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                     txt: "Product Name",
                                   ),
                                   CustomForm(
+                                    isDigit: true,
                                     ctrl: quantityCtrl,
                                     valid: validateNotEmpty,
                                     txt: "Quantity",
@@ -346,6 +350,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
 
                                 children: [
                                   CustomForm(
+                                    isDigit: true,
                                     ctrl: sellPriceCtrl,
                                     valid: validateNotEmpty,
                                     txt: "Sell Price",
@@ -355,6 +360,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                   ),
                                   CustomForm(
                                     prefix: "% ",
+                                    isDigit: true,
                                     ctrl: profitMarginCtrl,
                                     valid: validateNotEmpty,
                                     txt: "Profit Margin",

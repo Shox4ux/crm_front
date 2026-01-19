@@ -1,10 +1,12 @@
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:crm_app/app/features/common/widget/custom_footer.dart';
 import 'package:crm_app/app/features/common/widget/custom_search.dart';
+import 'package:crm_app/app/features/core/router/route_names.dart';
 import 'package:crm_app/app/features/order/data/fake_data.dart';
 import 'package:crm_app/app/features/order/presentation/widget/custom_filter.dart';
 import 'package:crm_app/app/features/order/presentation/widget/custom_table.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 var list = ["name", "address", "date", "type", "status"];
 
@@ -31,7 +33,10 @@ class OrderList extends StatelessWidget {
                   spacing: 10,
                   children: [
                     CustomSearch(),
-                    CustomBtn(onPress: () {}, txt: "Add"),
+                    CustomBtn(
+                      onPress: () => context.push(Routes.orderAddEdit),
+                      txt: "Add",
+                    ),
                   ],
                 ),
               ],

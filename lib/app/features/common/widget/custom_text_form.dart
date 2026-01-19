@@ -1,6 +1,7 @@
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomForm extends StatelessWidget {
   const CustomForm({
@@ -14,11 +15,14 @@ class CustomForm extends StatelessWidget {
     this.prefix,
     this.withLabel = true,
     this.initVal,
+    this.isDigit = false,
   });
   final TextEditingController? ctrl;
   final String? txt;
   final bool isPass;
   final bool withLabel;
+  final bool isDigit;
+
   final String? Function(String?)? valid;
   final void Function(String?)? onChanged;
   final bool readOnly;
@@ -46,7 +50,12 @@ class CustomForm extends StatelessWidget {
             onChanged: onChanged,
             validator: valid,
             controller: ctrl,
-
+            keyboardType: isDigit
+                ? TextInputType.numberWithOptions(decimal: true)
+                : null,
+            inputFormatters: isDigit
+                ? [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))]
+                : null,
             decoration: InputDecoration(
               filled: true, // enables background color
               fillColor: AppColour.clTxtBg,

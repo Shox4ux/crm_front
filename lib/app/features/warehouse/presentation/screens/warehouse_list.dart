@@ -6,7 +6,7 @@ import 'package:crm_app/app/features/common/widget/custom_search.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
 import 'package:crm_app/app/features/common/widget/custon_no_data.dart';
 import 'package:crm_app/app/features/warehouse/data/model/warehouse_create_update.dart';
-import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit/warehouse_cubit.dart';
+import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit.dart';
 import 'package:crm_app/app/features/warehouse/presentation/widgets/add_edit_ware.dart';
 import 'package:crm_app/app/features/warehouse/presentation/widgets/ware_card.dart';
 import 'package:flutter/material.dart';

@@ -12,7 +12,7 @@ part of 'expense_api_service.dart';
 
 class _ExpenseApiService implements ExpenseApiService {
   _ExpenseApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://31.57.47.156:8001';
+    baseUrl ??= 'http://155.138.235.216:8001';
   }
 
   final Dio _dio;

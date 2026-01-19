@@ -61,7 +61,8 @@ class _ProductListState extends State<ProductList> {
                 if (state.status == ProdStatus.loading) {
                   return CustomLoading();
                 }
-                if (state.status == ProdStatus.empty) {
+                if (state.status == ProdStatus.empty ||
+                    state.status == ProdStatus.error) {
                   return NoData();
                 }
                 var list = context.watch<ProductCubit>().getFiltList();
