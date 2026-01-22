@@ -1,5 +1,6 @@
 import 'package:crm_app/app/features/order/data/model/order_create.dart';
 import 'package:crm_app/app/features/order/data/model/order_response.dart';
+import 'package:crm_app/app/features/order/data/model/order_update.dart';
 import 'package:crm_app/app/utils/conts/api_urls.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -12,7 +13,7 @@ abstract class OrderApiService {
   //=========================== ORDER Endpoints ======================//
 
   @POST('/orders/create')
-  Future<HttpResponse<OrderResponse>> createOrder({
+  Future<HttpResponse<dynamic>> createOrder({
     @Body() required OrderCreate body,
   });
 
@@ -27,7 +28,7 @@ abstract class OrderApiService {
   @PATCH('/orders/update/{id}')
   Future<HttpResponse> updateOrder({
     @Path("id") required int id,
-    @Body() required OrderCreate body,
+    @Body() required OrderUpdate body,
   });
 
   @DELETE('/orders/delete/{id}')

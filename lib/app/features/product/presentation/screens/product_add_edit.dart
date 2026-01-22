@@ -53,6 +53,14 @@ class _ProductAddEditState extends State<ProductAddEdit> {
 
   List<Map<String, dynamic>> expenses = [];
 
+  void createMultipart() {
+    img = MultipartFile.fromFileSync(
+      _image!.path,
+      filename: basename(_image!.path),
+    );
+    nullImgUrl();
+  }
+
   void detectProdChange(ProductCubit cubit) {
     if (quantityCtrl.text != widget.product?.totalQuantity.toString()) {
       cubit.setChanges(
@@ -131,13 +139,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
     final picked = await ImageHelper.imageHandler();
     if (picked != null) {
       _image = await ImageHelper.compressAndSave(File(picked.path));
-      setState(() {
-        img = MultipartFile.fromFileSync(
-          _image!.path,
-          filename: basename(_image!.path),
-        );
-        nullImgUrl();
-      });
+      setState(() {});
     }
   }
 
@@ -197,6 +199,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
 
   void createProduct(ProductCubit cubit) {
     if (globalKey.currentState!.validate()) {
+      createMultipart();
       var b = ProductCreate(
         img: img,
         name: nameCtrl.text,

@@ -12,7 +12,7 @@ part of 'order_api_service.dart';
 
 class _OrderApiService implements OrderApiService {
   _OrderApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://155.138.235.216:8001';
+    baseUrl ??= 'http://95.182.116.9:8001';
   }
 
   final Dio _dio;
@@ -22,15 +22,13 @@ class _OrderApiService implements OrderApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<OrderResponse>> createOrder({
-    required OrderCreate body,
-  }) async {
+  Future<HttpResponse<dynamic>> createOrder({required OrderCreate body}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
-    final _options = _setStreamType<HttpResponse<OrderResponse>>(
+    final _options = _setStreamType<HttpResponse<dynamic>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -40,14 +38,8 @@ class _OrderApiService implements OrderApiService {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late OrderResponse _value;
-    try {
-      _value = OrderResponse.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
     final httpResponse = HttpResponse(_value, _result);
     return httpResponse;
   }
@@ -113,7 +105,7 @@ class _OrderApiService implements OrderApiService {
   @override
   Future<HttpResponse<dynamic>> updateOrder({
     required int id,
-    required OrderCreate body,
+    required OrderUpdate body,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

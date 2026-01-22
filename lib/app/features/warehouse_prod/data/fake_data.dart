@@ -2,7 +2,7 @@ import 'package:crm_app/app/features/product/data/model/product_response.dart';
 import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
 
 class WareProFake {
-  final _list = <WareProEntitiy>[];
+  final _list = <WareProEntity>[];
 
   static final List<ProductResponse> prodList = [
     ProductResponse(
@@ -46,7 +46,7 @@ class WareProFake {
   WareProFake() {
     _list.addAll(
       prodList.map(
-        (e) => WareProEntitiy(
+        (e) => WareProEntity(
           id: 1,
           product: e,
           warehouseId: 1,
@@ -58,8 +58,8 @@ class WareProFake {
     );
   }
 
-  List<WareProEntitiy> data() => _list;
-  void addWP(WareProEntitiy data) {
+  List<WareProEntity> data() => _list;
+  void addWP(WareProEntity data) {
     _list.add(data);
   }
 }

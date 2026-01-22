@@ -1,7 +1,21 @@
+import 'package:crm_app/app/features/client/domain/entity/client_entity.dart';
+import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
+import 'package:crm_app/app/features/common/functions/go_back.dart';
+import 'package:crm_app/app/features/common/functions/show_toast.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
+import 'package:crm_app/app/features/common/widget/custom_progress.dart';
+import 'package:crm_app/app/features/order/data/model/order_create.dart';
+import 'package:crm_app/app/features/order/presentation/bloc/order_cubit.dart';
+import 'package:crm_app/app/features/order/presentation/utils/order_enum_status.dart';
+import 'package:crm_app/app/features/order/presentation/widget/const_fit.dart';
+import 'package:crm_app/app/features/order_product/data/model/order_pro_create.dart';
+import 'package:crm_app/app/features/warehouse/domain/entity/warehouse_entity.dart';
+import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit.dart';
+import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderAddEditScreen extends StatefulWidget {
   final bool isEdit;
@@ -12,36 +26,43 @@ class OrderAddEditScreen extends StatefulWidget {
 }
 
 class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
-  // late final List<ClientEntity> clientList;
-  // late final List<WarehouseEntity> wareList;
-
+  List<ClientEntity>? clientList;
+  List<WarehouseEntity>? wareList;
+  late TextEditingController paidAmountCtrl;
   @override
   void initState() {
     super.initState();
+    paidAmountCtrl = TextEditingController();
     //get clients list
-    // context.read<ClientCubit>().getAllClient();
-    // clientList = context.read<ClientCubit>().getFiltList();
+    _loadClients();
+    _loadWares();
     // //get warehouse list
-    // context.read<WarehouseCubit>().getAllWarehouse();
-    // wareList = context.read<WarehouseCubit>().getFiltList();
-    // //get warehouse products list
-    // context.read<WarehouseCubit>().getAllWarehouse();
-    // wareList = context.read<WarehouseCubit>().getFiltList();
   }
 
-  String? selectedClient;
+  @override
+  void dispose() {
+    paidAmountCtrl.dispose();
+    super.dispose();
+  }
 
-  final clients = ['Client A', 'Client B'];
-  final warehouses = ['Warehouse 1', 'Warehouse 2'];
+  void _loadWares() async {
+    await context.read<WarehouseCubit>().getAllWarehouse();
+    if (!mounted) return;
+    setState(() {
+      wareList = context.read<WarehouseCubit>().getFiltList();
+    });
+  }
 
-  final Map<String, List<WarehouseProduct>> warehouseProducts = {
-    'Warehouse 1': [
-      WarehouseProduct('Product X', 12.5, 50),
-      WarehouseProduct('Product Y', 20, 30),
-    ],
-    'Warehouse 2': [WarehouseProduct('Product Z', 15, 40)],
-  };
+  Future<void> _loadClients() async {
+    await context.read<ClientCubit>().getAllClient();
+    if (!mounted) return;
+    setState(() {
+      clientList = context.read<ClientCubit>().getFiltList();
+    });
+  }
 
+  ClientEntity? selectedClient;
+  OrderEnumStatus? selectedStatus;
   final List<OrderItemModel> items = [];
 
   final border = OutlineInputBorder(
@@ -53,15 +74,27 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
 
   void addItem() => setState(() => items.add(OrderItemModel()));
 
-  static const colNo = 1;
-  static const colWarehouse = 4;
-  static const colProduct = 4;
-  static const colActualPrice = 2;
-  static const colPrice = 3;
-  static const colStock = 2;
-  static const colQty = 3;
-  static const colTotal = 2;
-  static const colAction = 1;
+  void createOrder() {
+    var b = OrderCreate(
+      clientId: selectedClient?.id ?? 0,
+      status: selectedStatus?.index ?? 0,
+      orderProducts: items
+          .map(
+            (v) => OrderProCreate(
+              customPrice: num.parse(v.priceController.text),
+              customQuantity: num.parse(v.qtyController.text),
+              warehouseProductId: v.selectedWProduct?.id ?? 0,
+            ),
+          )
+          .toList(),
+      paidAmount: double.tryParse(paidAmountCtrl.text) ?? 0,
+      adminNote: "",
+      clientNote: "",
+    );
+    context.read<OrderCubit>().createOrder(body: b);
+  }
+
+  void updateOrder() {}
 
   @override
   Widget build(BuildContext context) {
@@ -72,29 +105,78 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
       body: Padding(
         padding: const EdgeInsets.all(40),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: 280,
-                  child: DropdownButtonFormField<String>(
-                    initialValue: selectedClient,
-                    decoration: InputDecoration(
-                      labelText: 'Client',
-                      border: border,
+                Row(
+                  spacing: 12,
+                  children: [
+                    SizedBox(
+                      width: 280,
+                      child: DropdownButtonFormField<ClientEntity>(
+                        initialValue: selectedClient,
+                        decoration: InputDecoration(
+                          labelText: 'Client',
+                          border: border,
+                        ),
+                        items: clientList
+                            ?.map(
+                              (c) => DropdownMenuItem(
+                                value: c,
+                                child: Text(c.user.username ?? ""),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: widget.isEdit
+                            ? null
+                            : (v) => setState(() {
+                                selectedClient = v;
+                                items.clear();
+                              }),
+                      ),
                     ),
-                    items: clients
-                        .map((c) => DropdownMenuItem(value: c, child: Text(c)))
-                        .toList(),
-                    onChanged: widget.isEdit
-                        ? null
-                        : (v) => setState(() {
-                            selectedClient = v;
-                            items.clear();
-                          }),
-                  ),
+                    SizedBox(
+                      width: 280,
+                      child: DropdownButtonFormField<OrderEnumStatus>(
+                        initialValue: selectedStatus,
+                        decoration: InputDecoration(
+                          labelText: 'Status',
+                          border: border,
+                        ),
+                        items: OrderEnumStatus.values
+                            .map(
+                              (c) => DropdownMenuItem(
+                                value: c,
+                                child: Text(c.name),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: widget.isEdit
+                            ? null
+                            : (v) => setState(() {
+                                selectedStatus = v;
+                              }),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 280,
+                      child: TextFormField(
+                        controller: paidAmountCtrl,
+                        decoration: InputDecoration(
+                          hintText: 'Paid Amount',
+                          prefixText: '\$ ',
+                          border: border,
+                        ),
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        onChanged: (_) => setState(() {}),
+                      ),
+                    ),
+                  ],
                 ),
-                const Spacer(),
                 CustomBtn(
                   onPress: selectedClient == null ? null : addItem,
                   txt: 'Add Item',
@@ -116,8 +198,10 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                 ),
               ),
             ),
+
             const Divider(thickness: 2),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -128,18 +212,33 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Row(
-                  spacing: 10,
-                  children: [
-                    CustomBtn(
-                      onPress: () => Navigator.pop(context),
-                      txt: 'Cancel',
-                    ),
-                    CustomBtn(
-                      onPress: () {},
-                      txt: widget.isEdit ? 'Update' : 'Create',
-                    ),
-                  ],
+                BlocConsumer<OrderCubit, OrderState>(
+                  listener: (context, state) {
+                    if (state.status == OrderStatus.opsuccsess) {
+                      goBack(context);
+                    }
+                    if (state.status == OrderStatus.error) {
+                      showToast(context, state.msg ?? "");
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state.status == OrderStatus.oploading) {
+                      return const CustomLoading();
+                    }
+                    return Row(
+                      spacing: 10,
+                      children: [
+                        CustomBtn(
+                          onPress: () => Navigator.pop(context),
+                          txt: 'Cancel',
+                        ),
+                        CustomBtn(
+                          onPress: widget.isEdit ? updateOrder : createOrder,
+                          txt: widget.isEdit ? 'Update' : 'Create',
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
@@ -159,63 +258,65 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
       ),
       child: Row(
         children: const [
-          _HeaderCell('#', colNo),
-          _HeaderCell('Warehouse', colWarehouse),
-          _HeaderCell('Product', colProduct),
-          _HeaderCell('Actual Price', colActualPrice),
-          _HeaderCell('Price', colPrice),
-          _HeaderCell('Stock', colStock),
-          _HeaderCell('Quantity', colQty),
-          _HeaderCell('Total', colTotal),
-          _HeaderCell('Action', colAction),
+          _HeaderCell('#', ConstFit.colNo),
+          _HeaderCell('Warehouse', ConstFit.colWarehouse),
+          _HeaderCell('Product', ConstFit.colProduct),
+          _HeaderCell('Actual Price', ConstFit.colActualPrice),
+          _HeaderCell('Price', ConstFit.colPrice),
+          _HeaderCell('Stock', ConstFit.colStock),
+          _HeaderCell('Quantity', ConstFit.colQty),
+          _HeaderCell('Total', ConstFit.colTotal),
+          _HeaderCell('Action', ConstFit.colAction),
         ],
       ),
     );
   }
 
   Widget _buildRow(int index, OrderItemModel item) {
-    final products = item.selectedWarehouse == null
-        ? <WarehouseProduct>[]
-        : warehouseProducts[item.selectedWarehouse!] ?? [];
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
       child: Row(
         spacing: 16,
         children: [
-          _Cell(Text('${index + 1}'), colNo),
-
+          _Cell(Text('${index + 1}'), ConstFit.colNo),
           _Cell(
-            DropdownButtonFormField<String>(
+            DropdownButtonFormField<WarehouseEntity>(
               initialValue: item.selectedWarehouse,
               decoration: InputDecoration(
                 hintText: 'Warehouse',
                 border: border,
               ),
-              items: warehouses
-                  .map((w) => DropdownMenuItem(value: w, child: Text(w)))
+              items: wareList
+                  ?.map((w) => DropdownMenuItem(value: w, child: Text(w.name)))
                   .toList(),
               onChanged: (v) {
-                item.selectWarehouse(v);
-                setState(() {});
+                setState(() {
+                  item.selectWarehouse(v);
+                });
               },
             ),
-            colWarehouse,
+            ConstFit.colWarehouse,
           ),
 
           _Cell(
-            DropdownButtonFormField<WarehouseProduct>(
-              initialValue: item.selectedProduct,
+            DropdownButtonFormField<WareProEntity>(
+              initialValue: item.selectedWProduct,
               decoration: InputDecoration(hintText: 'Product', border: border),
-              items: products
-                  .map((p) => DropdownMenuItem(value: p, child: Text(p.name)))
+              items: item.selectedWarehouse?.products
+                  ?.map(
+                    (wp) => DropdownMenuItem(
+                      value: wp,
+                      child: Text(wp.product?.name ?? ""),
+                    ),
+                  )
                   .toList(),
               onChanged: (v) {
-                item.selectProduct(v);
-                setState(() {});
+                setState(() {
+                  item.selectProduct(v);
+                });
               },
             ),
-            colProduct,
+            ConstFit.colProduct,
           ),
 
           _Cell(
@@ -230,7 +331,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                 ),
               ),
             ),
-            colActualPrice,
+            ConstFit.colActualPrice,
           ),
 
           _Cell(
@@ -246,10 +347,13 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
               ),
               onChanged: (_) => setState(() {}),
             ),
-            colPrice,
+            ConstFit.colPrice,
           ),
 
-          _Cell(Center(child: Text("${item.stockQty} units")), colStock),
+          _Cell(
+            Center(child: Text("${item.stockQty} units")),
+            ConstFit.colStock,
+          ),
 
           _Cell(
             Row(
@@ -287,7 +391,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                 ),
               ],
             ),
-            colQty,
+            ConstFit.colQty,
           ),
 
           _Cell(
@@ -300,7 +404,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                 ),
               ),
             ),
-            colTotal,
+            ConstFit.colTotal,
           ),
 
           _Cell(
@@ -313,7 +417,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                 },
               ),
             ),
-            colAction,
+            ConstFit.colAction,
           ),
         ],
       ),
@@ -355,19 +459,19 @@ class _Cell extends StatelessWidget {
 }
 
 class OrderItemModel {
-  String? selectedWarehouse;
-  WarehouseProduct? selectedProduct;
+  WarehouseEntity? selectedWarehouse;
+  WareProEntity? selectedWProduct;
+  List<WareProEntity>? wpList;
   double? actualPrice;
-
   final priceController = TextEditingController();
   final qtyController = TextEditingController();
 
   int stockQty = 0;
   String? qtyError;
 
-  void selectWarehouse(String? v) {
+  void selectWarehouse(WarehouseEntity? v) {
     selectedWarehouse = v;
-    selectedProduct = null;
+    selectedWProduct = null;
     stockQty = 0;
     actualPrice = null;
     priceController.clear();
@@ -375,11 +479,11 @@ class OrderItemModel {
     qtyError = null;
   }
 
-  void selectProduct(WarehouseProduct? p) {
-    selectedProduct = p;
-    stockQty = p?.quantity ?? 0;
-    actualPrice = p?.price;
-    priceController.text = p?.price.toString() ?? '';
+  void selectProduct(WareProEntity? wp) {
+    selectedWProduct = wp;
+    stockQty = wp?.quantity ?? 0;
+    actualPrice = wp?.product?.sellPrice;
+    priceController.text = wp?.product?.sellPrice.toString() ?? '';
     qtyController.text = '0';
     qtyError = null;
   }
@@ -414,11 +518,4 @@ class OrderItemModel {
       qtyError = null;
     }
   }
-}
-
-class WarehouseProduct {
-  final String name;
-  final double price;
-  final int quantity;
-  WarehouseProduct(this.name, this.price, this.quantity);
 }

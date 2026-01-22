@@ -13,7 +13,7 @@ enum MenuAction { edit, delete }
 class WareProMenu extends StatefulWidget {
   const WareProMenu({super.key, required this.data, this.prodList});
   final List<ProductEntity>? prodList;
-  final WareProEntitiy data;
+  final WareProEntity data;
 
   @override
   State<WareProMenu> createState() => _WareProMenuState();

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 void showWareProductDialog(
   BuildContext context, {
   required Function(WareProCreate data) action,
-  WareProEntitiy? editData,
+  WareProEntity? editData,
   required bool isEdit,
   List<ProductEntity>? prodList,
   int? wareId,

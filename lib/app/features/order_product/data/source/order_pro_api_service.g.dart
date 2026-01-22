@@ -12,7 +12,7 @@ part of 'order_pro_api_service.dart';
 
 class _OrderProApiService implements OrderProApiService {
   _OrderProApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://155.138.235.216:8001';
+    baseUrl ??= 'http://95.182.116.9:8001';
   }
 
   final Dio _dio;

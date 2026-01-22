@@ -30,7 +30,7 @@ class ClientCubit extends Cubit<ClientState> {
     }
   }
 
-  void getAllClient() async {
+  Future<void> getAllClient() async {
     emit(state.copyWith(status: ClientStatus.loading));
     var res = await _repo.getAllClient();
     if (res is DataSuccess) {

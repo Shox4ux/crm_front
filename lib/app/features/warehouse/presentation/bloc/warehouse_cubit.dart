@@ -35,7 +35,7 @@ class WarehouseCubit extends Cubit<WarehouseState> {
   void onWPessed(int id) => _wId = id;
   int getWID() => _wId;
 
-  void getAllWarehouse() async {
+  Future<void> getAllWarehouse() async {
     emit(state.copyWith(status: WareStatus.getall));
     var res = await _wRepo.getAllWarehouse();
     if (res is DataSuccess) {

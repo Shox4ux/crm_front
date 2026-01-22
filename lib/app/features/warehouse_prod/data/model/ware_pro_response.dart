@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'ware_pro_response.g.dart';
 
 @JsonSerializable()
-class WareProResponse extends WareProEntitiy {
+class WareProResponse extends WareProEntity {
   WareProResponse({
     required super.id,
     required super.product,

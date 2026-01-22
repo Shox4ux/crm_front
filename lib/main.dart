@@ -2,6 +2,8 @@ import 'package:crm_app/app/features/client/domain/repo/client_repo.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
 import 'package:crm_app/app/features/core/theme/app_themex.dart';
 import 'package:crm_app/app/features/home/presentation/bloc/cubit/drawerx_cubit.dart';
+import 'package:crm_app/app/features/order/domain/repo/order_repo.dart';
+import 'package:crm_app/app/features/order/presentation/bloc/order_cubit.dart';
 import 'package:crm_app/app/features/product/data/repo/product_repo.dart';
 import 'package:crm_app/app/features/product/presentation/bloc/product_cubit.dart';
 import 'package:crm_app/app/features/product_expense/data/repo/expense_repo.dart';
@@ -36,6 +38,7 @@ class CRMApp extends StatelessWidget {
       BlocProvider(create: (_) => WarehouseCubit(locator<WarehouseRepo>())),
       BlocProvider(create: (_) => WareProCubit(locator<WareProRepo>())),
       BlocProvider(create: (_) => UserCubit(locator<UserRepo>())),
+      BlocProvider(create: (_) => OrderCubit(locator<OrderRepo>())),
       BlocProvider(
         create: (_) =>
             ProductCubit(locator<ProductRepo>(), locator<ExpenseRepo>()),

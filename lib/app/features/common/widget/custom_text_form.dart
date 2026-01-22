@@ -16,13 +16,14 @@ class CustomForm extends StatelessWidget {
     this.withLabel = true,
     this.initVal,
     this.isDigit = false,
+    this.width,
   });
   final TextEditingController? ctrl;
   final String? txt;
   final bool isPass;
   final bool withLabel;
   final bool isDigit;
-
+  final double? width;
   final String? Function(String?)? valid;
   final void Function(String?)? onChanged;
   final bool readOnly;
@@ -43,7 +44,7 @@ class CustomForm extends StatelessWidget {
             : SizedBox.shrink(),
         SizedBox(
           height: 60,
-          width: 360,
+          width: width ?? 360,
           child: TextFormField(
             initialValue: initVal,
             readOnly: readOnly,

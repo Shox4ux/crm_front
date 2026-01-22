@@ -1,6 +1,6 @@
 import 'package:crm_app/app/features/product/data/model/product_response.dart';
 
-class WareProEntitiy {
+class WareProEntity {
   final int id;
   final ProductResponse? product;
   final int warehouseId;
@@ -8,7 +8,7 @@ class WareProEntitiy {
   final DateTime? arrivesAt;
   final int quantity;
 
-  WareProEntitiy({
+  WareProEntity({
     required this.id,
     required this.product,
     required this.warehouseId,

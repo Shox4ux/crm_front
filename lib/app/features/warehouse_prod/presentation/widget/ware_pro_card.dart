@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 class WareProCard extends StatelessWidget {
   const WareProCard({super.key, required this.item});
-  final WareProEntitiy item;
+  final WareProEntity item;
 
   @override
   Widget build(BuildContext context) {

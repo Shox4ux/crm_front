@@ -59,7 +59,7 @@ class WareProCubit extends Cubit<WareProState> {
     }
   }
 
-  void delWareProd(WareProEntitiy item) async {
+  void delWareProd(WareProEntity item) async {
     emit(state.copyWith(status: WareProStatus.loading));
     var res = await _wpRepo.deleteWarehouseProduct(id: item.id);
     if (res is DataSuccess) {

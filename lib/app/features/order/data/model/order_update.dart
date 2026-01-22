@@ -1,6 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
+import 'package:crm_app/app/features/order_product/data/model/order_pro_create.dart';
+import 'package:crm_app/app/features/order_product/data/model/order_pro_update.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'order_update.g.dart';
@@ -9,6 +8,9 @@ part 'order_update.g.dart';
 class OrderUpdate {
   final int status;
   final double paidAmount;
+  final List<int>? deletedOrderProducts;
+  final List<OrderProUpdate>? updatedOrderProducts; // <OrderProUpdate>
+  final List<OrderProCreate>? newOrderProducts;
   final String? adminNote;
   final String? clientNote;
   OrderUpdate({
@@ -16,15 +18,13 @@ class OrderUpdate {
     required this.paidAmount,
     this.adminNote,
     this.clientNote,
+    this.deletedOrderProducts,
+    this.updatedOrderProducts,
+    this.newOrderProducts,
   });
 
-  Map<String, dynamic> toMap() => _$OrderUpdateToJson(this);
+  Map<String, dynamic> toJson() => _$OrderUpdateToJson(this);
 
-  factory OrderUpdate.fromMap(Map<String, dynamic> map) =>
+  factory OrderUpdate.fromJson(Map<String, dynamic> map) =>
       _$OrderUpdateFromJson(map);
-
-  String toJson() => json.encode(toMap());
-
-  factory OrderUpdate.fromJson(String source) =>
-      OrderUpdate.fromMap(json.decode(source) as Map<String, dynamic>);
 }
