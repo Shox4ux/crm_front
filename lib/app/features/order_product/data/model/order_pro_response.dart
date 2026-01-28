@@ -17,4 +17,8 @@ class OrderProResponse extends OrderProEntity {
 
   factory OrderProResponse.fromJson(Map<String, dynamic> map) =>
       _$OrderProResponseFromJson(map);
+
+  double get total {
+    return customPrice * customQuantity;
+  }
 }

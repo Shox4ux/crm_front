@@ -48,9 +48,9 @@ class _ProductCardState extends State<ProductCard> {
                 if (loadingProgress == null) {
                   return child; // IMAGE LOADED
                 }
-                return OnImgError(height: 200); // LOADING PLACEHOLDER
+                return OnImgError(height: 185); // LOADING PLACEHOLDER
               },
-              errorBuilder: (c, e, s) => OnImgError(height: 200),
+              errorBuilder: (c, e, s) => OnImgError(height: 185),
             ),
           ),
           BorderedContainer(
@@ -88,11 +88,7 @@ class _ProductCardState extends State<ProductCard> {
                   backgroundColor: AppColour.textFieldBgDark,
                   child: IconButton(
                     onPressed: () {
-                      showDelConfrm(
-                        ctx: context,
-                        action: () =>
-                            showDelConfrm(ctx: context, action: delete),
-                      );
+                      showDelConfrm(ctx: context, action: delete);
                     },
                     icon: SvgPicture.asset(AppAssets.delete),
                   ),

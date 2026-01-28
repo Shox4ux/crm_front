@@ -4,6 +4,7 @@ import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
 import 'package:crm_app/app/features/order/domain/entity/order_entity.dart';
 import 'package:crm_app/app/features/order/presentation/utils/date_formatter.dart';
+import 'package:crm_app/app/features/order/presentation/utils/get_total.dart';
 import 'package:crm_app/app/features/order/presentation/utils/order_enum_status.dart';
 import 'package:crm_app/app/features/order/presentation/utils/order_list_view_enum.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,9 @@ class CustomTable extends StatelessWidget {
               RowCellText(txt: rows[i].client?.user.username ?? ""),
               RowCellText(txt: rows[i].client?.user.address ?? ""),
               RowCellText(txt: formatDateTime(rows[i].createdAt)),
+              RowCellText(
+                txt: "\$ ${getTotal(rows[i].orderProducts).toStringAsFixed(2)}",
+              ),
               RowCellText(txt: "\$ ${rows[i].paidAmount.toString()}"),
               RowCellText(
                 status: orderStatusFromInt(rows[i].status),
@@ -122,8 +126,14 @@ class RowCellText extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             spacing: 20,
             children: [
-              IconButton(onPressed: editAction, icon: Icon(Icons.edit)),
-              IconButton(onPressed: delAction, icon: Icon(Icons.delete)),
+              IconButton(
+                onPressed: editAction,
+                icon: Icon(Icons.edit, color: Colors.blue),
+              ),
+              IconButton(
+                onPressed: delAction,
+                icon: Icon(Icons.delete, color: Colors.red),
+              ),
             ],
           ),
         );

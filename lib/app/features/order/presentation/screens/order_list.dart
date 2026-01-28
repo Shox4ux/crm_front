@@ -15,7 +15,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-var colist = ["n", "name", "address", "date", "amount", "status", "actions"];
+var colist = [
+  "n",
+  "name",
+  "address",
+  "date",
+  "total amount",
+  "paid amount",
+  "status",
+  "actions",
+];
 
 class OrderList extends StatefulWidget {
   const OrderList({super.key});
@@ -35,7 +44,7 @@ class _OrderListState extends State<OrderList> {
     showDelConfrm(
       ctx: context,
       action: () {
-        print(order.client?.user.username.toString());
+        context.read<OrderCubit>().deleteOrder(id: order.id);
         goBack(context);
       },
     );

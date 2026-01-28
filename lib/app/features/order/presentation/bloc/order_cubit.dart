@@ -55,4 +55,15 @@ class OrderCubit extends Cubit<OrderState> {
       emit(state.copyWith(status: OrderStatus.error, msg: res.errorMsg));
     }
   }
+
+  void deleteOrder({required int id}) async {
+    emit(state.copyWith(status: OrderStatus.loading));
+    final res = await _repo.deleteOrder(id: id);
+    if (res is DataSuccess) {
+      emit(state.copyWith(status: OrderStatus.opsuccsess));
+      getAllOrder();
+    } else {
+      emit(state.copyWith(status: OrderStatus.error, msg: res.errorMsg));
+    }
+  }
 }

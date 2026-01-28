@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:crm_app/app/features/common/data/repo/data_state.dart';
 import 'package:crm_app/app/features/product/data/model/product_create.dart';
 import 'package:crm_app/app/features/product/data/repo/product_repo.dart';
@@ -52,17 +54,13 @@ class ProductCubit extends Cubit<ProductState> {
       _filtered = res.data ?? [];
       emit(state.copyWith(list: res.data, status: state.isEmpty(res.data)));
     } else {
-      emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
-    }
-  }
-
-  Future<List<ProductEntity>> prodFor() async {
-    emit(state.copyWith(status: ProdStatus.loading));
-    var res = await _repo.getAllProduct();
-    if (res is DataSuccess) {
-      return res.data ?? [];
-    } else {
-      return [];
+      emit(
+        state.copyWith(
+          status: ProdStatus.retriable,
+          msg: res.errorMsg,
+          retry: getAllProduct,
+        ),
+      );
     }
   }
 
@@ -79,10 +77,10 @@ class ProductCubit extends Cubit<ProductState> {
           emit(state.copyWith(msg: "Successfully updated"));
         }
       }
-      getAllProduct();
     } else {
       emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
     }
+    getAllProduct();
   }
 
   void createProduct({
@@ -100,10 +98,10 @@ class ProductCubit extends Cubit<ProductState> {
           emit(state.copyWith(msg: "Successfully created"));
         }
       }
-      getAllProduct();
     } else {
       emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
     }
+    getAllProduct();
   }
 
   void deleteProduct({required int id}) async {
@@ -111,9 +109,9 @@ class ProductCubit extends Cubit<ProductState> {
     var res = await _repo.deleteProduct(id: id);
     if (res is DataSuccess) {
       emit(state.copyWith(msg: "Successfully deleted"));
-      getAllProduct();
     } else {
       emit(state.copyWith(status: ProdStatus.error, msg: res.errorMsg));
     }
+    getAllProduct();
   }
 }
