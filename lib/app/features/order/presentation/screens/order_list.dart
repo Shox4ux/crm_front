@@ -34,6 +34,7 @@ class OrderList extends StatefulWidget {
 }
 
 class _OrderListState extends State<OrderList> {
+  String query = "";
   @override
   void initState() {
     super.initState();
@@ -54,6 +55,10 @@ class _OrderListState extends State<OrderList> {
     context.push(Routes.orderAddEdit, extra: order);
   }
 
+  void filterPressed() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -62,17 +67,22 @@ class _OrderListState extends State<OrderList> {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 30,
         children: [
-          // CustomTitle(title: "Orders"),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              CustomFilter(),
+              CustomFilter(onFilterPressed: filterPressed),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 spacing: 10,
                 children: [
-                  CustomSearch(),
+                  CustomSearch(
+                    onChanged: (val) {
+                      setState(() {
+                        context.read<OrderCubit>().qFilter(val);
+                      });
+                    },
+                  ),
                   CustomBtn(
                     onPress: () => context.push(Routes.orderAddEdit),
                     txt: "Add",

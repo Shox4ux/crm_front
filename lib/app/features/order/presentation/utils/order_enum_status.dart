@@ -2,6 +2,17 @@ import 'dart:ui';
 
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 
+enum OrderFilterStatus {
+  all(color: AppColour.textDark),
+  processing(color: AppColour.inprocessDark),
+  onhold(color: AppColour.onholdDark),
+  completed(color: AppColour.completedDark),
+  rejected(color: AppColour.rejectedDark);
+
+  final Color color;
+  const OrderFilterStatus({required this.color});
+}
+
 enum OrderEnumStatus {
   processing(color: AppColour.inprocessDark),
   onhold(color: AppColour.onholdDark),

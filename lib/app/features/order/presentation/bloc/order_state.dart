@@ -3,10 +3,10 @@ part of 'order_cubit.dart';
 enum OrderStatus { init, loading, success, error, empty, oploading, opsuccsess }
 
 class OrderState extends Equatable {
-  const OrderState({this.status = OrderStatus.init, this.orderList, this.msg});
+  const OrderState({this.status = OrderStatus.init, this.list, this.msg});
   final OrderStatus status;
   final String? msg;
-  final List<OrderEntity>? orderList;
+  final List<OrderEntity>? list;
 
   OrderState copyWith({
     OrderStatus? status,
@@ -16,10 +16,10 @@ class OrderState extends Equatable {
     return OrderState(
       status: status ?? this.status,
       msg: msg ?? this.msg,
-      orderList: list ?? orderList,
+      list: list ?? this.list,
     );
   }
 
   @override
-  List<Object> get props => [status, msg ?? "", orderList ?? []];
+  List<Object> get props => [status, msg ?? "", list ?? []];
 }
