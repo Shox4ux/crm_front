@@ -1,9 +1,6 @@
 import 'package:crm_app/app/features/product/data/model/product_response.dart';
-import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
 
 class WareProFake {
-  final _list = <WareProEntity>[];
-
   static final List<ProductResponse> prodList = [
     ProductResponse(
       id: 1,
@@ -42,24 +39,4 @@ class WareProFake {
       createdAt: DateTime.now(),
     ),
   ];
-
-  WareProFake() {
-    _list.addAll(
-      prodList.map(
-        (e) => WareProEntity(
-          id: 1,
-          product: e,
-          warehouseId: 1,
-          status: e.id,
-          arrivesAt: DateTime.now(),
-          quantity: 100 * e.id,
-        ),
-      ),
-    );
-  }
-
-  List<WareProEntity> data() => _list;
-  void addWP(WareProEntity data) {
-    _list.add(data);
-  }
 }

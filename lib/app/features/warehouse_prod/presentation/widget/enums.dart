@@ -3,9 +3,8 @@
 import 'package:flutter/material.dart';
 
 enum ProductStatus {
-  pending(Colors.orange),
-  sold(Colors.green),
-  cancelled(Colors.red);
+  coming(Colors.orange),
+  exists(Colors.green);
 
   final Color color;
   const ProductStatus(this.color);
@@ -14,13 +13,11 @@ enum ProductStatus {
 ProductStatus statusFromInt(int? value) {
   switch (value) {
     case 0:
-      return ProductStatus.pending;
+      return ProductStatus.coming;
     case 1:
-      return ProductStatus.sold;
-    case 2:
-      return ProductStatus.cancelled;
+      return ProductStatus.exists;
     default:
-      return ProductStatus.pending;
+      return ProductStatus.coming;
   }
 }
 

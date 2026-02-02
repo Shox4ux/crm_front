@@ -11,12 +11,15 @@ class WareProCubit extends Cubit<WareProState> {
   final WareProRepo _wpRepo;
 
   late List<WareProResponse> _filtered;
+  late List<WareProResponse> _allFiltered;
 
   WareProCubit(this._wpRepo) : super(WareProState(status: WareProStatus.init)) {
     _filtered = [];
+    _allFiltered = [];
   }
 
   List<WareProResponse> getFiltList() => _filtered;
+  List<WareProResponse> getAllFiltList() => _allFiltered;
 
   void filter(String? query) {
     if (query != null && query.isNotEmpty) {
@@ -31,6 +34,37 @@ class WareProCubit extends Cubit<WareProState> {
     } else {
       _filtered.clear();
       _filtered = state.list;
+    }
+  }
+
+  void allFilter(String? query) {
+    if (query != null && query.isNotEmpty) {
+      var filtered = state.allList
+          .where(
+            (c) =>
+                c.product?.name.toLowerCase().contains(query.toLowerCase()) ??
+                false,
+          )
+          .toList();
+      _allFiltered = filtered;
+    } else {
+      _allFiltered.clear();
+      _allFiltered = state.list;
+    }
+  }
+
+  void getAllWareProd() async {
+    emit(state.copyWith(status: WareProStatus.loading));
+    var res = await _wpRepo.getAllWarehouseProduct();
+    if (res is DataSuccess) {
+      if (res.data == null || res.data!.isEmpty) {
+        emit(state.copyWith(status: WareProStatus.empty));
+      } else {
+        emit(state.copyWith(status: WareProStatus.success, allList: res.data));
+      }
+      _filtered = state.list;
+    } else {
+      emit(state.copyWith(status: WareProStatus.error, msg: res.errorMsg));
     }
   }
 

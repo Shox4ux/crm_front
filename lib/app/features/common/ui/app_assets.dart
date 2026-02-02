@@ -11,7 +11,7 @@ abstract class AppAssets {
   static const String edit = 'assets/imgs/edit.svg';
   static const String filter = 'assets/imgs/filter.svg';
   static const String search = 'assets/imgs/search.svg';
-
+  static const String defaultImg = 'assets/imgs/box.png';
   static const String returnIcon = 'assets/imgs/return.svg';
   static const String leftArrow = 'assets/imgs/left_arrow.svg';
   static const String rightArrow = 'assets/imgs/right_arrow.svg';

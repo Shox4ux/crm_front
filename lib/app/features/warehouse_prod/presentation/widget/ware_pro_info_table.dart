@@ -2,20 +2,18 @@ import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
-import 'package:crm_app/app/features/order/domain/entity/order_entity.dart';
-import 'package:crm_app/app/features/order/presentation/utils/date_formatter.dart';
-import 'package:crm_app/app/features/order/presentation/utils/get_total.dart';
 import 'package:crm_app/app/features/order/presentation/utils/order_enum_status.dart';
 import 'package:crm_app/app/features/order/presentation/utils/order_list_view_enum.dart';
+import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
 import 'package:flutter/material.dart';
 
-class OrderCustomTable extends StatelessWidget {
+class WareProInfoTable extends StatelessWidget {
   final List<String> clms;
-  final List<OrderEntity> rows;
-  final void Function(OrderEntity order) delAction;
-  final void Function(OrderEntity order) editAction;
+  final List<WareProEntity> rows;
+  final void Function(WareProEntity order) delAction;
+  final void Function(WareProEntity order) editAction;
 
-  const OrderCustomTable({
+  const WareProInfoTable({
     super.key,
     required this.clms,
     required this.rows,
@@ -51,6 +49,17 @@ class OrderCustomTable extends StatelessWidget {
   }
 
   // ---------------- DATA ROWS ----------------
+
+  //  final colist = [
+  //   "number",
+  //   "product name",
+  //   "warehouse",
+  //   "actual qty",
+  //   "warehouse qty",
+  //   "price",
+  //   "status",
+  //   "actions",
+  // ];
   List<Widget> _buildRows() {
     return List.generate(rows.length, (i) {
       return Column(
@@ -58,19 +67,13 @@ class OrderCustomTable extends StatelessWidget {
           Row(
             children: [
               RowCellText(txt: "${i + 1}"),
-              RowCellText(txt: rows[i].client?.user.username ?? ""),
-              RowCellText(txt: rows[i].client?.user.address ?? ""),
-              RowCellText(txt: formatDateTime(rows[i].createdAt)),
+              RowCellText(txt: rows[i].product?.name ?? ""),
+              RowCellText(txt: rows[i].warehouseId.toString()),
+              RowCellText(txt: rows[i].product?.totalQuantity.toString() ?? ""),
+              RowCellText(txt: rows[i].quantity.toString()),
               RowCellText(
-                txt: "\$ ${getTotal(rows[i].orderProducts).toStringAsFixed(2)}",
+                txt: "\$ ${rows[i].product?.sellPrice.toStringAsFixed(2)}",
               ),
-              RowCellText(txt: "\$ ${rows[i].paidAmount.toString()}"),
-              RowCellText(
-                // viewEnum: OrderListViewEnum.debt,
-                txt:
-                    "\$ ${(getTotal(rows[i].orderProducts) - rows[i].paidAmount).toStringAsFixed(2)}",
-              ),
-
               RowCellText(
                 status: orderStatusFromInt(rows[i].status),
                 viewEnum: OrderListViewEnum.status,

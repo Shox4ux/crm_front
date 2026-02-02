@@ -25,7 +25,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:crm_app/app/utils/utils.dart';
 
@@ -40,7 +39,6 @@ class ProductAddEdit extends StatefulWidget {
 
 class _ProductAddEditState extends State<ProductAddEdit> {
   File? _image;
-  final picker = ImagePicker();
   MultipartFile? img;
   String? _initialUrl;
   final TextEditingController nameCtrl = TextEditingController();

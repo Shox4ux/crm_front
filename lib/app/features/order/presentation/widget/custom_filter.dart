@@ -12,8 +12,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class CustomFilter extends StatefulWidget {
-  const CustomFilter({super.key, required this.onFilterPressed});
-
+  const CustomFilter({
+    super.key,
+    required this.onFilterPressed,
+    this.isWarePro = false,
+  });
+  final bool isWarePro;
   final void Function() onFilterPressed;
 
   @override
@@ -94,38 +98,62 @@ class _CustomFilterState extends State<CustomFilter> {
             },
             child: FilterItem(img: SvgPicture.asset(AppAssets.filter)),
           ),
-          SizedBox(
-            width: 280,
-            child: TextField(
-              controller: fromDateCtrl,
-              keyboardType: TextInputType.datetime,
-              decoration: InputDecoration(
-                border: border,
-                labelText: 'From date',
-                hintText: 'dd.MM.yyyy',
-                suffixIcon: Icon(Icons.calendar_today),
-              ),
-              onTap: () => _pickDate(isFrom: true),
-              onChanged: (_) => _applyManualDateEdit(),
-            ),
-          ),
-          const SizedBox(width: 12),
-          SizedBox(
-            width: 280,
-            child: TextField(
-              controller: toDateCtrl,
-              keyboardType: TextInputType.datetime,
-              decoration: InputDecoration(
-                border: border,
+          widget.isWarePro
+              ? SizedBox(
+                  width: 280,
+                  child: DropdownButtonFormField<OrderFilterStatus>(
+                    initialValue: selectedStatus,
+                    decoration: InputDecoration(
+                      labelText: 'Status',
+                      border: border,
+                    ),
+                    items: OrderFilterStatus.values
+                        .map(
+                          (c) =>
+                              DropdownMenuItem(value: c, child: Text(c.name)),
+                        )
+                        .toList(),
+                    onChanged: (v) => setState(() {
+                      selectedStatus = v;
+                    }),
+                  ),
+                )
+              : Row(
+                  children: [
+                    SizedBox(
+                      width: 280,
+                      child: TextField(
+                        controller: fromDateCtrl,
+                        keyboardType: TextInputType.datetime,
+                        decoration: InputDecoration(
+                          border: border,
+                          labelText: 'From date',
+                          hintText: 'dd.MM.yyyy',
+                          suffixIcon: Icon(Icons.calendar_today),
+                        ),
+                        onTap: () => _pickDate(isFrom: true),
+                        onChanged: (_) => _applyManualDateEdit(),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    SizedBox(
+                      width: 280,
+                      child: TextField(
+                        controller: toDateCtrl,
+                        keyboardType: TextInputType.datetime,
+                        decoration: InputDecoration(
+                          border: border,
 
-                labelText: 'To date',
-                hintText: 'dd.MM.yyyy',
-                suffixIcon: Icon(Icons.calendar_today),
-              ),
-              onTap: () => _pickDate(isFrom: false),
-              onChanged: (_) => _applyManualDateEdit(),
-            ),
-          ),
+                          labelText: 'To date',
+                          hintText: 'dd.MM.yyyy',
+                          suffixIcon: Icon(Icons.calendar_today),
+                        ),
+                        onTap: () => _pickDate(isFrom: false),
+                        onChanged: (_) => _applyManualDateEdit(),
+                      ),
+                    ),
+                  ],
+                ),
           const SizedBox(width: 12),
 
           SizedBox(

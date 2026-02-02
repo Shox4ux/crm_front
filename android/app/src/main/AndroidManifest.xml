@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:usesCleartextTraffic="true"
-        android:label="crm_app"
+        android:label="start"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

@@ -20,9 +20,4 @@ class ClientResponse extends ClientEntity {
 
   factory ClientResponse.fromJson(Map<String, dynamic> map) =>
       _$ClientResponseFromJson(map);
-
-  Map<String, dynamic> toMap() => _$ClientResponseToJson(this);
-
-  factory ClientResponse.fromMap(Map<String, dynamic> map) =>
-      _$ClientResponseFromJson(map);
 }

@@ -35,7 +35,7 @@ final List<OrderData> orderList = [
     clientAddress: "Yunusobod, Tashkent",
     date: "2025-01-12",
     type: "Delivery",
-    status: OrderEnumStatus.onhold,
+    status: OrderEnumStatus.paid,
   ),
   OrderData(
     id: 2,
@@ -43,7 +43,7 @@ final List<OrderData> orderList = [
     clientAddress: "Chilonzor, Tashkent",
     date: "2025-01-13",
     type: "Pickup",
-    status: OrderEnumStatus.processing,
+    status: OrderEnumStatus.unpaid,
   ),
   OrderData(
     id: 3,
@@ -51,7 +51,7 @@ final List<OrderData> orderList = [
     clientAddress: "Sergeli, Tashkent",
     date: "2025-02-01",
     type: "Delivery",
-    status: OrderEnumStatus.completed,
+    status: OrderEnumStatus.paid,
   ),
   OrderData(
     id: 4,
@@ -59,7 +59,7 @@ final List<OrderData> orderList = [
     clientAddress: "Samarkand City",
     date: "2025-02-03",
     type: "Delivery",
-    status: OrderEnumStatus.rejected,
+    status: OrderEnumStatus.unpaid,
   ),
   OrderData(
     id: 5,
@@ -67,7 +67,7 @@ final List<OrderData> orderList = [
     clientAddress: "Olmazor, Tashkent",
     date: "2025-02-05",
     type: "Pickup",
-    status: OrderEnumStatus.processing,
+    status: OrderEnumStatus.paid,
   ),
   OrderData(
     id: 6,
@@ -75,7 +75,7 @@ final List<OrderData> orderList = [
     clientAddress: "Bukhara City",
     date: "2025-02-10",
     type: "Delivery",
-    status: OrderEnumStatus.onhold,
+    status: OrderEnumStatus.unpaid,
   ),
   OrderData(
     id: 7,
@@ -83,7 +83,7 @@ final List<OrderData> orderList = [
     clientAddress: "Nukus, Karakalpakstan",
     date: "2025-02-12",
     type: "Pickup",
-    status: OrderEnumStatus.completed,
+    status: OrderEnumStatus.paid,
   ),
   OrderData(
     id: 8,
@@ -91,7 +91,7 @@ final List<OrderData> orderList = [
     clientAddress: "Namangan City",
     date: "2025-02-14",
     type: "Delivery",
-    status: OrderEnumStatus.processing,
+    status: OrderEnumStatus.paid,
   ),
   OrderData(
     id: 9,
@@ -99,7 +99,7 @@ final List<OrderData> orderList = [
     clientAddress: "Andijan City",
     date: "2025-02-18",
     type: "Pickup",
-    status: OrderEnumStatus.onhold,
+    status: OrderEnumStatus.paid,
   ),
   OrderData(
     id: 10,
@@ -107,7 +107,7 @@ final List<OrderData> orderList = [
     clientAddress: "Fergana City",
     date: "2025-02-20",
     type: "Delivery",
-    status: OrderEnumStatus.completed,
+    status: OrderEnumStatus.paid,
   ),
   OrderData(
     id: 11,
@@ -115,7 +115,7 @@ final List<OrderData> orderList = [
     clientAddress: "Urganch City",
     date: "2025-02-22",
     type: "Pickup",
-    status: OrderEnumStatus.processing,
+    status: OrderEnumStatus.paid,
   ),
   OrderData(
     id: 12,
@@ -123,6 +123,6 @@ final List<OrderData> orderList = [
     clientAddress: "Qoqon City",
     date: "2025-02-23",
     type: "Delivery",
-    status: OrderEnumStatus.onhold,
+    status: OrderEnumStatus.paid,
   ),
 ];

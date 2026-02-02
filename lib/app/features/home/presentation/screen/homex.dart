@@ -3,6 +3,7 @@ import 'package:crm_app/app/features/home/presentation/screen/home_holder.dart';
 import 'package:crm_app/app/features/order/presentation/screens/order_list.dart';
 import 'package:crm_app/app/features/product/presentation/screens/product_list.dart';
 import 'package:crm_app/app/features/warehouse/presentation/screens/warehouse_list.dart';
+import 'package:crm_app/app/features/warehouse_prod/presentation/screens/ware_pro_info_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:crm_app/app/features/home/presentation/bloc/cubit/drawerx_cubit.dart';
@@ -12,6 +13,7 @@ List<Widget> screens = [
   HomeHolder(),
   ProductList(),
   WarehouseList(),
+  WareProInfoList(),
   ClientList(),
   OrderList(),
 ];

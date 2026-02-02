@@ -124,21 +124,32 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
 
   void addItem() => setState(() => orderProds.add(OrderItemModel()));
 
+  List<OrderProCreate>? _getOrProdsForCreateOR() {
+    return orderProds
+        .map(
+          (v) => OrderProCreate(
+            customPrice: num.parse(v.priceController.text),
+            customQuantity: num.parse(v.qtyController.text),
+            warehouseProductId: v.selectedWProduct?.id ?? 0,
+          ),
+        )
+        .toList();
+  }
+
+  int _getStatusForCreateOR(double? paidAmount) {
+    return (paidAmount == totalAmount)
+        ? OrderEnumStatus.paid.index
+        : OrderEnumStatus.unpaid.index;
+  }
+
   void createOrder() {
     if (orderProds.isEmpty) return;
+    var paidAmount = double.tryParse(paidAmountCtrl.text);
     var b = OrderCreate(
       clientId: selectedClient?.id ?? 0,
-      status: selectedStatus?.index ?? 0,
-      orderProducts: orderProds
-          .map(
-            (v) => OrderProCreate(
-              customPrice: num.parse(v.priceController.text),
-              customQuantity: num.parse(v.qtyController.text),
-              warehouseProductId: v.selectedWProduct?.id ?? 0,
-            ),
-          )
-          .toList(),
-      paidAmount: double.tryParse(paidAmountCtrl.text) ?? 0,
+      status: _getStatusForCreateOR(paidAmount),
+      orderProducts: _getOrProdsForCreateOR(),
+      paidAmount: paidAmount ?? 0,
       adminNote: "",
       clientNote: "",
     );
@@ -149,14 +160,15 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
     if (widget.isEdit) {
       //================================>>>>>>>>>>>>
       checkIsUpdatedOrderProducts();
+      var paidAmount = double.tryParse(paidAmountCtrl.text) ?? 0;
       //================================>>>>>>>>>>>>
       context.read<OrderCubit>().updateOrder(
         body: OrderUpdate(
           deletedOrderProducts: deletedOrderProducts,
           updatedOrderProducts: updatedOrderProducts,
           newOrderProducts: newOrderProducts,
-          status: selectedStatus?.index ?? 0,
-          paidAmount: double.tryParse(paidAmountCtrl.text) ?? 0,
+          status: _getStatusForCreateOR(paidAmount),
+          paidAmount: paidAmount,
           adminNote: widget.orderToEdit?.adminNote ?? "",
           clientNote: widget.orderToEdit?.clientNote ?? "",
         ),
@@ -239,27 +251,29 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                               }),
                       ),
                     ),
-                    SizedBox(
-                      width: 280,
-                      child: DropdownButtonFormField<OrderEnumStatus>(
-                        initialValue: selectedStatus,
-                        decoration: InputDecoration(
-                          labelText: 'Status',
-                          border: border,
-                        ),
-                        items: OrderEnumStatus.values
-                            .map(
-                              (c) => DropdownMenuItem(
-                                value: c,
-                                child: Text(c.name),
+                    widget.isEdit
+                        ? SizedBox(
+                            width: 280,
+                            child: DropdownButtonFormField<OrderEnumStatus>(
+                              initialValue: selectedStatus,
+                              decoration: InputDecoration(
+                                labelText: 'Status',
+                                border: border,
                               ),
-                            )
-                            .toList(),
-                        onChanged: (v) => setState(() {
-                          selectedStatus = v;
-                        }),
-                      ),
-                    ),
+                              items: OrderEnumStatus.values
+                                  .map(
+                                    (c) => DropdownMenuItem(
+                                      value: c,
+                                      child: Text(c.name),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (v) => setState(() {
+                                selectedStatus = v;
+                              }),
+                            ),
+                          )
+                        : SizedBox.shrink(),
                     SizedBox(
                       width: 280,
                       child: TextFormField(

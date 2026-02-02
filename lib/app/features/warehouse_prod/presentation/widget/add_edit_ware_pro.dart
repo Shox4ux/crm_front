@@ -17,7 +17,7 @@ void showWareProductDialog(
   int? wareId,
   required GlobalKey<FormState>? key,
 }) {
-  final List<int> statusInts = [1, 2, 3];
+  final List<int> statusInts = [0, 1];
   ProductEntity? selectedProduct;
   ProductStatus? selectedStatus;
 
@@ -42,7 +42,7 @@ void showWareProductDialog(
       var b = WareProCreate(
         warehouseId: wareId!,
         productId: isEdit ? editData!.warehouseId : selectedProduct!.id,
-        status: selectedStatus?.index ?? ProductStatus.pending.index,
+        status: selectedStatus?.index ?? ProductStatus.coming.index,
         quantity: int.parse(qtyCtrl.text),
       );
       action(b);

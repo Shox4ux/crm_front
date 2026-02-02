@@ -22,6 +22,7 @@ var colist = [
   "date",
   "total amount",
   "paid amount",
+  "debt",
   "status",
   "actions",
 ];
@@ -92,30 +93,30 @@ class _OrderListState extends State<OrderList> {
             ],
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: BlocConsumer<OrderCubit, OrderState>(
-                listener: (context, state) {
-                  if (state.status == OrderStatus.error ||
-                      state.status == OrderStatus.success) {
-                    showToast(context, state.msg ?? "");
-                  }
-                },
-                builder: (context, state) {
-                  var orderList = context.watch<OrderCubit>().getFiltList();
-                  if (state.status == OrderStatus.loading) {
-                    return const CustomLoading();
-                  }
-                  if (state.status == OrderStatus.empty) {
-                    return const NoData();
-                  }
-                  return CustomTable(
+            child: BlocConsumer<OrderCubit, OrderState>(
+              listener: (context, state) {
+                if (state.status == OrderStatus.error ||
+                    state.status == OrderStatus.success) {
+                  showToast(context, state.msg ?? "");
+                }
+              },
+              builder: (context, state) {
+                var orderList = context.watch<OrderCubit>().getFiltList();
+                if (state.status == OrderStatus.loading) {
+                  return const CustomLoading();
+                }
+                if (state.status == OrderStatus.empty) {
+                  return const NoData();
+                }
+                return SingleChildScrollView(
+                  child: OrderCustomTable(
                     clms: colist,
                     rows: orderList,
                     delAction: deleteOrder,
                     editAction: editOrder,
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
           CustomFooter(

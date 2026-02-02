@@ -1,1 +1,1 @@
-enum OrderListViewEnum { text, status, action }
+enum OrderListViewEnum { text, status, action, debt }

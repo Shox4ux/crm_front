@@ -11,6 +11,7 @@ const List<String> items = [
   "Home",
   "Products",
   "Warehouse",
+  "Ware Products",
   "Clients",
   "Orders",
 ];

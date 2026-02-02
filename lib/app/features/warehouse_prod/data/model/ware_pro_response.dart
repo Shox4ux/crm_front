@@ -1,4 +1,5 @@
 import 'package:crm_app/app/features/product/data/model/product_response.dart';
+import 'package:crm_app/app/features/warehouse/data/model/warehouse_response.dart';
 import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'ware_pro_response.g.dart';
@@ -9,6 +10,7 @@ class WareProResponse extends WareProEntity {
     required super.id,
     required super.product,
     required super.warehouseId,
+    required super.warehouse,
     required super.status,
     required super.arrivesAt,
     required super.quantity,

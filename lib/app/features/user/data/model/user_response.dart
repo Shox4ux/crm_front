@@ -20,9 +20,4 @@ class UserResponse extends UserEntity {
 
   factory UserResponse.fromJson(Map<String, dynamic> map) =>
       _$UserResponseFromJson(map);
-
-  Map<String, dynamic> toMap() => _$UserResponseToJson(this);
-
-  factory UserResponse.fromMap(Map<String, dynamic> map) =>
-      _$UserResponseFromJson(map);
 }

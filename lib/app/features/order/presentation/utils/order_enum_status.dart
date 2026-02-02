@@ -4,20 +4,16 @@ import 'package:crm_app/app/features/common/ui/app_colour.dart';
 
 enum OrderFilterStatus {
   all(color: AppColour.textDark),
-  processing(color: AppColour.inprocessDark),
-  onhold(color: AppColour.onholdDark),
-  completed(color: AppColour.completedDark),
-  rejected(color: AppColour.rejectedDark);
+  paid(color: AppColour.completedDark),
+  unpaid(color: AppColour.rejectedDark);
 
   final Color color;
   const OrderFilterStatus({required this.color});
 }
 
 enum OrderEnumStatus {
-  processing(color: AppColour.inprocessDark),
-  onhold(color: AppColour.onholdDark),
-  completed(color: AppColour.completedDark),
-  rejected(color: AppColour.rejectedDark);
+  paid(color: AppColour.completedDark),
+  unpaid(color: AppColour.rejectedDark);
 
   final Color color;
   const OrderEnumStatus({required this.color});
@@ -26,15 +22,11 @@ enum OrderEnumStatus {
 OrderEnumStatus orderStatusFromInt(int value) {
   switch (value) {
     case 0:
-      return OrderEnumStatus.processing;
+      return OrderEnumStatus.paid;
     case 1:
-      return OrderEnumStatus.onhold;
-    case 2:
-      return OrderEnumStatus.completed;
-    case 3:
-      return OrderEnumStatus.rejected;
+      return OrderEnumStatus.unpaid;
     default:
-      return OrderEnumStatus.processing; // safe fallback
+      return OrderEnumStatus.paid;
   }
 }
 
