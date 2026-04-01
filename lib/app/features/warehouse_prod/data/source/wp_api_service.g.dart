@@ -12,7 +12,7 @@ part of 'wp_api_service.dart';
 
 class _WPApiService implements WPApiService {
   _WPApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://95.182.116.9:8001';
+    baseUrl ??= 'http://94.183.182.130:8001';
   }
 
   final Dio _dio;
@@ -138,6 +138,32 @@ class _WPApiService implements WPApiService {
       errorLogger?.logError(e, s, _options);
       rethrow;
     }
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> updateWProduct({
+    required int id,
+    required WareProCreate body,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<HttpResponse<dynamic>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/warehouse_products/update/${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
     final httpResponse = HttpResponse(_value, _result);
     return httpResponse;
   }

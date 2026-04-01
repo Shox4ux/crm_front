@@ -45,7 +45,7 @@ class WareProCard extends StatelessWidget {
             ],
           ),
         ),
-        WareProMenu(data: item),
+        WareProMenu(warePro: item),
       ],
     );
   }

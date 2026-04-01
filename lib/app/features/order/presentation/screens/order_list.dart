@@ -105,7 +105,8 @@ class _OrderListState extends State<OrderList> {
                 if (state.status == OrderStatus.loading) {
                   return const CustomLoading();
                 }
-                if (state.status == OrderStatus.empty) {
+                if (state.status == OrderStatus.empty ||
+                    state.status == OrderStatus.error) {
                   return const NoData();
                 }
                 return SingleChildScrollView(

@@ -3,6 +3,8 @@ targets:
     sources:
       include:
         - lib/**
+        - pubspec.yaml
+        - $package$
     builders:
       json_serializable:
         options:

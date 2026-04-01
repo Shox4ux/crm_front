@@ -41,7 +41,7 @@ void showWareProductDialog(
     if (key!.currentState!.validate()) {
       var b = WareProCreate(
         warehouseId: wareId!,
-        productId: isEdit ? editData!.warehouseId : selectedProduct!.id,
+        productId: isEdit ? editData!.id : selectedProduct!.id,
         status: selectedStatus?.index ?? ProductStatus.coming.index,
         quantity: int.parse(qtyCtrl.text),
       );

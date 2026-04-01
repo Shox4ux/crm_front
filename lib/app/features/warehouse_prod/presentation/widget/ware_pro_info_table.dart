@@ -48,18 +48,6 @@ class WareProInfoTable extends StatelessWidget {
     );
   }
 
-  // ---------------- DATA ROWS ----------------
-
-  //  final colist = [
-  //   "number",
-  //   "product name",
-  //   "warehouse",
-  //   "actual qty",
-  //   "warehouse qty",
-  //   "price",
-  //   "status",
-  //   "actions",
-  // ];
   List<Widget> _buildRows() {
     return List.generate(rows.length, (i) {
       return Column(
@@ -68,7 +56,7 @@ class WareProInfoTable extends StatelessWidget {
             children: [
               RowCellText(txt: "${i + 1}"),
               RowCellText(txt: rows[i].product?.name ?? ""),
-              RowCellText(txt: rows[i].warehouseId.toString()),
+              RowCellText(txt: rows[i].warehouse?.name ?? ""),
               RowCellText(txt: rows[i].product?.totalQuantity.toString() ?? ""),
               RowCellText(txt: rows[i].quantity.toString()),
               RowCellText(

@@ -58,11 +58,11 @@ class WareProCubit extends Cubit<WareProState> {
     var res = await _wpRepo.getAllWarehouseProduct();
     if (res is DataSuccess) {
       if (res.data == null || res.data!.isEmpty) {
-        emit(state.copyWith(status: WareProStatus.empty));
+        emit(state.copyWith(status: WareProStatus.allempty, allList: res.data));
       } else {
         emit(state.copyWith(status: WareProStatus.success, allList: res.data));
       }
-      _filtered = state.list;
+      _allFiltered = state.allList;
     } else {
       emit(state.copyWith(status: WareProStatus.error, msg: res.errorMsg));
     }
@@ -93,11 +93,21 @@ class WareProCubit extends Cubit<WareProState> {
     }
   }
 
+  void updateWareProd(WareProCreate body, int id) async {
+    emit(state.copyWith(status: WareProStatus.loading));
+    var res = await _wpRepo.updateWarehouseProduct(id: id, body: body);
+    if (res is DataSuccess) {
+      getAllWareProdByWareId(body.warehouseId);
+    } else {
+      emit(state.copyWith(status: WareProStatus.error, msg: res.errorMsg));
+    }
+  }
+
   void delWareProd(WareProEntity item) async {
     emit(state.copyWith(status: WareProStatus.loading));
     var res = await _wpRepo.deleteWarehouseProduct(id: item.id);
     if (res is DataSuccess) {
-      getAllWareProdByWareId(item.warehouseId);
+      getAllWareProdByWareId(item.warehouse!.id);
     } else {
       emit(state.copyWith(status: WareProStatus.error, msg: res.errorMsg));
     }

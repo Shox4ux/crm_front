@@ -56,7 +56,7 @@ class ProductCubit extends Cubit<ProductState> {
     } else {
       emit(
         state.copyWith(
-          status: ProdStatus.retriable,
+          status: ProdStatus.error,
           msg: res.errorMsg,
           retry: getAllProduct,
         ),

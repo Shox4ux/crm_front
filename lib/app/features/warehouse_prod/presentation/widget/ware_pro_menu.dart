@@ -1,5 +1,4 @@
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
-import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/warehouse_prod/data/model/ware_pro_create.dart';
 import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
@@ -11,9 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 enum MenuAction { edit, delete }
 
 class WareProMenu extends StatefulWidget {
-  const WareProMenu({super.key, required this.data, this.prodList});
+  const WareProMenu({super.key, required this.warePro, this.prodList});
   final List<ProductEntity>? prodList;
-  final WareProEntity data;
+  final WareProEntity warePro;
 
   @override
   State<WareProMenu> createState() => _WareProMenuState();
@@ -31,26 +30,26 @@ class _WareProMenuState extends State<WareProMenu> {
 
   void _editWarePro(WareProCreate data) {
     if (_formKey!.currentState!.validate()) {
-      context.read<WareProCubit>();
-      goBack(context);
+      context.read<WareProCubit>().updateWareProd(data, widget.warePro.id);
+      // goBack(context);
     }
   }
 
   void _deleteWarePro() {
     if (mounted) {
-      context.read<WareProCubit>().delWareProd(widget.data);
-      goBack(context);
+      context.read<WareProCubit>().delWareProd(widget.warePro);
+      // goBack(context);
     }
   }
 
   void showEdit() {
     showWareProductDialog(
-      wareId: widget.data.warehouseId,
+      wareId: widget.warePro.warehouse!.id,
       key: _formKey,
       context,
       prodList: widget.prodList,
       action: _editWarePro,
-      editData: widget.data,
+      editData: widget.warePro,
       isEdit: true,
     );
   }

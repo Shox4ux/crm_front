@@ -71,7 +71,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
     paidAmountCtrl = TextEditingController(text: order.paidAmount.toString());
     orderProds = order.orderProducts!.map((i) {
       final ware = wareList!.firstWhere(
-        (w) => w.id == i.warehouseProduct.warehouseId,
+        (w) => w.id == i.warehouseProduct.warehouse?.id,
       );
 
       final wp = ware.products!.firstWhere(

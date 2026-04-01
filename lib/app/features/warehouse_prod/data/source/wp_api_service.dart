@@ -28,6 +28,12 @@ abstract class WPApiService {
     @Path("ware_id") required int wareId,
   });
 
+  @PATCH('/warehouse_products/update/{id}')
+  Future<HttpResponse> updateWProduct({
+    @Path("id") required int id,
+    @Body() required WareProCreate body,
+  });
+
   @DELETE('/warehouse_products/delete/{id}')
   Future<HttpResponse> deleteWProduct({@Path("id") required int id});
 }

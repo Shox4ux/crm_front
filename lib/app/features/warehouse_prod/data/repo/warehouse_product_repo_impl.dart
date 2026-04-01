@@ -4,6 +4,11 @@ import 'package:crm_app/app/features/warehouse_prod/data/model/ware_pro_response
 
 abstract class WarehouseProductRepoImpl {
   Future<DataState> createWarehouseProduct({required WareProCreate body});
+  Future<DataState> updateWarehouseProduct({
+    required int id,
+    required WareProCreate body,
+  });
+
   Future<DataState> deleteWarehouseProduct({required int id});
   Future<DataState<List<WareProResponse>>> getAllWarehouseProduct();
   Future<DataState<List<WareProResponse>>> getAllWarehouseProductByWareId({

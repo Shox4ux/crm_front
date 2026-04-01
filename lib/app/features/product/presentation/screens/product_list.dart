@@ -1,4 +1,3 @@
-import 'package:crm_app/app/features/common/functions/retry_dialog.dart';
 import 'package:crm_app/app/features/common/functions/show_toast.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:crm_app/app/features/common/widget/custom_progress.dart';
@@ -54,14 +53,14 @@ class _ProductListState extends State<ProductList> {
           Flexible(
             child: BlocConsumer<ProductCubit, ProductState>(
               listener: (context, state) {
-                if (state.status == ProdStatus.retriable &&
-                    state.retry != null) {
-                  showRetryDialog(
-                    context: context,
-                    message: state.msg,
-                    onRetry: state.retry!,
-                  );
-                }
+                // if (state.status == ProdStatus.retriable &&
+                //     state.retry != null) {
+                //   showRetryDialog(
+                //     context: context,
+                //     message: state.msg,
+                //     onRetry: state.retry!,
+                //   );
+                // }
 
                 if (state.status == ProdStatus.error) {
                   showToast(context, state.msg);

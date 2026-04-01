@@ -5,7 +5,6 @@ class WareProEntity {
   final int id;
   final ProductResponse? product;
   final WarehouseResponse? warehouse;
-  final int warehouseId;
   final int status;
   final DateTime? arrivesAt;
   final int quantity;
@@ -14,7 +13,6 @@ class WareProEntity {
     required this.warehouse,
     required this.id,
     required this.product,
-    required this.warehouseId,
     required this.status,
     required this.arrivesAt,
     required this.quantity,

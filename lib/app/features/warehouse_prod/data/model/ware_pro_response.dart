@@ -9,7 +9,6 @@ class WareProResponse extends WareProEntity {
   WareProResponse({
     required super.id,
     required super.product,
-    required super.warehouseId,
     required super.warehouse,
     required super.status,
     required super.arrivesAt,

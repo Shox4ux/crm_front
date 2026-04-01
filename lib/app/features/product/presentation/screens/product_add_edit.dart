@@ -20,7 +20,8 @@ import 'package:crm_app/app/features/product/presentation/widget/img_url_holder.
 import 'package:crm_app/app/features/product_expense/data/model/expense_bulk_update.dart';
 import 'package:crm_app/app/features/product_expense/data/model/expense_create.dart';
 import 'package:crm_app/app/utils/extensions/full_url.dart';
-import 'package:crm_app/app/utils/img_handler/img_handler.dart';
+import 'package:crm_app/app/utils/funcs/file_handler.dart';
+import 'package:crm_app/app/utils/funcs/img_handler.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,7 +101,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
         created.add(
           NewExpItem(
             name: exp['name'],
-            amount: double.tryParse(exp['amount']) ?? 1,
+            amount: double.tryParse(exp['amount'].toString()) ?? 1,
           ),
         );
       }
@@ -123,7 +124,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
             ProdItemUp(
               id: id,
               name: exp['name'],
-              amount: double.tryParse(exp['amount']),
+              amount: double.tryParse(exp['amount'].toString()),
             ),
           );
         }
@@ -135,42 +136,58 @@ class _ProductAddEditState extends State<ProductAddEdit> {
   }
 
   Future pickImage() async {
-    final picked = await ImageHelper.imageHandler();
-    if (picked != null) {
-      _image = await ImageHelper.compressAndSave(File(picked.path));
-      if (widget.isEdit) {
-        _initialUrl = null;
-        createMultipart();
+    try {
+      final picked = await FileHelper.fileHandler();
+      if (picked != null) {
+        _image = await ImageHelper.compressAndSave(picked);
+        if (widget.isEdit) {
+          _initialUrl = null;
+          createMultipart();
+        }
+        setState(() {});
       }
-      setState(() {});
+    } catch (e) {
+      print('Error picking image: $e');
     }
   }
 
+  // FIXED: Consistent base price calculation
   double getBasePrice() {
-    double sum = widget.product?.basePrice ?? 0;
+    double totalExpense = 0;
     for (var e in expenses) {
-      sum += (double.tryParse(e['amount'] ?? '0') ?? 0);
+      totalExpense += (double.tryParse(e['amount'].toString()) ?? 0);
     }
+
     int qty = int.tryParse(quantityCtrl.text) ?? 1;
     if (qty <= 0) qty = 1;
-    double end = sum / qty;
-    double truncated = (end * 100).floor() / 100;
-    setState(() {});
-    return truncated;
+
+    double result = totalExpense / qty;
+    return double.parse(result.toStringAsFixed(2));
   }
 
+  // FIXED: Logic for Margin -> Sell Price
   void updateSellPriceFromPercentage(String? val) {
-    double basePrice = getBasePrice();
-    double percent = double.tryParse(profitMarginCtrl.text) ?? 0;
-    double price = basePrice + basePrice * (percent / 100);
-    sellPriceCtrl.text = price.toStringAsFixed(2);
+    double base = getBasePrice();
+    double margin = double.tryParse(profitMarginCtrl.text) ?? 0;
+    double price = base * (1 + (margin / 100));
+
+    setState(() {
+      sellPriceCtrl.text = price.toStringAsFixed(2);
+    });
   }
 
+  // FIXED: Logic for Sell Price -> Margin
   void updatePercentageFromSellPrice(String? val) {
-    double basePrice = getBasePrice();
+    double base = getBasePrice();
     double sell = double.tryParse(sellPriceCtrl.text) ?? 0;
-    double percent = ((sell - basePrice) / basePrice) * 100;
-    profitMarginCtrl.text = percent.toStringAsFixed(2);
+
+    if (base <= 0) return;
+
+    double percent = ((sell - base) / base) * 100;
+
+    setState(() {
+      profitMarginCtrl.text = percent.toStringAsFixed(2);
+    });
   }
 
   void prefillCtrlText() {
@@ -213,7 +230,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
       var items = expenses
           .map(
             (v) => ExpenseCreate(
-              amount: double.tryParse(v['amount']) ?? 0,
+              amount: double.tryParse(v['amount'].toString()) ?? 0,
               name: v['name'],
             ),
           )
@@ -272,7 +289,6 @@ class _ProductAddEditState extends State<ProductAddEdit> {
     expAmount.clear();
     expName.clear();
     updateSellPriceFromPercentage("");
-    updatePercentageFromSellPrice("");
     goBack(ctx);
   });
 
@@ -338,8 +354,10 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                     ctrl: quantityCtrl,
                                     valid: validateNotEmpty,
                                     txt: "Quantity",
-                                    onChanged: (v) =>
-                                        updateSellPriceFromPercentage(""),
+                                    onChanged: (v) {
+                                      // Recalculate everything when quantity changes
+                                      updateSellPriceFromPercentage("");
+                                    },
                                   ),
                                   Text(
                                     "Base Price: \$ ${getBasePrice().toString()}",
@@ -353,7 +371,6 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                               Column(
                                 spacing: 20,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-
                                 children: [
                                   CustomForm(
                                     isDigit: true,
@@ -361,8 +378,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                     valid: validateNotEmpty,
                                     txt: "Sell Price",
                                     prefix: "\$ ",
-                                    onChanged: (v) =>
-                                        updatePercentageFromSellPrice(""),
+                                    onChanged: updatePercentageFromSellPrice,
                                   ),
                                   CustomForm(
                                     prefix: "% ",
@@ -370,8 +386,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                     ctrl: profitMarginCtrl,
                                     valid: validateNotEmpty,
                                     txt: "Profit Margin",
-                                    onChanged: (v) =>
-                                        updateSellPriceFromPercentage(""),
+                                    onChanged: updateSellPriceFromPercentage,
                                   ),
                                   BlocConsumer<ProductCubit, ProductState>(
                                     listener: (context, state) {

@@ -12,7 +12,7 @@ part of 'order_api_service.dart';
 
 class _OrderApiService implements OrderApiService {
   _OrderApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://95.182.116.9:8001';
+    baseUrl ??= 'http://94.183.182.130:8001';
   }
 
   final Dio _dio;

@@ -32,4 +32,12 @@ class WareProRepo extends BaseRepo implements WarehouseProductRepoImpl {
   @override
   Future<DataState<WareProResponse>> getWarehouseProduct({required int id}) =>
       getStateOf(request: () => _service.getWProductById(id: id));
+
+  @override
+  Future<DataState<dynamic>> updateWarehouseProduct({
+    required int id,
+    required WareProCreate body,
+  }) => getStateOf(
+    request: () => _service.updateWProduct(id: id, body: body),
+  );
 }

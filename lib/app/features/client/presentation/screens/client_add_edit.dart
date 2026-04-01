@@ -18,7 +18,7 @@ import 'package:crm_app/app/features/home/presentation/widget/bordered_container
 import 'package:crm_app/app/features/home/presentation/widget/custom_data_table.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/utils/extensions/full_url.dart';
-import 'package:crm_app/app/utils/img_handler/img_handler.dart';
+import 'package:crm_app/app/utils/funcs/img_handler.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

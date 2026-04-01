@@ -9,9 +9,13 @@ class ImageHelper {
 
   // Pick image from gallery
   static Future<XFile?> imageHandler() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile == null) return null;
-    return pickedFile;
+    try {
+      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile == null) return null;
+      return pickedFile;
+    } catch (e) {
+      throw Exception('Failed to pick image: $e');
+    }
   }
 
   // Compress and save image locally
