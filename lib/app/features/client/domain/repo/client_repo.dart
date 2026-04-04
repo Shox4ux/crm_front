@@ -32,10 +32,8 @@ class ClientRepo extends BaseRepo implements ClientRepoImpl {
       getStateOf<List<ClientResponse>>(request: () => _service.getAllClient());
 
   @override
-  Future<DataState<ClientResponse>> getClient({required int userId}) =>
-      getStateOf<ClientResponse>(
-        request: () => _service.getClientById(userId: userId),
-      );
+  Future<DataState<ClientResponse>> getClient({required int id}) =>
+      getStateOf<ClientResponse>(request: () => _service.getClientById(id: id));
 
   @override
   Future<DataState> updateCP({

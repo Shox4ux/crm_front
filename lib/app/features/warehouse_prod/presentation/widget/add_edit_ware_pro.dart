@@ -34,6 +34,12 @@ void showWareProductDialog(
     if (val is String && val.isEmpty) {
       return 'Required';
     }
+    if (val is String &&
+        double.tryParse(val) != null &&
+        double.parse(val) > selectedProduct!.activeQuantity) {
+      return 'Quantity cannot exceed available stock';
+    }
+
     return null;
   }
 
@@ -52,7 +58,7 @@ void showWareProductDialog(
 
   dynamic statusList() {
     return statusInts.map((intValue) {
-      final status = statusFromInt(intValue);
+      final status = wpStatusFromInt(intValue);
       return DropdownMenuItem(
         value: status,
         child: StatusItem(status: status),
@@ -119,14 +125,17 @@ void showWareProductDialog(
                         validator: validate,
                         controller: qtyCtrl,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Custom Quantity',
+                          suffix: Text(
+                            "| Total qty : ${selectedProduct?.activeQuantity}",
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),
                       DropdownButtonFormField<ProductStatus>(
                         decoration: const InputDecoration(labelText: 'Status'),
-                        initialValue: statusFromInt(editData?.status),
+                        initialValue: wpStatusFromInt(editData?.status),
                         items: statusList(),
                         validator: validate,
                         onChanged: (value) {

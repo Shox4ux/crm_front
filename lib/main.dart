@@ -16,13 +16,14 @@ import 'package:crm_app/app/features/warehouse_prod/presentation/bloc/ware_pro_c
 import 'package:crm_app/app_bloc_observer.dart';
 import 'package:crm_app/app/features/core/router/app_router.dart';
 import 'package:crm_app/app_locator.dart';
+import 'package:crm_app/connectivity_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
-  // NetworkStatusService.instance.initialize();
+  NetworkStatusService.instance.initialize();
   await setupLocator();
   runApp(const CRMApp());
 }

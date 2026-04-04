@@ -37,7 +37,7 @@ class WareProCard extends StatelessWidget {
                       ),
                       Text("\$ ${item.product?.sellPrice}"),
                       Text("${item.quantity} units"),
-                      StatusItem(status: statusFromInt(item.status)),
+                      StatusItem(status: wpStatusFromInt(item.status)),
                     ],
                   ),
                 ),

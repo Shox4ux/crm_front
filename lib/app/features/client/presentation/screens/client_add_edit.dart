@@ -4,6 +4,7 @@ import 'package:crm_app/app/features/client/data/model/create_as_client.dart';
 import 'package:crm_app/app/features/client/domain/entity/client_entity.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
 import 'package:crm_app/app/features/client/presentation/widget/client_button.dart';
+import 'package:crm_app/app/features/client/presentation/widget/client_order_table.dart';
 import 'package:crm_app/app/features/client/presentation/widget/local_avatar.dart';
 import 'package:crm_app/app/features/client/presentation/widget/remote_avatar.dart';
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
@@ -14,8 +15,8 @@ import 'package:crm_app/app/features/common/widget/custom_footer.dart';
 import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_text_form.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
+import 'package:crm_app/app/features/common/widget/custon_no_data.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
-import 'package:crm_app/app/features/home/presentation/widget/custom_data_table.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/utils/extensions/full_url.dart';
 import 'package:crm_app/app/utils/funcs/img_handler.dart';
@@ -41,6 +42,7 @@ class _ClientAddEditState extends State<ClientAddEdit> {
   late TextEditingController _addressCtrl;
   bool isEditActive = false;
 
+  var colist = ["n", "date", "total amount", "paid amount", "debt", "status"];
   // for image upload
   File? _image;
   MultipartFile? img;
@@ -222,7 +224,7 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                       ),
                       BlocConsumer<ClientCubit, ClientState>(
                         listener: (context, state) {
-                          if (state.status == ClientStatus.success) {
+                          if (state.status == ClientStatus.opsuccess) {
                             goBack(context);
                           }
                         },
@@ -254,14 +256,11 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                 CustomTitle(title: "Client Invoice"),
                 BlocBuilder<ClientCubit, ClientState>(
                   builder: (context, state) {
-                    return CustomTable(
-                      columns: ["Name", "Age", "Address"],
-                      rows: [
-                        ["John Doe", "30", "123 Main St"],
-                        ["Jane Smith", "25", "456 Oak Ave"],
-                        ["Sam Johnson", "40", "789 Pine Rd"],
-                      ],
-                    );
+                    var orders = state.slctClient?.orders;
+                    if (orders == [] || orders == null) {
+                      return SizedBox(height: 300, child: NoData());
+                    }
+                    return ClientOrderTable(clms: colist, rows: orders);
                   },
                 ),
                 CustomFooter(totalCount: 12, pageCount: 12),

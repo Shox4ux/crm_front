@@ -2,34 +2,31 @@ import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
+import 'package:crm_app/app/features/order/data/model/order_response.dart';
+import 'package:crm_app/app/features/order/presentation/utils/date_formatter.dart';
+import 'package:crm_app/app/features/order/presentation/utils/get_total.dart';
+import 'package:crm_app/app/features/order/presentation/utils/order_enum_status.dart';
 import 'package:crm_app/app/features/order/presentation/utils/order_list_view_enum.dart';
-import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
-import 'package:crm_app/app/features/warehouse_prod/presentation/widget/enums.dart';
 import 'package:flutter/material.dart';
 
-class WareProInfoTable extends StatelessWidget {
+class ClientOrderTable extends StatelessWidget {
   final List<String> clms;
-  final List<WareProEntity> rows;
-  final void Function(WareProEntity order) delAction;
-  final void Function(WareProEntity order) editAction;
+  final List<OrderResponse> rows;
 
-  const WareProInfoTable({
+  final void Function(OrderResponse order)? delAction;
+  final void Function(OrderResponse order)? editAction;
+
+  const ClientOrderTable({
     super.key,
     required this.clms,
     required this.rows,
-    required this.delAction,
-    required this.editAction,
+    this.delAction,
+    this.editAction,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColour.stroke),
-        borderRadius: AppRadius.cardRadius,
-      ),
-      child: Column(children: [_buildHeader(), ..._buildRows()]),
-    );
+    return Column(spacing: 15, children: [_buildHeader(), ..._buildRows()]);
   }
 
   // ---------------- HEADER ----------------
@@ -48,6 +45,7 @@ class WareProInfoTable extends StatelessWidget {
     );
   }
 
+  // ---------------- DATA ROWS ----------------
   List<Widget> _buildRows() {
     return List.generate(rows.length, (i) {
       return Column(
@@ -55,25 +53,28 @@ class WareProInfoTable extends StatelessWidget {
           Row(
             children: [
               RowCellText(txt: "${i + 1}"),
-              RowCellText(txt: rows[i].product?.name ?? ""),
-              RowCellText(txt: rows[i].warehouse?.name ?? ""),
-              RowCellText(txt: rows[i].product?.totalQuantity.toString() ?? ""),
-              RowCellText(txt: rows[i].quantity.toString()),
+              RowCellText(txt: formatDateTime(rows[i].createdAt)),
               RowCellText(
-                txt: "\$ ${rows[i].product?.sellPrice.toStringAsFixed(2)}",
+                txt: "\$ ${getTotal(rows[i].orderProducts).toStringAsFixed(2)}",
               ),
+              RowCellText(txt: "\$ ${rows[i].paidAmount.toString()}"),
               RowCellText(
-                status: wpStatusFromInt(rows[i].status),
+                // viewEnum: OrderListViewEnum.debt,
+                txt:
+                    "\$ ${(getTotal(rows[i].orderProducts) - rows[i].paidAmount).toStringAsFixed(2)}",
+              ),
+
+              RowCellText(
+                status: orderStatusFromInt(rows[i].status),
                 viewEnum: OrderListViewEnum.status,
               ),
-              RowCellText(
-                viewEnum: OrderListViewEnum.action,
-                delAction: () => delAction(rows[i]),
-                editAction: () => editAction(rows[i]),
-              ),
+              // RowCellText(
+              //   viewEnum: OrderListViewEnum.action,
+              //   delAction: () => delAction!(rows[i]),
+              //   editAction: () => editAction!(rows[i]),
+              // ),
             ],
           ),
-
           // Divider between data rows
           if (i != rows.length - 1)
             Container(height: 1, color: AppColour.whiteStroke),
@@ -109,7 +110,7 @@ class RowCellText extends StatelessWidget {
     this.editAction,
   });
   final String txt;
-  final ProductStatus? status;
+  final OrderEnumStatus? status;
   final OrderListViewEnum viewEnum;
   final void Function()? delAction;
   final void Function()? editAction;

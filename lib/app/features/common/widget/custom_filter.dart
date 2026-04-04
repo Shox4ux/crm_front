@@ -6,6 +6,7 @@ import 'package:crm_app/app/features/home/presentation/widget/bordered_container
 import 'package:crm_app/app/features/order/presentation/bloc/order_cubit.dart';
 import 'package:crm_app/app/features/order/presentation/utils/filter_date_formatter.dart';
 import 'package:crm_app/app/features/order/presentation/utils/order_enum_status.dart';
+import 'package:crm_app/app/features/warehouse_prod/presentation/widget/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,7 +30,8 @@ class _CustomFilterState extends State<CustomFilter> {
   final TextEditingController toDateCtrl = TextEditingController();
   DateTime? fromDate;
   DateTime? toDate;
-  OrderFilterStatus? selectedStatus = OrderFilterStatus.all;
+  OrderFilterStatus? sltOrderStatus = OrderFilterStatus.all;
+  WpFilterStatus? sltWpStatus = WpFilterStatus.all;
 
   final DateFormat _dateFormatter = DateFormat('dd.MM.yyyy');
   final border = OutlineInputBorder(
@@ -40,7 +42,7 @@ class _CustomFilterState extends State<CustomFilter> {
     context.read<OrderCubit>().complexFilter(
       from: fromDate,
       to: toDate,
-      status: selectedStatus,
+      status: sltOrderStatus,
     );
   }
 
@@ -76,7 +78,7 @@ class _CustomFilterState extends State<CustomFilter> {
     setState(() {
       fromDate = null;
       toDate = null;
-      selectedStatus = OrderFilterStatus.all;
+      sltOrderStatus = OrderFilterStatus.all;
       fromDateCtrl.clear();
       toDateCtrl.clear();
     });
@@ -101,74 +103,84 @@ class _CustomFilterState extends State<CustomFilter> {
           widget.isWarePro
               ? SizedBox(
                   width: 280,
-                  child: DropdownButtonFormField<OrderFilterStatus>(
-                    initialValue: selectedStatus,
+                  child: DropdownButtonFormField<WpFilterStatus>(
+                    initialValue: sltWpStatus,
                     decoration: InputDecoration(
                       labelText: 'Status',
                       border: border,
                     ),
-                    items: OrderFilterStatus.values
+                    items: WpFilterStatus.values
                         .map(
                           (c) =>
                               DropdownMenuItem(value: c, child: Text(c.name)),
                         )
                         .toList(),
                     onChanged: (v) => setState(() {
-                      selectedStatus = v;
+                      sltWpStatus = v;
                     }),
                   ),
                 )
               : Row(
                   children: [
-                    SizedBox(
-                      width: 280,
-                      child: TextField(
-                        controller: fromDateCtrl,
-                        keyboardType: TextInputType.datetime,
-                        decoration: InputDecoration(
-                          border: border,
-                          labelText: 'From date',
-                          hintText: 'dd.MM.yyyy',
-                          suffixIcon: Icon(Icons.calendar_today),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 280,
+                          child: TextField(
+                            controller: fromDateCtrl,
+                            keyboardType: TextInputType.datetime,
+                            decoration: InputDecoration(
+                              border: border,
+                              labelText: 'From date',
+                              hintText: 'dd.MM.yyyy',
+                              suffixIcon: Icon(Icons.calendar_today),
+                            ),
+                            onTap: () => _pickDate(isFrom: true),
+                            onChanged: (_) => _applyManualDateEdit(),
+                          ),
                         ),
-                        onTap: () => _pickDate(isFrom: true),
-                        onChanged: (_) => _applyManualDateEdit(),
-                      ),
+                        const SizedBox(width: 12),
+                        SizedBox(
+                          width: 280,
+                          child: TextField(
+                            controller: toDateCtrl,
+                            keyboardType: TextInputType.datetime,
+                            decoration: InputDecoration(
+                              border: border,
+                              labelText: 'To date',
+                              hintText: 'dd.MM.yyyy',
+                              suffixIcon: Icon(Icons.calendar_today),
+                            ),
+                            onTap: () => _pickDate(isFrom: false),
+                            onChanged: (_) => _applyManualDateEdit(),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(width: 12),
                     SizedBox(
                       width: 280,
-                      child: TextField(
-                        controller: toDateCtrl,
-                        keyboardType: TextInputType.datetime,
+                      child: DropdownButtonFormField<OrderFilterStatus>(
+                        initialValue: sltOrderStatus,
                         decoration: InputDecoration(
+                          labelText: 'Status',
                           border: border,
-
-                          labelText: 'To date',
-                          hintText: 'dd.MM.yyyy',
-                          suffixIcon: Icon(Icons.calendar_today),
                         ),
-                        onTap: () => _pickDate(isFrom: false),
-                        onChanged: (_) => _applyManualDateEdit(),
+                        items: OrderFilterStatus.values
+                            .map(
+                              (c) => DropdownMenuItem(
+                                value: c,
+                                child: Text(c.name),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (v) => setState(() {
+                          sltOrderStatus = v;
+                        }),
                       ),
                     ),
                   ],
                 ),
-          const SizedBox(width: 12),
-
-          SizedBox(
-            width: 280,
-            child: DropdownButtonFormField<OrderFilterStatus>(
-              initialValue: selectedStatus,
-              decoration: InputDecoration(labelText: 'Status', border: border),
-              items: OrderFilterStatus.values
-                  .map((c) => DropdownMenuItem(value: c, child: Text(c.name)))
-                  .toList(),
-              onChanged: (v) => setState(() {
-                selectedStatus = v;
-              }),
-            ),
-          ),
           FilterItem(
             img: GestureDetector(
               onTap: () {

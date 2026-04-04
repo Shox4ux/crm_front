@@ -1,5 +1,8 @@
+import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
 import 'package:crm_app/app/features/common/widget/custom_footer.dart';
 import 'package:crm_app/app/features/home/presentation/widget/custom_data_table.dart';
+import 'package:crm_app/app/features/order/domain/entity/order_entity.dart';
+import 'package:crm_app/app/features/order/presentation/bloc/order_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/home/data/fake_data.dart';
@@ -8,9 +11,37 @@ import 'package:crm_app/app/features/common/widget/custom_title.dart';
 import 'package:crm_app/app/features/home/presentation/widget/month_drop.dart';
 import 'package:crm_app/app/features/home/presentation/widget/order_chart.dart';
 import 'package:crm_app/app/features/home/presentation/widget/dashboard_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeHolder extends StatelessWidget {
+class HomeHolder extends StatefulWidget {
   const HomeHolder({super.key});
+
+  @override
+  State<HomeHolder> createState() => _HomeHolderState();
+}
+
+class _HomeHolderState extends State<HomeHolder> {
+  int clientCount = 0;
+  int orderCount = 0;
+  double revenue = 0.0;
+
+  @override
+  void initState() {
+    // Fetch clients and update client count
+    context.read<ClientCubit>().getAllClient();
+    clientCount = context.read<ClientCubit>().state.list.length;
+
+    // Fetch orders and update order count
+    context.read<OrderCubit>().getAllOrder();
+    orderCount = context.read<OrderCubit>().state.list?.length ?? 0;
+
+    super.initState();
+  }
+
+  double calculateRevenue(List<OrderEntity>? list) {
+    return 0;
+    // return list?.fold(0.0, (total, order) => total + order.totalAmount) ?? 0.0;
+  }
 
   @override
   Widget build(BuildContext context) {

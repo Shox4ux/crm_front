@@ -23,9 +23,9 @@ abstract class ClientApiService {
     @Part() required String phone,
   });
 
-  @GET('/clients/get_by_user_id/{user_id}')
+  @GET('/clients/get_by_id/{id}')
   Future<HttpResponse<ClientResponse>> getClientById({
-    @Path("user_id") required int userId,
+    @Path("id") required int id,
   });
 
   @GET('/clients/get_all')

@@ -57,11 +57,16 @@ dependencies:
   flutter_svg: ^2.2.3
   fl_chart: ^1.1.1
   file_picker: ^10.3.10
+  flutter_launcher_icons: ^0.14.4
 
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/imgs/icon.png"
+  image_path: "assets/icon.png"
+
+  macos:
+    generate: true
+    image_path: "assets/icon.png"
 
  
 

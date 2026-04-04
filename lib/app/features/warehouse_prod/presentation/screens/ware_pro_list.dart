@@ -76,7 +76,7 @@ class _WarehouseProductListState extends State<WarehouseProductList> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CustomTitle(title: "Products"),
+                CustomTitle(title: "Warehouse Products"),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   spacing: 10,

@@ -3,7 +3,7 @@ import 'package:crm_app/app/features/common/widget/custom_footer.dart';
 import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_search.dart';
 import 'package:crm_app/app/features/common/widget/custon_no_data.dart';
-import 'package:crm_app/app/features/order/presentation/widget/custom_filter.dart';
+import 'package:crm_app/app/features/common/widget/custom_filter.dart';
 import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entitiy.dart';
 import 'package:crm_app/app/features/warehouse_prod/presentation/bloc/ware_pro_cubit.dart';
 import 'package:crm_app/app/features/warehouse_prod/presentation/widget/ware_pro_info_table.dart';
@@ -63,12 +63,7 @@ class _WareProInfoListState extends State<WareProInfoList> {
           ),
           Expanded(
             child: BlocConsumer<WareProCubit, WareProState>(
-              listener: (context, state) {
-                // if (state.status == OrderStatus.error ||
-                //     state.status == OrderStatus.success) {
-                //   showToast(context, state.msg ?? "");
-                // }
-              },
+              listener: (context, state) {},
               builder: (context, state) {
                 var list = context.watch<WareProCubit>().getAllFiltList();
                 if (state.status == WareProStatus.loading) {

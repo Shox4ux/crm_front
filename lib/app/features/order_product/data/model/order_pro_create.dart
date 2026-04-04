@@ -6,6 +6,7 @@ class OrderProCreate {
   final num customPrice;
   final num customQuantity;
   final int warehouseProductId;
+
   OrderProCreate({
     required this.customPrice,
     required this.customQuantity,

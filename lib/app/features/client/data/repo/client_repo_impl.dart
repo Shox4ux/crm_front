@@ -8,7 +8,7 @@ abstract class ClientRepoImpl {
   Future<DataState<dynamic>> createClient({required CreateAsClient body});
   Future<DataState<dynamic>> deleteClient({required int id});
   Future<DataState<List<ClientResponse>>> getAllClient();
-  Future<DataState<ClientResponse>> getClient({required int userId});
+  Future<DataState<ClientResponse>> getClient({required int id});
   Future<DataState<dynamic>> updateClient({
     required int id,
     required ClientUpdate body,

@@ -58,9 +58,7 @@ class _ClientApiService implements ClientApiService {
   }
 
   @override
-  Future<HttpResponse<ClientResponse>> getClientById({
-    required int userId,
-  }) async {
+  Future<HttpResponse<ClientResponse>> getClientById({required int id}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -69,7 +67,7 @@ class _ClientApiService implements ClientApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/clients/get_by_user_id/${userId}',
+            '/clients/get_by_id/${id}',
             queryParameters: queryParameters,
             data: _data,
           )

@@ -49,18 +49,22 @@ class ClientCubit extends Cubit<ClientState> {
     emit(state.copyWith(status: ClientStatus.loading));
     final res = await _repo.createClient(body: body);
     if (res is DataSuccess) {
-      emit(state.copyWith(status: ClientStatus.success));
+      emit(state.copyWith(status: ClientStatus.opsuccess));
       getAllClient();
     } else {
       emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
     }
   }
 
+  void setSlctClient(ClientEntity? client) {
+    emit(state.copyWith(slctClient: client));
+  }
+
   void updateClient({required ClientUpdate body, required int id}) async {
     emit(state.copyWith(status: ClientStatus.loading));
     final res = await _repo.updateClient(id: id, body: body);
     if (res is DataSuccess) {
-      emit(state.copyWith(status: ClientStatus.success));
+      emit(state.copyWith(status: ClientStatus.opsuccess));
       getAllClient();
     } else {
       emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
@@ -84,17 +88,16 @@ class ClientCubit extends Cubit<ClientState> {
       body: ClientProdUpdate(customPrice: double.tryParse(val ?? "")),
     );
     if (res is DataSuccess) {
-      _getClientByUid(uId);
+      getClientByUid(uId);
     } else {
       emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
     }
   }
 
-  void _getClientByUid(int id) async {
-    emit(state.copyWith(status: ClientStatus.loading));
-    var res = await _repo.getClient(userId: id);
+  void getClientByUid(int id) async {
+    var res = await _repo.getClient(id: id);
     if (res is DataSuccess) {
-      emit(state.copyWith(status: ClientStatus.success, slctClient: res.data));
+      emit(state.copyWith(slctClient: res.data));
     } else {
       emit(state.copyWith(status: ClientStatus.error, msg: res.errorMsg));
     }
