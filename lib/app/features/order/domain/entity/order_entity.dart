@@ -5,6 +5,8 @@ class OrderEntity {
   final int id;
   final int status;
   final double paidAmount;
+  final double totalAmount;
+
   final String? adminNote;
   final String? clientNote;
   final DateTime createdAt;
@@ -15,6 +17,7 @@ class OrderEntity {
     required this.id,
     required this.status,
     required this.paidAmount,
+    required this.totalAmount,
     required this.adminNote,
     required this.clientNote,
     required this.createdAt,

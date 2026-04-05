@@ -2,7 +2,7 @@ import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:crm_app/app/features/core/router/route_names.dart';
-import 'package:crm_app/app/features/home/presentation/bloc/cubit/drawerx_cubit.dart';
+import 'package:crm_app/app/features/home/presentation/bloc/drawerx_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

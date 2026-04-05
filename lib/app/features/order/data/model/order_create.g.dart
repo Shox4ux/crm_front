@@ -7,6 +7,7 @@ part of 'order_create.dart';
 // **************************************************************************
 
 OrderCreate _$OrderCreateFromJson(Map<String, dynamic> json) => OrderCreate(
+  totalAmount: (json['total_amount'] as num).toDouble(),
   clientId: (json['client_id'] as num).toInt(),
   status: (json['status'] as num).toInt(),
   paidAmount: (json['paid_amount'] as num).toDouble(),
@@ -23,6 +24,7 @@ Map<String, dynamic> _$OrderCreateToJson(
   'client_id': instance.clientId,
   'status': instance.status,
   'paid_amount': instance.paidAmount,
+  'total_amount': instance.totalAmount,
   'order_products': ?instance.orderProducts?.map((e) => e.toJson()).toList(),
   'admin_note': ?instance.adminNote,
   'client_note': ?instance.clientNote,

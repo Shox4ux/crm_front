@@ -10,6 +10,7 @@ class OrderResponse extends OrderEntity {
     required super.id,
     required super.status,
     required super.paidAmount,
+    required super.totalAmount,
     super.adminNote,
     super.clientNote,
     required super.createdAt,

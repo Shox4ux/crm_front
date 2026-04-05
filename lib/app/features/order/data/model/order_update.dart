@@ -8,12 +8,14 @@ part 'order_update.g.dart';
 class OrderUpdate {
   final int status;
   final double paidAmount;
+  final double totalAmount;
   final List<int>? deletedOrderProducts;
   final List<OrderProUpdate>? updatedOrderProducts; // <OrderProUpdate>
   final List<OrderProCreate>? newOrderProducts;
   final String? adminNote;
   final String? clientNote;
   OrderUpdate({
+    required this.totalAmount,
     required this.status,
     required this.paidAmount,
     this.adminNote,

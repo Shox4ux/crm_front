@@ -7,6 +7,7 @@ part of 'order_update.dart';
 // **************************************************************************
 
 OrderUpdate _$OrderUpdateFromJson(Map<String, dynamic> json) => OrderUpdate(
+  totalAmount: (json['total_amount'] as num).toDouble(),
   status: (json['status'] as num).toInt(),
   paidAmount: (json['paid_amount'] as num).toDouble(),
   adminNote: json['admin_note'] as String?,
@@ -26,6 +27,7 @@ Map<String, dynamic> _$OrderUpdateToJson(OrderUpdate instance) =>
     <String, dynamic>{
       'status': instance.status,
       'paid_amount': instance.paidAmount,
+      'total_amount': instance.totalAmount,
       'deleted_order_products': ?instance.deletedOrderProducts,
       'updated_order_products': ?instance.updatedOrderProducts
           ?.map((e) => e.toJson())

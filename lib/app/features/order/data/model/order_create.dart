@@ -7,10 +7,13 @@ class OrderCreate {
   final int clientId;
   final int status;
   final double paidAmount;
+  final double totalAmount;
+
   final List<OrderProCreate>? orderProducts;
   final String? adminNote;
   final String? clientNote;
   OrderCreate({
+    required this.totalAmount,
     required this.clientId,
     required this.status,
     required this.paidAmount,

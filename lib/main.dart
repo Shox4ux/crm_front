@@ -1,7 +1,7 @@
 import 'package:crm_app/app/features/client/domain/repo/client_repo.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
 import 'package:crm_app/app/features/core/theme/app_themex.dart';
-import 'package:crm_app/app/features/home/presentation/bloc/cubit/drawerx_cubit.dart';
+import 'package:crm_app/app/features/home/presentation/bloc/drawerx_cubit.dart';
 import 'package:crm_app/app/features/order/domain/repo/order_repo.dart';
 import 'package:crm_app/app/features/order/presentation/bloc/order_cubit.dart';
 import 'package:crm_app/app/features/product/data/repo/product_repo.dart';

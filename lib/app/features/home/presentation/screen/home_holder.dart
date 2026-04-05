@@ -25,22 +25,60 @@ class _HomeHolderState extends State<HomeHolder> {
   int orderCount = 0;
   double revenue = 0.0;
 
-  @override
-  void initState() {
-    // Fetch clients and update client count
+  void _setClientCount() {
     context.read<ClientCubit>().getAllClient();
     clientCount = context.read<ClientCubit>().state.list.length;
+    dashItems.where((item) => item.type == DashType.client).first.index =
+        clientCount;
+  }
 
-    // Fetch orders and update order count
+  void _setOrderCount() {
     context.read<OrderCubit>().getAllOrder();
     orderCount = context.read<OrderCubit>().state.list?.length ?? 0;
-
-    super.initState();
+    dashItems.where((item) => item.type == DashType.order).first.index =
+        orderCount;
   }
 
   double calculateRevenue(List<OrderEntity>? list) {
-    return 0;
-    // return list?.fold(0.0, (total, order) => total + order.totalAmount) ?? 0.0;
+    double totalRevenue = 0.0;
+    if (list != null) {
+      for (var order in list) {
+        totalRevenue += order.paidAmount;
+      }
+    }
+    return totalRevenue;
+  }
+
+  double calculateDebt(List<OrderEntity>? list) {
+    double totalDebt = 0.0;
+    if (list != null) {
+      for (var order in list) {
+        // totalDebt += (order. - order.paidAmount);
+      }
+    }
+    return totalDebt;
+  }
+
+  void _setRevenue() {
+    var orders = context.read<OrderCubit>().state.list;
+    revenue = calculateRevenue(orders);
+    dashItems.where((item) => item.type == DashType.revenue).first.index =
+        revenue;
+  }
+
+  void _setDebt() {
+    var orders = context.read<OrderCubit>().state.list;
+    revenue = calculateRevenue(orders);
+    dashItems.where((item) => item.type == DashType.revenue).first.index =
+        revenue;
+  }
+
+  @override
+  void initState() {
+    _setClientCount();
+    _setOrderCount();
+    _setRevenue();
+    super.initState();
   }
 
   @override

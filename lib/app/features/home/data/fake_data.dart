@@ -25,7 +25,7 @@ List<Map<String, int>> months = [
 
 class DashItem {
   String primary;
-  int index;
+  num index;
   String secondary;
   String icon;
   Color iconColor;
@@ -45,7 +45,7 @@ class DashItem {
 
   DashItem copyWith({
     String? primary,
-    int? index,
+    num? index,
     String? secondary,
     String? icon,
     Color? iconColor,

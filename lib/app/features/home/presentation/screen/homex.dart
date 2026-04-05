@@ -6,7 +6,7 @@ import 'package:crm_app/app/features/warehouse/presentation/screens/warehouse_li
 import 'package:crm_app/app/features/warehouse_prod/presentation/screens/ware_pro_info_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:crm_app/app/features/home/presentation/bloc/cubit/drawerx_cubit.dart';
+import 'package:crm_app/app/features/home/presentation/bloc/drawerx_cubit.dart';
 import 'package:crm_app/app/features/home/presentation/widget/drawerx.dart';
 
 List<Widget> screens = [

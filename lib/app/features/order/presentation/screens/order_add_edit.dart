@@ -152,6 +152,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
       paidAmount: paidAmount ?? 0,
       adminNote: "",
       clientNote: "",
+      totalAmount: totalAmount,
     );
     context.read<OrderCubit>().createOrder(body: b);
   }
@@ -171,6 +172,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
           paidAmount: paidAmount,
           adminNote: widget.orderToEdit?.adminNote ?? "",
           clientNote: widget.orderToEdit?.clientNote ?? "",
+          totalAmount: totalAmount,
         ),
         id: widget.orderToEdit!.id,
       );
