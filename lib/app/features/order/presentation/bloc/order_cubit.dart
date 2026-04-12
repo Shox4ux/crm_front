@@ -21,7 +21,7 @@ class OrderCubit extends Cubit<OrderState> {
     _filtered = [];
     _qFiltered = [];
     _cFiltered = [];
-    getAllOrder();
+    getAllOrders();
   }
 
   void setQuery(String q) {
@@ -81,7 +81,7 @@ class OrderCubit extends Cubit<OrderState> {
     }
   }
 
-  Future<void> getAllOrder() async {
+  Future<void> getAllOrders() async {
     emit(state.copyWith(status: OrderStatus.loading));
     var res = await _repo.getAllOrder();
     if (res is DataSuccess) {
@@ -100,8 +100,13 @@ class OrderCubit extends Cubit<OrderState> {
     emit(state.copyWith(status: OrderStatus.oploading));
     final res = await _repo.createOrder(body: body);
     if (res is DataSuccess) {
-      emit(state.copyWith(status: OrderStatus.opsuccsess));
-      getAllOrder();
+      emit(
+        state.copyWith(
+          status: OrderStatus.opsuccsess,
+          msg: "Order created successfully",
+        ),
+      );
+      getAllOrders();
     } else {
       emit(state.copyWith(status: OrderStatus.error, msg: res.errorMsg));
     }
@@ -111,8 +116,13 @@ class OrderCubit extends Cubit<OrderState> {
     emit(state.copyWith(status: OrderStatus.oploading));
     final res = await _repo.updateOrder(body: body, id: id);
     if (res is DataSuccess) {
-      emit(state.copyWith(status: OrderStatus.opsuccsess));
-      getAllOrder();
+      emit(
+        state.copyWith(
+          status: OrderStatus.opsuccsess,
+          msg: "Order updated successfully",
+        ),
+      );
+      getAllOrders();
     } else {
       emit(state.copyWith(status: OrderStatus.error, msg: res.errorMsg));
     }
@@ -122,9 +132,14 @@ class OrderCubit extends Cubit<OrderState> {
     emit(state.copyWith(status: OrderStatus.loading));
     final res = await _repo.deleteOrder(id: id);
     if (res is DataSuccess) {
-      emit(state.copyWith(status: OrderStatus.opsuccsess));
+      emit(
+        state.copyWith(
+          status: OrderStatus.opsuccsess,
+          msg: "Order deleted successfully",
+        ),
+      );
       state.list?.removeWhere((order) => order.id == id);
-      getAllOrder();
+      getAllOrders();
     } else {
       emit(state.copyWith(status: OrderStatus.error, msg: res.errorMsg));
     }

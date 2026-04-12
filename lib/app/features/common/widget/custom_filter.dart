@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/ui/app_assets.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
@@ -106,13 +107,15 @@ class _CustomFilterState extends State<CustomFilter> {
                   child: DropdownButtonFormField<WpFilterStatus>(
                     initialValue: sltWpStatus,
                     decoration: InputDecoration(
-                      labelText: 'Status',
+                      labelText: context.l10n.status,
                       border: border,
                     ),
                     items: WpFilterStatus.values
                         .map(
-                          (c) =>
-                              DropdownMenuItem(value: c, child: Text(c.name)),
+                          (c) => DropdownMenuItem(
+                            value: c,
+                            child: Text(c.localizedName(context)),
+                          ),
                         )
                         .toList(),
                     onChanged: (v) => setState(() {
@@ -131,7 +134,7 @@ class _CustomFilterState extends State<CustomFilter> {
                             keyboardType: TextInputType.datetime,
                             decoration: InputDecoration(
                               border: border,
-                              labelText: 'From date',
+                              labelText: context.l10n.fromDate,
                               hintText: 'dd.MM.yyyy',
                               suffixIcon: Icon(Icons.calendar_today),
                             ),
@@ -147,7 +150,7 @@ class _CustomFilterState extends State<CustomFilter> {
                             keyboardType: TextInputType.datetime,
                             decoration: InputDecoration(
                               border: border,
-                              labelText: 'To date',
+                              labelText: context.l10n.toDate,
                               hintText: 'dd.MM.yyyy',
                               suffixIcon: Icon(Icons.calendar_today),
                             ),
@@ -163,14 +166,14 @@ class _CustomFilterState extends State<CustomFilter> {
                       child: DropdownButtonFormField<OrderFilterStatus>(
                         initialValue: sltOrderStatus,
                         decoration: InputDecoration(
-                          labelText: 'Status',
+                          labelText: context.l10n.status,
                           border: border,
                         ),
                         items: OrderFilterStatus.values
                             .map(
                               (c) => DropdownMenuItem(
                                 value: c,
-                                child: Text(c.name),
+                                child: Text(c.localizedName(context)),
                               ),
                             )
                             .toList(),
@@ -192,7 +195,7 @@ class _CustomFilterState extends State<CustomFilter> {
                 children: [
                   SvgPicture.asset(AppAssets.returnIcon, height: 20, width: 20),
                   Text(
-                    "Reset filter",
+                    context.l10n.resetFilter,
                     style: AppTxtStl.medium.copyWith(
                       color: AppColour.dashPending,
                     ),

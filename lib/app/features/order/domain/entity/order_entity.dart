@@ -6,8 +6,8 @@ class OrderEntity {
   final int status;
   final double paidAmount;
   final double totalAmount;
-
   final String? adminNote;
+  final DateTime? deliveryOn;
   final String? clientNote;
   final DateTime createdAt;
   final List<OrderProResponse>? orderProducts;
@@ -23,5 +23,6 @@ class OrderEntity {
     required this.createdAt,
     required this.orderProducts,
     required this.client,
+    this.deliveryOn,
   });
 }

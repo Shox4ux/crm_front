@@ -1,4 +1,5 @@
 import 'package:crm_app/api_logger.dart';
+import 'package:crm_app/app_storage.dart';
 import 'package:crm_app/app/features/client/data/source/client_api_service.dart';
 import 'package:crm_app/app/features/client/domain/repo/client_repo.dart';
 import 'package:crm_app/app/features/order/data/source/order_api_service.dart';
@@ -26,6 +27,7 @@ Future<void> setupLocator() async {
   locator.registerSingleton<Dio>(dio);
 
   // ==================================User==============================
+  locator.registerSingleton<AppStorage>(AppStorage());
   locator.registerSingleton<UserApiService>(UserApiService(locator<Dio>()));
   locator.registerSingleton<UserRepo>(UserRepo(locator<UserApiService>()));
 

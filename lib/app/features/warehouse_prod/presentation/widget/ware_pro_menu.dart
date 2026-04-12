@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/warehouse_prod/data/model/ware_pro_create.dart';
@@ -74,14 +75,14 @@ class _WareProMenuState extends State<WareProMenu> {
                 break;
             }
           },
-          itemBuilder: (context) => const [
+          itemBuilder: (context) => [
             PopupMenuItem(
               value: MenuAction.edit,
               child: Row(
                 children: [
                   Icon(Icons.edit, size: 18),
                   SizedBox(width: 8),
-                  Text('Edit'),
+                  Text(context.l10n.edit),
                 ],
               ),
             ),
@@ -91,7 +92,7 @@ class _WareProMenuState extends State<WareProMenu> {
                 children: [
                   Icon(Icons.delete, size: 18, color: Colors.red),
                   SizedBox(width: 8),
-                  Text('Delete'),
+                  Text(context.l10n.delete),
                 ],
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
@@ -135,6 +136,7 @@ class RowCellText extends StatelessWidget {
           ),
         );
       case OrderListViewEnum.status:
+        final statusText = _getLocalizedStatus(context, status);
         return Flexible(
           child: Center(
             child: Container(
@@ -146,7 +148,7 @@ class RowCellText extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
               child: Text(
-                status?.name.toUpperCase() ?? "",
+                statusText.toUpperCase(),
                 style: AppTxtStl.medium.copyWith(color: AppColour.white),
                 textAlign: TextAlign.center,
               ),
@@ -175,6 +177,17 @@ class RowCellText extends StatelessWidget {
             ),
           ),
         );
+    }
+  }
+
+  String _getLocalizedStatus(BuildContext context, ProductStatus? status) {
+    switch (status) {
+      case ProductStatus.coming:
+        return context.l10n.comingProduct;
+      case ProductStatus.exists:
+        return context.l10n.existsProduct;
+      default:
+        return "";
     }
   }
 }

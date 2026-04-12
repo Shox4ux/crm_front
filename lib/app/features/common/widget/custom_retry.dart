@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 
 class RetryWidget extends StatelessWidget {
   final String message;
@@ -34,7 +35,7 @@ class RetryWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text("Retry"),
+              child: Text(context.l10n.retry),
             ),
           ],
         ),

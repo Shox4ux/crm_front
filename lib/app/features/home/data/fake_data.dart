@@ -115,7 +115,7 @@ List<DashItem> dashItems = [
   DashItem(
     type: DashType.client,
     primary: "Total Clients",
-    index: 20034,
+    index: 0,
     secondary: "5% increase",
     icon: AppAssets.clients,
     isMoney: false,
@@ -125,7 +125,7 @@ List<DashItem> dashItems = [
   DashItem(
     type: DashType.order,
     primary: "Total Orders",
-    index: 15000,
+    index: 0,
     secondary: "3% decrease",
     icon: AppAssets.products,
     isMoney: false,
@@ -135,7 +135,7 @@ List<DashItem> dashItems = [
   DashItem(
     type: DashType.revenue,
     primary: "Total Revenue",
-    index: 500000,
+    index: 0,
     secondary: "10% decrease",
     icon: AppAssets.chart,
     isMoney: true,
@@ -145,10 +145,10 @@ List<DashItem> dashItems = [
   DashItem(
     type: DashType.unpaid,
     primary: "Unpaid Invoices",
-    index: 3000,
+    index: 0,
     secondary: "2% increase",
     icon: AppAssets.returnIcon,
-    isMoney: false,
+    isMoney: true,
     iconColor: AppColour.dashPending,
     isIncreased: true,
   ),

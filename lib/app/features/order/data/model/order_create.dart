@@ -8,7 +8,7 @@ class OrderCreate {
   final int status;
   final double paidAmount;
   final double totalAmount;
-
+  final DateTime? deliveryOn;
   final List<OrderProCreate>? orderProducts;
   final String? adminNote;
   final String? clientNote;
@@ -17,6 +17,7 @@ class OrderCreate {
     required this.clientId,
     required this.status,
     required this.paidAmount,
+    required this.deliveryOn,
     this.orderProducts,
     this.adminNote,
     this.clientNote,

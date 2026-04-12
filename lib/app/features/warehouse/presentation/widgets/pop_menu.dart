@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/warehouse/data/model/warehouse_create_update.dart';
@@ -76,7 +77,7 @@ class _CustomMenuState extends State<CustomMenu> {
       valid: _validateNotEmpty,
       key: _formKey,
       isEdit: true,
-      title: 'Edit Warehouse',
+      title: context.l10n.editWarehouse,
     );
   }
 
@@ -100,14 +101,14 @@ class _CustomMenuState extends State<CustomMenu> {
                 break;
             }
           },
-          itemBuilder: (context) => const [
+          itemBuilder: (context) => [
             PopupMenuItem(
               value: MenuAction.edit,
               child: Row(
                 children: [
                   Icon(Icons.edit, size: 18),
                   SizedBox(width: 8),
-                  Text('Edit'),
+                  Text(context.l10n.edit),
                 ],
               ),
             ),
@@ -115,9 +116,9 @@ class _CustomMenuState extends State<CustomMenu> {
               value: MenuAction.delete,
               child: Row(
                 children: [
-                  Icon(Icons.delete, size: 18, color: Colors.red),
+                  Icon(Icons.delete, size: 18),
                   SizedBox(width: 8),
-                  Text('Delete'),
+                  Text(context.l10n.delete),
                 ],
               ),
             ),

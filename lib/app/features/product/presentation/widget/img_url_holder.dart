@@ -1,4 +1,5 @@
 import 'package:crm_app/app/features/common/widget/img_error.dart';
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:flutter/material.dart';
 
 class ImageUrlHolder extends StatelessWidget {
@@ -33,7 +34,7 @@ class ImageUrlHolder extends StatelessWidget {
             ),
           ),
         ),
-        ElevatedButton(onPressed: onTap, child: Text("Change image")),
+        ElevatedButton(onPressed: onTap, child: Text(context.l10n.changeImage)),
       ],
     );
   }

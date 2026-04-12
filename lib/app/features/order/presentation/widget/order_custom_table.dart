@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
@@ -53,40 +54,45 @@ class OrderCustomTable extends StatelessWidget {
   // ---------------- DATA ROWS ----------------
   List<Widget> _buildRows() {
     return List.generate(rows.length, (i) {
-      return Column(
-        children: [
-          Row(
-            children: [
-              RowCellText(txt: "${i + 1}"),
-              RowCellText(txt: rows[i].client?.user.username ?? ""),
-              RowCellText(txt: rows[i].client?.user.address ?? ""),
-              RowCellText(txt: formatDateTime(rows[i].createdAt)),
-              RowCellText(
-                txt: "\$ ${getTotal(rows[i].orderProducts).toStringAsFixed(2)}",
-              ),
-              RowCellText(txt: "\$ ${rows[i].paidAmount.toString()}"),
-              RowCellText(
-                // viewEnum: OrderListViewEnum.debt,
-                txt:
-                    "\$ ${(getTotal(rows[i].orderProducts) - rows[i].paidAmount).toStringAsFixed(2)}",
-              ),
+      return ListTile(
+        title: Column(
+          children: [
+            Row(
+              children: [
+                RowCellText(txt: "${i + 1}"),
+                RowCellText(txt: rows[i].client?.user.username ?? ""),
+                RowCellText(txt: rows[i].client?.user.address ?? ""),
+                RowCellText(txt: formatDateTime(rows[i].createdAt)),
+                RowCellText(txt: formatDate(rows[i].deliveryOn!)),
 
-              RowCellText(
-                status: orderStatusFromInt(rows[i].status),
-                viewEnum: OrderListViewEnum.status,
-              ),
-              RowCellText(
-                viewEnum: OrderListViewEnum.action,
-                delAction: () => delAction(rows[i]),
-                editAction: () => editAction(rows[i]),
-              ),
-            ],
-          ),
+                RowCellText(
+                  txt:
+                      "\$ ${getTotal(rows[i].orderProducts).toStringAsFixed(2)}",
+                ),
+                RowCellText(txt: "\$ ${rows[i].paidAmount.toString()}"),
+                RowCellText(
+                  // viewEnum: OrderListViewEnum.debt,
+                  txt:
+                      "\$ ${(getTotal(rows[i].orderProducts) - rows[i].paidAmount).toStringAsFixed(2)}",
+                ),
 
-          // Divider between data rows
-          if (i != rows.length - 1)
-            Container(height: 1, color: AppColour.whiteStroke),
-        ],
+                RowCellText(
+                  status: orderStatusFromInt(rows[i].status),
+                  viewEnum: OrderListViewEnum.status,
+                ),
+                RowCellText(
+                  viewEnum: OrderListViewEnum.action,
+                  delAction: () => delAction(rows[i]),
+                  editAction: () => editAction(rows[i]),
+                ),
+              ],
+            ),
+
+            // Divider between data rows
+            if (i != rows.length - 1)
+              Container(height: 1, color: AppColour.whiteStroke),
+          ],
+        ),
       );
     });
   }
@@ -144,6 +150,7 @@ class RowCellText extends StatelessWidget {
           ),
         );
       case OrderListViewEnum.status:
+        final statusText = _getLocalizedStatus(context, status);
         return Flexible(
           child: Center(
             child: Container(
@@ -155,7 +162,7 @@ class RowCellText extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
               child: Text(
-                status?.name.toUpperCase() ?? "",
+                statusText.toUpperCase(),
                 style: AppTxtStl.medium.copyWith(color: AppColour.white),
                 textAlign: TextAlign.center,
               ),
@@ -184,6 +191,19 @@ class RowCellText extends StatelessWidget {
             ),
           ),
         );
+    }
+  }
+
+  String _getLocalizedStatus(BuildContext context, OrderEnumStatus? status) {
+    switch (status) {
+      case OrderEnumStatus.paid:
+        return context.l10n.paidOrder;
+      case OrderEnumStatus.prepaid:
+        return context.l10n.prepaidOrder;
+      case OrderEnumStatus.unpaid:
+        return context.l10n.unpaidOrder;
+      default:
+        return "";
     }
   }
 }

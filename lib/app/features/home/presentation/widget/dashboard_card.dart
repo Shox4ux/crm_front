@@ -37,7 +37,9 @@ class DashboardCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      item.isMoney ? "\$ ${item.index}" : item.index.toString(),
+                      item.isMoney
+                          ? "\$ ${item.index.toStringAsFixed(2)}"
+                          : item.index.toString(),
                       style: AppTxtStl.large.copyWith(color: AppColour.white),
                     ),
                   ],

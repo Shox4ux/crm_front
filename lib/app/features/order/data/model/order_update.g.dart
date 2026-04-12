@@ -21,6 +21,7 @@ OrderUpdate _$OrderUpdateFromJson(Map<String, dynamic> json) => OrderUpdate(
   newOrderProducts: (json['new_order_products'] as List<dynamic>?)
       ?.map((e) => OrderProCreate.fromJson(e as Map<String, dynamic>))
       .toList(),
+  deliveryOn: DateTime.parse(json['delivery_on'] as String),
 );
 
 Map<String, dynamic> _$OrderUpdateToJson(OrderUpdate instance) =>
@@ -28,6 +29,7 @@ Map<String, dynamic> _$OrderUpdateToJson(OrderUpdate instance) =>
       'status': instance.status,
       'paid_amount': instance.paidAmount,
       'total_amount': instance.totalAmount,
+      'delivery_on': instance.deliveryOn.toIso8601String(),
       'deleted_order_products': ?instance.deletedOrderProducts,
       'updated_order_products': ?instance.updatedOrderProducts
           ?.map((e) => e.toJson())

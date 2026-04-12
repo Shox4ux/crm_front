@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/common/widget/dialog_title.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
@@ -25,7 +26,9 @@ void showWareProductDialog(
     text: editData?.quantity.toString(),
   );
 
-  String title = isEdit ? 'Edit Ware Product' : 'Add Ware Product';
+  String title = isEdit
+      ? context.l10n.editWareProduct
+      : context.l10n.addWareProduct;
 
   String? validate(dynamic val) {
     if (val == null) {
@@ -152,11 +155,11 @@ void showWareProductDialog(
             actions: [
               TextButton(
                 onPressed: () => goBack(context),
-                child: const Text('Cancel'),
+                child: Text(context.l10n.cancel),
               ),
               ElevatedButton(
                 onPressed: actionPress,
-                child: const Text('Confirm'),
+                child: Text(context.l10n.confirm),
               ),
             ],
           );

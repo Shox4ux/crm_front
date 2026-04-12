@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:flutter/material.dart';
 
 class ImageFileHolder extends StatelessWidget {
@@ -36,7 +37,10 @@ class ImageFileHolder extends StatelessWidget {
                   ),
           ),
           if (isEdit)
-            ElevatedButton(onPressed: onTap, child: Text("Change image")),
+            ElevatedButton(
+              onPressed: onTap,
+              child: Text(context.l10n.changeImage),
+            ),
         ],
       ),
     );

@@ -16,6 +16,7 @@ class OrderResponse extends OrderEntity {
     required super.createdAt,
     super.orderProducts,
     super.client,
+    super.deliveryOn,
   });
 
   Map<String, dynamic> toJson() => _$OrderResponseToJson(this);

@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:crm_app/app/features/common/widget/custom_text_form.dart';
 import 'package:crm_app/app/features/common/widget/dialog_title.dart';
@@ -13,23 +14,33 @@ void addEditWarehouseDialog({
   required TextEditingController addressController,
   GlobalKey? key,
   String? Function(String?)? valid,
-  String title = 'Create Warehouse',
+  String? title,
   bool isEdit = false,
 }) {
+  final dialogTitle =
+      title ?? (isEdit ? ctx.l10n.editWarehouse : ctx.l10n.createWarehouse);
   showDialog(
     context: ctx,
     barrierDismissible: false,
     builder: (context) {
       return AlertDialog(
-        title: DialogTitle(title: title),
+        title: DialogTitle(title: dialogTitle),
         content: Form(
           key: key,
           child: Column(
             spacing: 12,
             mainAxisSize: MainAxisSize.min,
             children: [
-              CustomForm(ctrl: nameController, txt: 'Name', valid: valid),
-              CustomForm(ctrl: addressController, txt: 'Address', valid: valid),
+              CustomForm(
+                ctrl: nameController,
+                txt: context.l10n.name,
+                valid: valid,
+              ),
+              CustomForm(
+                ctrl: addressController,
+                txt: context.l10n.address,
+                valid: valid,
+              ),
             ],
           ),
         ),
@@ -47,8 +58,14 @@ void addEditWarehouseDialog({
                 spacing: 20,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomBtn(onPress: action, txt: isEdit ? 'Update' : 'Add'),
-                  CustomBtn(onPress: () => goBack(context), txt: 'Cancel'),
+                  CustomBtn(
+                    onPress: () => goBack(context),
+                    txt: context.l10n.cancel,
+                  ),
+                  CustomBtn(
+                    onPress: action,
+                    txt: isEdit ? context.l10n.edit : context.l10n.add,
+                  ),
                 ],
               );
             },

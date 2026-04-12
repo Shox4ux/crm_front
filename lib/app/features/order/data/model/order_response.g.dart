@@ -21,6 +21,9 @@ OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) =>
       client: json['client'] == null
           ? null
           : ClientResponse.fromJson(json['client'] as Map<String, dynamic>),
+      deliveryOn: json['delivery_on'] == null
+          ? null
+          : DateTime.parse(json['delivery_on'] as String),
     );
 
 Map<String, dynamic> _$OrderResponseToJson(
@@ -31,6 +34,7 @@ Map<String, dynamic> _$OrderResponseToJson(
   'paid_amount': instance.paidAmount,
   'total_amount': instance.totalAmount,
   'admin_note': ?instance.adminNote,
+  'delivery_on': ?instance.deliveryOn?.toIso8601String(),
   'client_note': ?instance.clientNote,
   'created_at': instance.createdAt.toIso8601String(),
   'order_products': ?instance.orderProducts?.map((e) => e.toJson()).toList(),

@@ -11,6 +11,9 @@ OrderCreate _$OrderCreateFromJson(Map<String, dynamic> json) => OrderCreate(
   clientId: (json['client_id'] as num).toInt(),
   status: (json['status'] as num).toInt(),
   paidAmount: (json['paid_amount'] as num).toDouble(),
+  deliveryOn: json['delivery_on'] == null
+      ? null
+      : DateTime.parse(json['delivery_on'] as String),
   orderProducts: (json['order_products'] as List<dynamic>?)
       ?.map((e) => OrderProCreate.fromJson(e as Map<String, dynamic>))
       .toList(),
@@ -25,6 +28,7 @@ Map<String, dynamic> _$OrderCreateToJson(
   'status': instance.status,
   'paid_amount': instance.paidAmount,
   'total_amount': instance.totalAmount,
+  'delivery_on': ?instance.deliveryOn?.toIso8601String(),
   'order_products': ?instance.orderProducts?.map((e) => e.toJson()).toList(),
   'admin_note': ?instance.adminNote,
   'client_note': ?instance.clientNote,

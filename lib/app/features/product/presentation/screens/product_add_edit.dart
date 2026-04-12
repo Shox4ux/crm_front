@@ -9,6 +9,7 @@ import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_text_form.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/product/data/model/product_create.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/product/presentation/bloc/product_cubit.dart';
@@ -303,7 +304,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Product')),
+      appBar: AppBar(title: Text(context.l10n.createProduct)),
       body: Padding(
         padding: const EdgeInsets.all(40),
         child: SingleChildScrollView(
@@ -311,7 +312,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 30,
             children: [
-              CustomTitle(title: "Product Info"),
+              CustomTitle(title: context.l10n.productInfo),
               BorderedContainer(
                 borderRadius: AppRadius.buttonRadius,
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
@@ -347,20 +348,20 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                   CustomForm(
                                     ctrl: nameCtrl,
                                     valid: validateNotEmpty,
-                                    txt: "Product Name",
+                                    txt: context.l10n.productName,
                                   ),
                                   CustomForm(
                                     isDigit: true,
                                     ctrl: quantityCtrl,
                                     valid: validateNotEmpty,
-                                    txt: "Quantity",
+                                    txt: context.l10n.quantity,
                                     onChanged: (v) {
                                       // Recalculate everything when quantity changes
                                       updateSellPriceFromPercentage("");
                                     },
                                   ),
                                   Text(
-                                    "Base Price: \$ ${getBasePrice().toString()}",
+                                    "${context.l10n.basePrice}: \$ ${getBasePrice().toString()}",
                                     style: AppTxtStl.medium.copyWith(
                                       fontSize: 24,
                                       color: AppColour.white,
@@ -376,7 +377,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                     isDigit: true,
                                     ctrl: sellPriceCtrl,
                                     valid: validateNotEmpty,
-                                    txt: "Sell Price",
+                                    txt: context.l10n.sellPrice,
                                     prefix: "\$ ",
                                     onChanged: updatePercentageFromSellPrice,
                                   ),
@@ -385,7 +386,7 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                     isDigit: true,
                                     ctrl: profitMarginCtrl,
                                     valid: validateNotEmpty,
-                                    txt: "Profit Margin",
+                                    txt: context.l10n.profitMargin,
                                     onChanged: updateSellPriceFromPercentage,
                                   ),
                                   BlocConsumer<ProductCubit, ProductState>(
@@ -399,7 +400,9 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                         return const CustomLoading();
                                       }
                                       return CustomBtn(
-                                        txt: widget.isEdit ? "Edit" : "Create",
+                                        txt: widget.isEdit
+                                            ? context.l10n.edit
+                                            : context.l10n.create,
                                         action: () => widget.isEdit
                                             ? updateProduct(
                                                 context.read<ProductCubit>(),
@@ -423,16 +426,21 @@ class _ProductAddEditState extends State<ProductAddEdit> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomTitle(title: "Product Expenses"),
+                  CustomTitle(title: context.l10n.productExpenses),
                   CustomBtn(
-                    txt: "Add Expense",
+                    txt: context.l10n.expenseName,
                     action: () => showAddEditDialog(context),
                   ),
                 ],
               ),
               CustomExpTable(
                 onRemoveExp: (i) => removeExp(context, expenses[i]['name']),
-                columns: ["Number", "Expense Name", "Spent Amount", "Action"],
+                columns: [
+                  context.l10n.number,
+                  context.l10n.expenseName,
+                  context.l10n.spentAmount,
+                  context.l10n.action,
+                ],
                 rows: expenses,
               ),
             ],

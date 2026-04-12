@@ -7,6 +7,7 @@ import 'package:crm_app/app/features/client/presentation/widget/client_button.da
 import 'package:crm_app/app/features/client/presentation/widget/client_order_table.dart';
 import 'package:crm_app/app/features/client/presentation/widget/local_avatar.dart';
 import 'package:crm_app/app/features/client/presentation/widget/remote_avatar.dart';
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
 import 'package:crm_app/app/features/common/functions/form_empty_validation.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
@@ -42,7 +43,14 @@ class _ClientAddEditState extends State<ClientAddEdit> {
   late TextEditingController _addressCtrl;
   bool isEditActive = false;
 
-  var colist = ["n", "date", "total amount", "paid amount", "debt", "status"];
+  List<String> get colist => [
+    context.l10n.number,
+    context.l10n.date,
+    context.l10n.totalAmount,
+    context.l10n.paidAmount,
+    context.l10n.debt,
+    context.l10n.status,
+  ];
   // for image upload
   File? _image;
   MultipartFile? img;
@@ -142,7 +150,9 @@ class _ClientAddEditState extends State<ClientAddEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isEdit ? "Edit Client" : "Create Client"),
+        title: Text(
+          widget.isEdit ? context.l10n.editClient : context.l10n.createClient,
+        ),
       ),
       body: Container(
         padding: EdgeInsets.all(40),
@@ -154,7 +164,7 @@ class _ClientAddEditState extends State<ClientAddEdit> {
               spacing: 30,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomTitle(title: "Client Info"),
+                CustomTitle(title: context.l10n.clientInfo),
                 BorderedContainer(
                   color: AppColour.clSecond,
                   borderColor: AppColour.clStroke,
@@ -178,7 +188,7 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                           _image == null
                               ? TextButton(
                                   onPressed: pickImage,
-                                  child: Text("Choose Image"),
+                                  child: Text(context.l10n.chooseImage),
                                 )
                               : SizedBox.shrink(),
                         ],
@@ -196,12 +206,12 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                                     CustomForm(
                                       ctrl: _nameCtrl,
                                       valid: validateNotEmpty,
-                                      txt: "Username",
+                                      txt: context.l10n.username,
                                     ),
                                     CustomForm(
                                       ctrl: _passwCtrl,
                                       valid: validateNotEmpty,
-                                      txt: "Password",
+                                      txt: context.l10n.password,
                                     ),
                                   ],
                                 ),
@@ -210,13 +220,13 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                             children: [
                               CustomForm(
                                 valid: validateNotEmpty,
-                                txt: "Phone",
+                                txt: context.l10n.phone,
                                 ctrl: _phoneCtrl,
                               ),
                               CustomForm(
                                 ctrl: _addressCtrl,
                                 valid: validateNotEmpty,
-                                txt: "Address",
+                                txt: context.l10n.address,
                               ),
                             ],
                           ),
@@ -239,21 +249,24 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                                   children: [
                                     ClientButton(
                                       onPress: delete,
-                                      txt: "Delete",
+                                      txt: context.l10n.delete,
                                     ),
-                                    ClientButton(onPress: edit, txt: "Edit"),
+                                    ClientButton(
+                                      onPress: edit,
+                                      txt: context.l10n.edit,
+                                    ),
                                   ],
                                 )
                               : ClientButton(
                                   onPress: createClient,
-                                  txt: "Create Client",
+                                  txt: context.l10n.createClient,
                                 );
                         },
                       ),
                     ],
                   ),
                 ),
-                CustomTitle(title: "Client Invoice"),
+                CustomTitle(title: context.l10n.clientInvoice),
                 BlocBuilder<ClientCubit, ClientState>(
                   builder: (context, state) {
                     var orders = state.slctClient?.orders;

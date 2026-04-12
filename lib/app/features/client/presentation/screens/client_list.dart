@@ -1,9 +1,11 @@
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
 import 'package:crm_app/app/features/client/presentation/widget/client_card.dart';
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
 import 'package:crm_app/app/features/common/widget/custon_no_data.dart';
+import 'package:crm_app/app/features/common/widget/refresher_widget.dart';
 import 'package:crm_app/app/features/core/router/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,64 +22,71 @@ class ClientList extends StatefulWidget {
 class _ClientListState extends State<ClientList> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(40),
-      child: Column(
-        spacing: 30,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomTitle(title: "Clients"),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 10,
-                children: [
-                  CustomSearch(
-                    onChanged: (val) {
-                      setState(() {
-                        context.read<ClientCubit>().filter(val);
-                      });
-                    },
-                  ),
-                  CustomBtn(
-                    onPress: () => context.push("/client_add_edit"),
-                    txt: "Add",
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Flexible(
-            child: BlocBuilder<ClientCubit, ClientState>(
-              builder: (context, state) {
-                if (state.status == ClientStatus.success) {
-                  var list = context.watch<ClientCubit>().getFiltList();
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5,
-                      crossAxisSpacing: 30,
-                      mainAxisSpacing: 30,
-                    ),
-                    shrinkWrap: true,
-                    itemCount: list.length,
-                    itemBuilder: (_, i) => GestureDetector(
-                      onTap: () {
-                        context.read<ClientCubit>().getClientByUid(list[i].id);
-                        context.push(Routes.clientAddEdit, extra: list[i]);
+    return RefresherWidget(
+      onRefresh: () {
+        context.read<ClientCubit>().getAllClients();
+      },
+      child: Padding(
+        padding: EdgeInsets.all(40),
+        child: Column(
+          spacing: 30,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomTitle(title: context.l10n.clients),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 10,
+                  children: [
+                    CustomSearch(
+                      onChanged: (val) {
+                        setState(() {
+                          context.read<ClientCubit>().filter(val);
+                        });
                       },
-                      child: ClientCard(item: list[i]),
                     ),
-                  );
-                }
-                if (state.status == ClientStatus.loading) {
-                  return CustomLoading();
-                }
-                return NoData();
-              },
+                    CustomBtn(
+                      onPress: () => context.push("/client_add_edit"),
+                      txt: context.l10n.add,
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ),
-        ],
+            Flexible(
+              child: BlocBuilder<ClientCubit, ClientState>(
+                builder: (context, state) {
+                  if (state.status == ClientStatus.success) {
+                    var list = context.watch<ClientCubit>().getFiltList();
+                    return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 5,
+                        crossAxisSpacing: 30,
+                        mainAxisSpacing: 30,
+                      ),
+                      shrinkWrap: true,
+                      itemCount: list.length,
+                      itemBuilder: (_, i) => GestureDetector(
+                        onTap: () {
+                          context.read<ClientCubit>().getClientByUid(
+                            list[i].id,
+                          );
+                          context.push(Routes.clientAddEdit, extra: list[i]);
+                        },
+                        child: ClientCard(item: list[i]),
+                      ),
+                    );
+                  }
+                  if (state.status == ClientStatus.loading) {
+                    return CustomLoading();
+                  }
+                  return NoData();
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,0 +1,240 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Мое Flutter Приложение",
+  "greeting": "Привет, {name}!",
+  "crmLogin": "Вход в CRM",
+  "dashboard": "Панель управления",
+  "clientInfo": "Информация о клиенте",
+  "clientInvoice": "Счет клиента",
+  "clients": "Клиенты",
+  "orderOverview": "Обзор заказов",
+  "productInfo": "Информация о товаре",
+  "productExpenses": "Расходы на товары",
+  "@productExpenses": {
+    "description": "Product expenses section title"
+  },
+  "createProduct": "Создать товар",
+  "@createProduct": {
+    "description": "App bar title for the product creation screen"
+  },
+  "basePrice": "Себестоимость",
+  "@basePrice": {
+    "description": "Label for the base price value"
+  },
+  "spentAmount": "Потрачено",
+  "@spentAmount": {
+    "description": "Table column header for expense amount spent"
+  },
+  "create": "Создать",
+  "@create": {
+    "description": "Button label to create an item"
+  },
+  "products": "Товары",
+  "warehouse": "Склад",
+  "wareProducts": "Товары на складе",
+  "add": "Добавить",
+  "cancel": "Отмена",
+  "chooseImage": "Выберите изображение",
+  "createClient": "Создать клиента",
+  "delete": "Удалить",
+  "edit": "Редактировать",
+  "login": "Вход",
+  "refresh": "Обновить",
+  "retry": "Повторить",
+  "address": "Адрес",
+  "amount": "Сумма",
+  "expenseName": "Cоздать расхода",
+  "name": "Имя",
+  "password": "Пароль",
+  "phone": "Телефон",
+  "productName": "Название товара",
+  "profitMargin": "Прибыль",
+  "quantity": "Количество",
+  "secretWord": "Кодовое слово",
+  "sellPrice": "Цена продажи",
+  "username": "Имя пользователя",
+  "dateFormat": "дд.мм.гггг",
+  "price": "Цена",
+  "product": "Товар",
+  "qty": "Кол-во",
+  "warehouseHint": "Склад",
+  "confirmDelete": "Подтвердить удаление",
+  "deleteConfirmationMessage": "Вы уверены, что хотите удалить этот товар?",
+  "pleaseEnterValue": "Пожалуйста, введите значение",
+  "action": "Действие",
+  "actualPrice": "Фактическая цена",
+  "stock": "Запас",
+  "total": "Итого",
+  "appDrawer": "Меню",
+  "home": "Главная",
+  "logout": "Выход",
+  "orders": "Заказы",
+  "settings": "Параметры",
+  "chooseLanguage": "Выберите язык",
+  "@chooseLanguage": {
+    "description": "Dialog title for selecting app language"
+  },
+  "english": "Английский",
+  "@english": {
+    "description": "English language label"
+  },
+  "russian": "Русский",
+  "@russian": {
+    "description": "Russian language label"
+  },
+  "required": "Обязательное",
+  "fieldCannotBeEmpty": "Это поле не может быть пустым",
+  "searchByName": "Поиск по имени",
+  "select": "Выбрать",
+  "enter": "Введите",
+  "@enter": {
+    "description": "Prefix text for input field hints"
+  },
+  "editClient": "Редактировать клиента",
+  "successfullyCreated": "Успешно создано",
+  "successfullyDeleted": "Успешно удалено",
+  "successfullyUpdated": "Успешно обновлено",
+  "orderCreatedSuccessfully": "Заказ успешно создан",
+  "orderUpdatedSuccessfully": "Заказ успешно обновлен",
+  "orderDeletedSuccessfully": "Заказ успешно удален",
+  "totalClients": "Всего клиентов",
+  "totalOrders": "Всего заказов",
+  "totalRevenue": "Общая выручка",
+  "unpaidInvoices": "Неоплаченные счета",
+  "acceptedStatus": "Принят",
+  "rejectedStatus": "Отклонен",
+  "paidStatus": "Оплачено",
+  "unpaidStatus": "Не оплачено",
+  "paidOrder": "Оплачено",
+  "@paidOrder": {
+    "description": "Order status label for paid orders"
+  },
+  "prepaidOrder": "Предоплачен",
+  "@prepaidOrder": {
+    "description": "Order status label for prepaid orders"
+  },
+  "unpaidOrder": "Не оплачено",
+  "@unpaidOrder": {
+    "description": "Order status label for unpaid orders"
+  },
+  "all": "Все",
+  "@all": {
+    "description": "Label for selecting all items in a filter"
+  },
+  "comingProduct": "Поступает",
+  "@comingProduct": {
+    "description": "Product status label for incoming products"
+  },
+  "existsProduct": "Есть в наличии",
+  "@existsProduct": {
+    "description": "Product status label for existing products"
+  },
+  "number": "номер",
+  "date": "дата",
+  "orderDate": "дата заказа",
+  "@orderDate": {
+    "description": "Table column header for order date"
+  },
+  "deliveryDate": "дата доставки",
+  "@deliveryDate": {
+    "description": "Table column header for delivery date"
+  },
+  "actualQty": "фактическое кол-во",
+  "@actualQty": {
+    "description": "Table column header for actual quantity"
+  },
+  "warehouseQty": "кол-во на складе",
+  "@warehouseQty": {
+    "description": "Table column header for warehouse quantity"
+  },
+  "totalAmount": "общая сумма",
+  "paidAmount": "оплаченная сумма",
+  "debt": "задолженность",
+  "status": "статус",
+  "forThisMonth": "в этом месяце",
+  "november": "Ноябрь",
+  "december": "Декабрь",
+  "addItem": "Добавить товар",
+  "@addItem": {
+    "description": "Button label to add an order item"
+  },
+  "confirm": "Подтвердить",
+  "@confirm": {
+    "description": "Button label to confirm an action"
+  },
+  "units": "товаров",
+  "@units": {
+    "description": "Unit label for quantities"
+  },
+  
+  "changeImage": "Изменить изображение",
+  "@changeImage": {
+    "description": "Button label to change an image"
+  },
+  "dataNotFound": "Данные не найдены",
+  "@dataNotFound": {
+    "description": "Message displayed when no data is available"
+  },
+  "status": "Статус",
+  "@status": {
+    "description": "Filter dropdown label for status"
+  },
+  "fromDate": "С даты",
+  "@fromDate": {
+    "description": "Filter field label for start date"
+  },
+  "toDate": "По дату",
+  "@toDate": {
+    "description": "Filter field label for end date"
+  },
+  "resetFilter": "Сброс фильтра",
+  "@resetFilter": {
+    "description": "Button label to reset filters"
+  },
+  "createWarehouse": "Создать склад",
+  "@createWarehouse": {
+    "description": "Dialog title for creating a new warehouse"
+  },
+  "editWarehouse": "Редактировать склад",
+  "@editWarehouse": {
+    "description": "Dialog title for editing a warehouse"
+  },
+  "addWareProduct": "Добавить товар на склад",
+  "@addWareProduct": {
+    "description": "Dialog title for adding a warehouse product"
+  },
+  "editWareProduct": "Редактировать товар на складе",
+  "@editWareProduct": {
+    "description": "Dialog title for editing a warehouse product"
+  },
+  "createOrder": "Создать заказ",
+  "@createOrder": {
+    "description": "Screen title for creating a new order"
+  },
+  "editOrder": "Редактировать заказ",
+  "@editOrder": {
+    "description": "Screen title for editing an order"
+  },
+  "client": "Клиент",
+  "@client": {
+    "description": "Form field label for client dropdown"
+  },
+  "paidAmountField": "Оплаченная сумма",
+  "@paidAmountField": {
+    "description": "Form field label for paid amount input"
+  },
+  "deliveryOn": "Дата доставки",
+  "@deliveryOn": {
+    "description": "Form field label for delivery date"
+  },
+  "totalAmountLabel": "Общая сумма: $ {amount}",
+  "@totalAmountLabel": {
+    "description": "Label for displaying total amount with currency",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "123.45"
+      }
+    }
+  }
+}

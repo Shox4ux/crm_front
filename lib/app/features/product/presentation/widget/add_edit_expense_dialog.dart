@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
@@ -37,7 +38,7 @@ addEditExpense({
             CustomForm(
               ctrl: name,
               initVal: data?['name'],
-              txt: "Expense Name",
+              txt: context.l10n.expenseName,
               valid: validate,
             ),
             CustomForm(
@@ -45,7 +46,7 @@ addEditExpense({
               isDigit: true,
               ctrl: amount,
               initVal: data?['amount'],
-              txt: "Amount",
+              txt: context.l10n.amount,
               prefix: "\$ ",
             ),
           ],
@@ -58,7 +59,7 @@ addEditExpense({
           children: [
             CustomBtn(
               onPress: () => Navigator.of(context).pop(),
-              txt: "Cancel",
+              txt: context.l10n.cancel,
             ),
             CustomBtn(
               onPress: () {

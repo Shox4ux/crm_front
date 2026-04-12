@@ -1,6 +1,8 @@
+import 'package:crm_app/app_storage.dart';
 import 'package:crm_app/app/features/client/domain/repo/client_repo.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
 import 'package:crm_app/app/features/core/theme/app_themex.dart';
+import 'package:crm_app/app/features/common/cubit/locale_cubit.dart';
 import 'package:crm_app/app/features/home/presentation/bloc/drawerx_cubit.dart';
 import 'package:crm_app/app/features/order/domain/repo/order_repo.dart';
 import 'package:crm_app/app/features/order/presentation/bloc/order_cubit.dart';
@@ -17,8 +19,11 @@ import 'package:crm_app/app_bloc_observer.dart';
 import 'package:crm_app/app/features/core/router/app_router.dart';
 import 'package:crm_app/app_locator.dart';
 import 'package:crm_app/connectivity_service.dart';
+import 'package:crm_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,25 +42,63 @@ class CRMApp extends StatelessWidget {
       BlocProvider(create: (_) => DrawerXCubit()),
       BlocProvider(create: (_) => WarehouseCubit(locator<WarehouseRepo>())),
       BlocProvider(create: (_) => WareProCubit(locator<WareProRepo>())),
-      BlocProvider(create: (_) => UserCubit(locator<UserRepo>())),
+      BlocProvider(
+        create: (_) => UserCubit(locator<UserRepo>(), locator<AppStorage>()),
+      ),
       BlocProvider(create: (_) => OrderCubit(locator<OrderRepo>())),
       BlocProvider(
         create: (_) =>
             ProductCubit(locator<ProductRepo>(), locator<ExpenseRepo>()),
       ),
       BlocProvider(create: (_) => ClientCubit(locator<ClientRepo>())),
+      BlocProvider(create: (_) => LocaleCubit(locator<AppStorage>())),
     ],
 
-    child: MaterialApp.router(
-      title: 'CRM App',
-      scrollBehavior: ScrollConfiguration.of(
-        context,
-      ).copyWith(scrollbars: false),
-      theme: AppThemeX.light,
-      darkTheme: AppThemeX.dark,
-      themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: false,
-      routerConfig: AppRouter.router,
+    child: Shortcuts(
+      shortcuts: {
+        LogicalKeySet(LogicalKeyboardKey.escape): const ActivateIntent(),
+      },
+      child: Actions(
+        actions: {
+          ActivateIntent: CallbackAction<ActivateIntent>(
+            onInvoke: (intent) {
+              if (AppRouter.router.canPop()) {
+                AppRouter.router.pop();
+              }
+              return null;
+            },
+          ),
+        },
+        child: Focus(
+          autofocus: true,
+          child: BlocBuilder<LocaleCubit, Locale>(
+            builder: (context, locale) => MaterialApp.router(
+              locale: locale,
+              onGenerateTitle: (context) =>
+                  AppLocalizations.of(context)!.appTitle,
+
+              localizationsDelegates: const [
+                AppLocalizations.delegate, // Your generated delegate
+                GlobalMaterialLocalizations.delegate, // Material widgets
+                GlobalWidgetsLocalizations.delegate, // Text direction routing
+                GlobalCupertinoLocalizations.delegate, // iOS style widgets
+              ],
+              supportedLocales: const [
+                Locale('en'), // English
+                Locale('ru'), // Russian
+              ],
+              title: 'Alpha CRM',
+              scrollBehavior: ScrollConfiguration.of(
+                context,
+              ).copyWith(scrollbars: false),
+              darkTheme: AppThemeX.dark,
+              themeMode: ThemeMode.dark,
+              debugShowCheckedModeBanner: false,
+              routerConfig: AppRouter.router,
+            ),
+          ),
+        ),
+      ),
     ),
   );
 }

@@ -4,6 +4,7 @@ import 'package:crm_app/app/features/common/widget/custom_progress.dart';
 import 'package:crm_app/app/features/common/widget/custom_search.dart';
 import 'package:crm_app/app/features/common/widget/custom_title.dart';
 import 'package:crm_app/app/features/common/widget/custon_no_data.dart';
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/product/presentation/bloc/product_cubit.dart';
 import 'package:crm_app/app/features/warehouse/domain/entity/warehouse_entity.dart';
@@ -67,7 +68,9 @@ class _WarehouseProductListState extends State<WarehouseProductList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("${widget.data?.name} Warehouse")),
+      appBar: AppBar(
+        title: Text("${widget.data?.name} ${context.l10n.warehouse}"),
+      ),
       body: Container(
         padding: EdgeInsets.all(40),
         child: Column(
@@ -76,13 +79,13 @@ class _WarehouseProductListState extends State<WarehouseProductList> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CustomTitle(title: "Warehouse Products"),
+                CustomTitle(title: context.l10n.wareProducts),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   spacing: 10,
                   children: [
                     CustomSearch(onChanged: search),
-                    CustomBtn(onPress: showAddDialog, txt: "Add"),
+                    CustomBtn(onPress: showAddDialog, txt: context.l10n.add),
                   ],
                 ),
               ],

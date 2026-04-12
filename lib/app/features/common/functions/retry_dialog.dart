@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ Future<void> showRetryDialog({
         actionsAlignment: MainAxisAlignment.center,
         actions: [
           CustomBtn(
-            txt: 'Retry',
+            txt: context.l10n.retry,
             onPress: () {
               Navigator.of(context).pop();
               onRetry();

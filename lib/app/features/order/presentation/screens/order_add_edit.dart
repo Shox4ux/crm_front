@@ -1,5 +1,6 @@
 import 'package:crm_app/app/features/client/domain/entity/client_entity.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/common/functions/show_toast.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
@@ -9,6 +10,7 @@ import 'package:crm_app/app/features/order/data/model/order_create.dart';
 import 'package:crm_app/app/features/order/data/model/order_update.dart';
 import 'package:crm_app/app/features/order/domain/entity/order_entity.dart';
 import 'package:crm_app/app/features/order/presentation/bloc/order_cubit.dart';
+import 'package:crm_app/app/features/order/presentation/utils/filter_date_formatter.dart';
 import 'package:crm_app/app/features/order/presentation/utils/order_enum_status.dart';
 import 'package:crm_app/app/features/order/presentation/widget/const_fit.dart';
 import 'package:crm_app/app/features/order_product/data/model/order_pro_create.dart';
@@ -19,6 +21,7 @@ import 'package:crm_app/app/features/warehouse_prod/domain/entity/ware_pro_entit
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class OrderAddEditScreen extends StatefulWidget {
   final bool isEdit;
@@ -43,6 +46,8 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
   bool _clientsLoaded = false;
   bool _waresLoaded = false;
   bool _editInitialized = false;
+  late TextEditingController _deliveryOn;
+  DateTime? _deliveryOnDate;
   double get totalAmount => orderProds.fold(0, (sum, i) => sum + i.total);
   final border = OutlineInputBorder(
     borderRadius: BorderRadius.circular(8),
@@ -54,6 +59,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
     _loadClients();
     _loadWares();
     paidAmountCtrl = TextEditingController(text: '0');
+    _deliveryOn = TextEditingController();
   }
 
   void _tryInitEdit() {
@@ -69,6 +75,11 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
     selectedClient = clients!.firstWhere((c) => c.id == order.client!.id);
     selectedStatus = OrderEnumStatus.values[order.status];
     paidAmountCtrl = TextEditingController(text: order.paidAmount.toString());
+    _deliveryOn = TextEditingController(
+      text: order.deliveryOn != null
+          ? _dateFormatter.format(order.deliveryOn!)
+          : '',
+    );
     orderProds = order.orderProducts!.map((i) {
       final ware = wareList!.firstWhere(
         (w) => w.id == i.warehouseProduct.warehouse?.id,
@@ -100,7 +111,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
   }
 
   Future<void> _loadClients() async {
-    await context.read<ClientCubit>().getAllClient();
+    await context.read<ClientCubit>().getAllClients();
     if (!mounted) return;
     setState(() {
       clients = context.read<ClientCubit>().getFiltList();
@@ -137,14 +148,42 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
   }
 
   int _getStatusForCreateOR(double? paidAmount) {
-    return (paidAmount == totalAmount)
-        ? OrderEnumStatus.paid.index
-        : OrderEnumStatus.unpaid.index;
+    if (_deliveryOnDate != null && _deliveryOnDate!.isAfter(DateTime.now())) {
+      return OrderEnumStatus.prepaid.index;
+    } else {
+      return (paidAmount == totalAmount)
+          ? OrderEnumStatus.paid.index
+          : OrderEnumStatus.unpaid.index;
+    }
+  }
+
+  final DateFormat _dateFormatter = DateFormat('dd.MM.yyyy');
+
+  Future<void> _pickDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      initialDate: _deliveryOnDate,
+    );
+
+    if (picked == null) return;
+
+    setState(() {
+      _deliveryOnDate = picked;
+      _deliveryOn.text = _dateFormatter.format(picked);
+      print(_deliveryOnDate);
+    });
+  }
+
+  void _applyManualDateEdit() {
+    _deliveryOnDate = parseDate(_deliveryOn.text);
   }
 
   void createOrder() {
     if (orderProds.isEmpty) return;
     var paidAmount = double.tryParse(paidAmountCtrl.text);
+
     var b = OrderCreate(
       clientId: selectedClient?.id ?? 0,
       status: _getStatusForCreateOR(paidAmount),
@@ -153,6 +192,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
       adminNote: "",
       clientNote: "",
       totalAmount: totalAmount,
+      deliveryOn: _deliveryOnDate ?? DateTime.now(),
     );
     context.read<OrderCubit>().createOrder(body: b);
   }
@@ -165,6 +205,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
       //================================>>>>>>>>>>>>
       context.read<OrderCubit>().updateOrder(
         body: OrderUpdate(
+          deliveryOn: _deliveryOnDate ?? widget.orderToEdit!.deliveryOn!,
           deletedOrderProducts: deletedOrderProducts,
           updatedOrderProducts: updatedOrderProducts,
           newOrderProducts: newOrderProducts,
@@ -216,7 +257,9 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isEdit ? 'Edit Order' : 'Create Order'),
+        title: Text(
+          widget.isEdit ? context.l10n.editOrder : context.l10n.createOrder,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(40),
@@ -234,7 +277,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                       child: DropdownButtonFormField<ClientEntity>(
                         initialValue: selectedClient,
                         decoration: InputDecoration(
-                          labelText: 'Client',
+                          labelText: context.l10n.client,
                           border: border,
                         ),
                         items: clients
@@ -276,12 +319,13 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                             ),
                           )
                         : SizedBox.shrink(),
+
                     SizedBox(
                       width: 280,
                       child: TextFormField(
                         controller: paidAmountCtrl,
                         decoration: InputDecoration(
-                          labelText: 'Paid Amount',
+                          labelText: context.l10n.paidAmountField,
                           prefixText: '\$ ',
                           border: border,
                         ),
@@ -291,11 +335,26 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                         onChanged: (_) => setState(() {}),
                       ),
                     ),
+                    SizedBox(
+                      width: 280,
+                      child: TextField(
+                        controller: _deliveryOn,
+                        keyboardType: TextInputType.datetime,
+                        decoration: InputDecoration(
+                          border: border,
+                          labelText: context.l10n.deliveryOn,
+                          hintText: 'dd.MM.yyyy',
+                          suffixIcon: Icon(Icons.calendar_today),
+                        ),
+                        onTap: () => _pickDate(),
+                        onChanged: (_) => _applyManualDateEdit(),
+                      ),
+                    ),
                   ],
                 ),
                 CustomBtn(
                   onPress: selectedClient == null ? null : addItem,
-                  txt: 'Add Item',
+                  txt: context.l10n.addItem,
                 ),
               ],
             ),
@@ -322,7 +381,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Total Amount: \$ ${totalAmount.toStringAsFixed(2)}',
+                  context.l10n.totalAmountLabel(totalAmount.toStringAsFixed(2)),
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -346,11 +405,13 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                       children: [
                         CustomBtn(
                           onPress: () => Navigator.pop(context),
-                          txt: 'Cancel',
+                          txt: context.l10n.cancel,
                         ),
                         CustomBtn(
                           onPress: widget.isEdit ? updateOrder : createOrder,
-                          txt: widget.isEdit ? 'Update' : 'Create',
+                          txt: widget.isEdit
+                              ? context.l10n.edit
+                              : context.l10n.create,
                         ),
                       ],
                     );
@@ -373,16 +434,16 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
-        children: const [
+        children: [
           _HeaderCell('#', ConstFit.colNo),
-          _HeaderCell('Warehouse', ConstFit.colWarehouse),
-          _HeaderCell('Product', ConstFit.colProduct),
-          _HeaderCell('Actual Price', ConstFit.colActualPrice),
-          _HeaderCell('Price', ConstFit.colPrice),
-          _HeaderCell('Stock', ConstFit.colStock),
-          _HeaderCell('Quantity', ConstFit.colQty),
-          _HeaderCell('Total', ConstFit.colTotal),
-          _HeaderCell('Action', ConstFit.colAction),
+          _HeaderCell(context.l10n.warehouse, ConstFit.colWarehouse),
+          _HeaderCell(context.l10n.product, ConstFit.colProduct),
+          _HeaderCell(context.l10n.actualPrice, ConstFit.colActualPrice),
+          _HeaderCell(context.l10n.price, ConstFit.colPrice),
+          _HeaderCell(context.l10n.stock, ConstFit.colStock),
+          _HeaderCell(context.l10n.quantity, ConstFit.colQty),
+          _HeaderCell(context.l10n.total, ConstFit.colTotal),
+          _HeaderCell(context.l10n.action, ConstFit.colAction),
         ],
       ),
     );
@@ -399,7 +460,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
             DropdownButtonFormField<WarehouseEntity>(
               initialValue: item.selectedWarehouse,
               decoration: InputDecoration(
-                hintText: 'Warehouse',
+                hintText: context.l10n.warehouseHint,
                 border: border,
               ),
               items: wareList
@@ -417,7 +478,10 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
           _Cell(
             DropdownButtonFormField<WareProEntity>(
               initialValue: item.selectedWProduct,
-              decoration: InputDecoration(hintText: 'Product', border: border),
+              decoration: InputDecoration(
+                hintText: context.l10n.product,
+                border: border,
+              ),
               items: item.selectedWarehouse?.products
                   ?.map(
                     (wp) => DropdownMenuItem(
@@ -454,7 +518,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
             TextFormField(
               controller: item.priceController,
               decoration: InputDecoration(
-                hintText: 'Price',
+                hintText: context.l10n.price,
                 prefixText: '\$ ',
                 border: border,
               ),
@@ -467,7 +531,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
           ),
 
           _Cell(
-            Center(child: Text("${item.stockQty} units")),
+            Center(child: Text("${item.stockQty} ${context.l10n.units}")),
             ConstFit.colStock,
           ),
 
@@ -485,8 +549,8 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                   child: TextFormField(
                     controller: item.qtyController,
                     decoration: InputDecoration(
-                      hintText: 'Qty',
-                      prefixText: 'pcs ',
+                      hintText: context.l10n.qty,
+                      prefixText: '${context.l10n.units} ',
                       border: border,
                       errorText: item.qtyError,
                     ),

@@ -9,6 +9,7 @@ class OrderUpdate {
   final int status;
   final double paidAmount;
   final double totalAmount;
+  final DateTime deliveryOn;
   final List<int>? deletedOrderProducts;
   final List<OrderProUpdate>? updatedOrderProducts; // <OrderProUpdate>
   final List<OrderProCreate>? newOrderProducts;
@@ -23,6 +24,7 @@ class OrderUpdate {
     this.deletedOrderProducts,
     this.updatedOrderProducts,
     this.newOrderProducts,
+    required this.deliveryOn,
   });
 
   Map<String, dynamic> toJson() => _$OrderUpdateToJson(this);

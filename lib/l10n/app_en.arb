@@ -1,0 +1,485 @@
+{
+  "@@locale": "en",
+  "appTitle": "My Flutter App",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "greeting": "Hello, {name}!",
+  "@greeting": {
+    "description": "A greeting message with a dynamic name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "crmLogin": "CRM Login",
+  "@crmLogin": {
+    "description": "Title for the login screen"
+  },
+  "dashboard": "Dashboard",
+  "@dashboard": {
+    "description": "Dashboard screen title"
+  },
+  "clientInfo": "Client Info",
+  "@clientInfo": {
+    "description": "Client information section title"
+  },
+  "clientInvoice": "Client Invoice",
+  "@clientInvoice": {
+    "description": "Client invoice section title"
+  },
+  "clients": "Clients",
+  "@clients": {
+    "description": "Clients screen title and menu item"
+  },
+  "orderOverview": "Order Overview",
+  "@orderOverview": {
+    "description": "Order overview section title"
+  },
+  "productInfo": "Product Info",
+  "@productInfo": {
+    "description": "Product information section title"
+  },
+  "productExpenses": "Product Expenses",
+  "@productExpenses": {
+    "description": "Product expenses section title"
+  },
+  "createProduct": "Create Product",
+  "@createProduct": {
+    "description": "App bar title for the product creation screen"
+  },
+  "basePrice": "Base Price",
+  "@basePrice": {
+    "description": "Label for the base price value"
+  },
+  "spentAmount": "Spent Amount",
+  "@spentAmount": {
+    "description": "Table column header for expense amount spent"
+  },
+  "create": "Create",
+  "@create": {
+    "description": "Button label to create an item"
+  },
+  "products": "Products",
+  "@products": {
+    "description": "Products screen title and menu item"
+  },
+  "warehouse": "Warehouse",
+  "@warehouse": {
+    "description": "Warehouse screen title and menu item"
+  },
+  "wareProducts": "Ware Products",
+  "@wareProducts": {
+    "description": "Warehouse products screen title and menu item"
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Button label to add a new item"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Button label to cancel an action"
+  },
+  
+  "chooseImage": "Choose Image",
+  "@chooseImage": {
+    "description": "Button label to choose an image"
+  },
+ 
+  "createClient": "Create Client",
+  "@createClient": {
+    "description": "Button label to create a new client"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Button label to delete an item"
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Button label to edit an item"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button label"
+  },
+  "refresh": "Refresh",
+  "@refresh": {
+    "description": "Button label to refresh data"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Button label to retry an action"
+  },
+  "address": "Address",
+  "@address": {
+    "description": "Form field label for address"
+  },
+  "amount": "Amount",
+  "@amount": {
+    "description": "Form field label for amount"
+  },
+  "expenseName": "Expense Name",
+  "@expenseName": {
+    "description": "Form field label for expense name"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "Form field label for name"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Form field label for password"
+  },
+  "phone": "Phone",
+  "@phone": {
+    "description": "Form field label for phone number"
+  },
+  "productName": "Product Name",
+  "@productName": {
+    "description": "Form field label for product name"
+  },
+  "profitMargin": "Profit Margin",
+  "@profitMargin": {
+    "description": "Form field label for profit margin"
+  },
+  "quantity": "Quantity",
+  "@quantity": {
+    "description": "Form field label for quantity"
+  },
+  "secretWord": "Secret Word",
+  "@secretWord": {
+    "description": "Form field label for secret word (username)"
+  },
+  "sellPrice": "Sell Price",
+  "@sellPrice": {
+    "description": "Form field label for sell price"
+  },
+  "username": "Username",
+  "@username": {
+    "description": "Form field label for username"
+  },
+  "dateFormat": "dd.MM.yyyy",
+  "@dateFormat": {
+    "description": "Date format hint text"
+  },
+  "price": "Price",
+  "@price": {
+    "description": "Price hint text and table column"
+  },
+  "product": "Product",
+  "@product": {
+    "description": "Product hint text and table column"
+  },
+  "qty": "Qty",
+  "@qty": {
+    "description": "Quantity abbreviation hint text"
+  },
+  "warehouseHint": "Warehouse",
+  "@warehouseHint": {
+    "description": "Warehouse hint text for dropdown"
+  },
+  "confirmDelete": "Confirm Delete",
+  "@confirmDelete": {
+    "description": "Dialog title for delete confirmation"
+  },
+  "deleteConfirmationMessage": "Are you sure to delete this item?",
+  "@deleteConfirmationMessage": {
+    "description": "Dialog message for delete confirmation"
+  },
+  "pleaseEnterValue": "Please Enter Value",
+  "@pleaseEnterValue": {
+    "description": "Validation error message for empty fields"
+  },
+  "action": "Action",
+  "@action": {
+    "description": "Table column header for actions"
+  },
+  "actualPrice": "Actual Price",
+  "@actualPrice": {
+    "description": "Table column header for actual price"
+  },
+  "stock": "Stock",
+  "@stock": {
+    "description": "Table column header for stock"
+  },
+  "total": "Total",
+  "@total": {
+    "description": "Table column header for total"
+  },
+  "appDrawer": "App Drawer",
+  "@appDrawer": {
+    "description": "Drawer title"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Drawer menu item for home"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Drawer menu item for logout"
+  },
+  "orders": "Orders",
+  "@orders": {
+    "description": "Drawer menu item for orders and screen title"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Drawer menu item for settings"
+  },
+  "chooseLanguage": "Choose language",
+  "@chooseLanguage": {
+    "description": "Dialog title for selecting app language"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language label"
+  },
+  "russian": "Russian",
+  "@russian": {
+    "description": "Russian language label"
+  },
+  "required": "Required",
+  "@required": {
+    "description": "Validation error message for required fields"
+  },
+  "fieldCannotBeEmpty": "This field cannot be empty",
+  "@fieldCannotBeEmpty": {
+    "description": "Validation error message for empty fields"
+  },
+  "searchByName": "Search by name",
+  "@searchByName": {
+    "description": "Placeholder text for search input"
+  },
+  "select": "Select",
+  "@select": {
+    "description": "Hint text for dropdown selections"
+  },
+  "enter": "Enter",
+  "@enter": {
+    "description": "Prefix text for input field hints"
+  },
+  "editClient": "Edit Client",
+  "@editClient": {
+    "description": "Title for edit client screen"
+  },
+  "successfullyCreated": "Successfully created",
+  "@successfullyCreated": {
+    "description": "Success message for creation"
+  },
+  "successfullyDeleted": "Successfully deleted",
+  "@successfullyDeleted": {
+    "description": "Success message for deletion"
+  },
+  "successfullyUpdated": "Successfully updated",
+  "@successfullyUpdated": {
+    "description": "Success message for update"
+  },
+  "orderCreatedSuccessfully": "Order created successfully",
+  "@orderCreatedSuccessfully": {
+    "description": "Success message for order creation"
+  },
+  "orderUpdatedSuccessfully": "Order updated successfully",
+  "@orderUpdatedSuccessfully": {
+    "description": "Success message for order update"
+  },
+  "orderDeletedSuccessfully": "Order deleted successfully",
+  "@orderDeletedSuccessfully": {
+    "description": "Success message for order deletion"
+  },
+  "totalClients": "Total Clients",
+  "@totalClients": {
+    "description": "Dashboard card label for total clients"
+  },
+  "totalOrders": "Total Orders",
+  "@totalOrders": {
+    "description": "Dashboard card label for total orders"
+  },
+  "totalRevenue": "Total Revenue",
+  "@totalRevenue": {
+    "description": "Dashboard card label for total revenue"
+  },
+  "unpaidInvoices": "Unpaid Invoices",
+  "@unpaidInvoices": {
+    "description": "Dashboard card label for unpaid invoices"
+  },
+  "acceptedStatus": "Accepted",
+  "@acceptedStatus": {
+    "description": "Order status - accepted"
+  },
+  "rejectedStatus": "Rejected",
+  "@rejectedStatus": {
+    "description": "Order status - rejected"
+  },
+  "paidStatus": "Paid",
+  "@paidStatus": {
+    "description": "Order status - paid"
+  },
+  "unpaidStatus": "Unpaid",
+  "@unpaidStatus": {
+    "description": "Order status - unpaid"
+  },
+  "paidOrder": "Paid",
+  "@paidOrder": {
+    "description": "Order status label for paid orders"
+  },
+  "prepaidOrder": "Prepaid",
+  "@prepaidOrder": {
+    "description": "Order status label for prepaid orders"
+  },
+  "unpaidOrder": "Unpaid",
+  "@unpaidOrder": {
+    "description": "Order status label for unpaid orders"
+  },
+  "all": "All",
+  "@all": {
+    "description": "Label for selecting all items in a filter"
+  },
+  "comingProduct": "Coming",
+  "@comingProduct": {
+    "description": "Product status label for incoming products"
+  },
+  "existsProduct": "Exists",
+  "@existsProduct": {
+    "description": "Product status label for existing products"
+  },
+  "number": "number",
+  "@number": {
+    "description": "Table column header for number/index"
+  },
+  "date": "date",
+  "@date": {
+    "description": "Table column header for date"
+  },
+  "orderDate": "order date",
+  "@orderDate": {
+    "description": "Table column header for order date"
+  },
+  "deliveryDate": "delivery date",
+  "@deliveryDate": {
+    "description": "Table column header for delivery date"
+  },
+  "actualQty": "actual qty",
+  "@actualQty": {
+    "description": "Table column header for actual quantity"
+  },
+  "warehouseQty": "warehouse qty",
+  "@warehouseQty": {
+    "description": "Table column header for warehouse quantity"
+  },
+  "totalAmount": "total amount",
+  "@totalAmount": {
+    "description": "Table column header for total amount"
+  },
+  "paidAmount": "paid amount",
+  "@paidAmount": {
+    "description": "Table column header for paid amount"
+  },
+  "debt": "debt",
+  "@debt": {
+    "description": "Table column header for debt"
+  },
+  "status": "status",
+  "@status": {
+    "description": "Table column header for status"
+  },
+  "forThisMonth": "for this month",
+  "@forThisMonth": {
+    "description": "Dashboard card stat indicator text"
+  },
+  "november": "November",
+  "@november": {
+    "description": "Month name - November"
+  },
+  "december": "December",
+  "@december": {
+    "description": "Month name - December"
+  },
+  "addItem": "Add Item",
+  "@addItem": {
+    "description": "Button label to add an order item"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Button label to confirm an action"
+  },
+  "units": "units",
+  "@units": {
+    "description": "Unit label for quantities"
+  },
+  "editWarehouse": "Edit Warehouse",
+  "@editWarehouse": {
+    "description": "Dialog title for editing warehouse"
+  },
+  "changeImage": "Change image",
+  "@changeImage": {
+    "description": "Button label to change an image"
+  },
+  "dataNotFound": "No Data Found",
+  "@dataNotFound": {
+    "description": "Message displayed when no data is available"
+  },
+  "status": "Status",
+  "@status": {
+    "description": "Filter dropdown label for status"
+  },
+  "fromDate": "From date",
+  "@fromDate": {
+    "description": "Filter field label for start date"
+  },
+  "toDate": "To date",
+  "@toDate": {
+    "description": "Filter field label for end date"
+  },
+  "resetFilter": "Reset filter",
+  "@resetFilter": {
+    "description": "Button label to reset filters"
+  },
+  "createWarehouse": "Create Warehouse",
+  "@createWarehouse": {
+    "description": "Dialog title for creating a new warehouse"
+  },
+  "editWarehouse": "Edit Warehouse",
+  "@editWarehouse": {
+    "description": "Dialog title for editing a warehouse"
+  },
+  "addWareProduct": "Add Ware Product",
+  "@addWareProduct": {
+    "description": "Dialog title for adding a warehouse product"
+  },
+  "editWareProduct": "Edit Ware Product",
+  "@editWareProduct": {
+    "description": "Dialog title for editing a warehouse product"
+  },
+  "createOrder": "Create Order",
+  "@createOrder": {
+    "description": "Screen title for creating a new order"
+  },
+  "editOrder": "Edit Order",
+  "@editOrder": {
+    "description": "Screen title for editing an order"
+  },
+  "client": "Client",
+  "@client": {
+    "description": "Form field label for client dropdown"
+  },
+  "paidAmountField": "Paid Amount",
+  "@paidAmountField": {
+    "description": "Form field label for paid amount input"
+  },
+  "deliveryOn": "Delivery On",
+  "@deliveryOn": {
+    "description": "Form field label for delivery date"
+  },
+  "totalAmountLabel": "Total Amount: $ {amount}",
+  "@totalAmountLabel": {
+    "description": "Label for displaying total amount with currency",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "123.45"
+      }
+    }
+  }
+}

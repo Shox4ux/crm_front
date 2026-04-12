@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class CustomForm extends StatelessWidget {
             decoration: InputDecoration(
               filled: true, // enables background color
               fillColor: AppColour.clTxtBg,
-              hint: Text("Enter $txt"),
+              hint: Text("${context.l10n.enter} $txt"),
               prefixText: prefix,
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(

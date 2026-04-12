@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/functions/show_toast.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String? validateNotEmpty(String? value, {bool isPass = false}) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field cannot be empty';
+      return context.l10n.fieldCannotBeEmpty;
     }
 
     return null;
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisSize: MainAxisSize.min,
 
                 children: [
-                  CustomTitle(title: "CRM Login"),
+                  CustomTitle(title: context.l10n.crmLogin),
                   SizedBox(height: 40),
                   Column(
                     spacing: 12,
@@ -98,13 +99,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomForm(
                         valid: validateNotEmpty,
                         ctrl: _nameCtrl,
-                        txt: "Secret Word",
+                        txt: context.l10n.secretWord,
                       ),
                       CustomForm(
                         valid: validateNotEmpty,
                         ctrl: _passwCtrl,
                         isPass: true,
-                        txt: "Password",
+                        txt: context.l10n.password,
                       ),
                     ],
                   ),
@@ -114,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (state.status == UserSStatus.loading) {
                         return SizedBox(width: 200, child: CustomLoading());
                       }
-                      return CustomBtn(action: _login, txt: "Login");
+                      return CustomBtn(action: _login, txt: context.l10n.login);
                     },
                   ),
                 ],
