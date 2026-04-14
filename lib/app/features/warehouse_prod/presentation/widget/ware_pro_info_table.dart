@@ -29,7 +29,7 @@ class WareProInfoTable extends StatelessWidget {
         border: Border.all(color: AppColour.stroke),
         borderRadius: AppRadius.cardRadius,
       ),
-      child: Column(children: [_buildHeader(), ..._buildRows()]),
+      child: Column(children: [_buildHeader(), ..._buildRows(context)]),
     );
   }
 
@@ -49,7 +49,7 @@ class WareProInfoTable extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildRows() {
+  List<Widget> _buildRows(BuildContext ctx) {
     return List.generate(rows.length, (i) {
       return Column(
         children: [
@@ -58,8 +58,11 @@ class WareProInfoTable extends StatelessWidget {
               RowCellText(txt: "${i + 1}"),
               RowCellText(txt: rows[i].product?.name ?? ""),
               RowCellText(txt: rows[i].warehouse?.name ?? ""),
-              RowCellText(txt: rows[i].product?.totalQuantity.toString() ?? ""),
-              RowCellText(txt: rows[i].quantity.toString()),
+              RowCellText(
+                txt:
+                    "${rows[i].product?.totalQuantity.toString()} ${ctx.l10n.units}",
+              ),
+              RowCellText(txt: "${rows[i].quantity} ${ctx.l10n.units}"),
               RowCellText(
                 txt: "\$ ${rows[i].product?.sellPrice.toStringAsFixed(2)}",
               ),

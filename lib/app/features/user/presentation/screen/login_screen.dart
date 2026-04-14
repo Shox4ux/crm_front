@@ -1,3 +1,4 @@
+import 'package:crm_app/actions/action_widgets/enter_action.dart';
 import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/functions/show_toast.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
@@ -115,7 +116,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (state.status == UserSStatus.loading) {
                         return SizedBox(width: 200, child: CustomLoading());
                       }
-                      return CustomBtn(action: _login, txt: context.l10n.login);
+                      return EnterAction(
+                        onEnter: _login,
+                        child: CustomBtn(
+                          action: _login,
+                          txt: context.l10n.login,
+                        ),
+                      );
                     },
                   ),
                 ],

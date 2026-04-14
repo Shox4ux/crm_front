@@ -1,3 +1,4 @@
+import 'package:crm_app/actions/action_widgets/enter_action.dart';
 import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
@@ -10,7 +11,6 @@ addEditExpense({
   required void Function() action,
   required TextEditingController name,
   required TextEditingController amount,
-  String title = "Add",
   Map<String, dynamic>? data,
   required int i,
 }) {
@@ -26,7 +26,7 @@ addEditExpense({
     context: ctx,
     builder: (context) => AlertDialog(
       title: Text(
-        "$title Product Expense",
+        context.l10n.expDialogTitle(context.l10n.add),
         style: AppTxtStl.large.copyWith(fontSize: 24, color: AppColour.white),
       ),
       constraints: BoxConstraints(minHeight: 180, minWidth: 300),
@@ -61,13 +61,20 @@ addEditExpense({
               onPress: () => Navigator.of(context).pop(),
               txt: context.l10n.cancel,
             ),
-            CustomBtn(
-              onPress: () {
+            EnterAction(
+              onEnter: () {
                 if (formKey.currentState!.validate()) {
                   action();
                 }
               },
-              txt: title,
+              child: CustomBtn(
+                onPress: () {
+                  if (formKey.currentState!.validate()) {
+                    action();
+                  }
+                },
+                txt: context.l10n.add,
+              ),
             ),
           ],
         ),

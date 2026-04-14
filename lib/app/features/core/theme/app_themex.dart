@@ -110,14 +110,11 @@ abstract class AppThemeX {
       bodyLarge: const TextStyle(color: AppColour.textDark),
       bodyMedium: const TextStyle(color: AppColour.textSecondaryDark),
     ),
-
-    // listTileTheme: ListTileThemeData(
-    //   selectedColor: Colors.white,
-    //   selectedTileColor: const Color(0xFF4880FF).withValues(alpha: 0.20),
-    //   iconColor: Colors.white.withValues(alpha: 0.9),
-    //   textColor: Colors.white.withValues(alpha: 0.85),
-    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    //   minVerticalPadding: 14,
-    // ),
+    listTileTheme: ListTileThemeData(
+      contentPadding: EdgeInsets.zero,
+      horizontalTitleGap: 0, // Gap between leading icon and title
+      minLeadingWidth: 0, // Minimum width for the leading widget
+      minVerticalPadding: 0, // Vertical padding
+    ),
   );
 }

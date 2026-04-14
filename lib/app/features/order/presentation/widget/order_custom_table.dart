@@ -1,7 +1,8 @@
-import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
-import 'package:crm_app/app/features/common/ui/app_text_style.dart';
+import 'package:crm_app/app/features/common/widget/custom_text.dart';
+import 'package:crm_app/app/features/common/widget/table_colmn_cell.dart';
+import 'package:crm_app/app/features/common/widget/table_row_cell.dart';
 import 'package:crm_app/app/features/home/presentation/widget/bordered_container.dart';
 import 'package:crm_app/app/features/order/domain/entity/order_entity.dart';
 import 'package:crm_app/app/features/order/presentation/utils/date_formatter.dart';
@@ -46,7 +47,7 @@ class OrderCustomTable extends StatelessWidget {
       borderColor: AppColour.whiteStroke,
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Row(
-        children: List.generate(clms.length, (i) => ClnCellText(txt: clms[i])),
+        children: List.generate(clms.length, (i) => ClmCell(txt: clms[i])),
       ),
     );
   }
@@ -54,156 +55,72 @@ class OrderCustomTable extends StatelessWidget {
   // ---------------- DATA ROWS ----------------
   List<Widget> _buildRows() {
     return List.generate(rows.length, (i) {
-      return ListTile(
-        title: Column(
-          children: [
-            Row(
-              children: [
-                RowCellText(txt: "${i + 1}"),
-                RowCellText(txt: rows[i].client?.user.username ?? ""),
-                RowCellText(txt: rows[i].client?.user.address ?? ""),
-                RowCellText(txt: formatDateTime(rows[i].createdAt)),
-                RowCellText(txt: formatDate(rows[i].deliveryOn!)),
-
-                RowCellText(
-                  txt:
-                      "\$ ${getTotal(rows[i].orderProducts).toStringAsFixed(2)}",
-                ),
-                RowCellText(txt: "\$ ${rows[i].paidAmount.toString()}"),
-                RowCellText(
-                  // viewEnum: OrderListViewEnum.debt,
-                  txt:
-                      "\$ ${(getTotal(rows[i].orderProducts) - rows[i].paidAmount).toStringAsFixed(2)}",
-                ),
-
-                RowCellText(
-                  status: orderStatusFromInt(rows[i].status),
-                  viewEnum: OrderListViewEnum.status,
-                ),
-                RowCellText(
-                  viewEnum: OrderListViewEnum.action,
-                  delAction: () => delAction(rows[i]),
-                  editAction: () => editAction(rows[i]),
-                ),
-              ],
-            ),
-
-            // Divider between data rows
-            if (i != rows.length - 1)
-              Container(height: 1, color: AppColour.whiteStroke),
-          ],
-        ),
+      return Column(
+        children: [
+          i == 1 ? _getRow(i, rows[i]) : _getExpdRow(i, rows[i]),
+          if (i != rows.length - 1)
+            Container(height: 1, color: AppColour.whiteStroke),
+        ],
       );
     });
   }
-}
 
-class ClnCellText extends StatelessWidget {
-  const ClnCellText({super.key, this.txt = ""});
-  final String txt;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Text(
-        txt.toUpperCase(),
-        textAlign: TextAlign.center,
-        style: AppTxtStl.medium.copyWith(color: AppColour.white),
+  Widget _getExpdRow(int i, OrderEntity data) {
+    return ExpansionTile(
+      title: _getRow(i, data),
+      textColor: AppColour.textSecondaryDark,
+      collapsedTextColor: AppColour.textSecondaryDark,
+      trailing: null,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.transparent, width: 1),
       ),
+      showTrailingIcon: false,
+      minTileHeight: 0,
+      tilePadding: EdgeInsets.zero,
+      childrenPadding: EdgeInsets.all(10),
+      expandedAlignment: Alignment.centerLeft,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CustomText(primary: "Reason: ", secondary: "secondary"),
+            Row(
+              spacing: 32,
+              children: [
+                CustomText(primary: "Updater: ", secondary: "secondary"),
+                CustomText(primary: "Updated At: ", secondary: "secondary"),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
-}
 
-class RowCellText extends StatelessWidget {
-  const RowCellText({
-    super.key,
-    this.txt = "",
-    this.status,
-    this.viewEnum = OrderListViewEnum.text,
-    this.delAction,
-    this.editAction,
-  });
-  final String txt;
-  final OrderEnumStatus? status;
-  final OrderListViewEnum viewEnum;
-  final void Function()? delAction;
-  final void Function()? editAction;
-
-  @override
-  Widget build(BuildContext context) {
-    switch (viewEnum) {
-      case OrderListViewEnum.action:
-        return Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 20,
-            children: [
-              IconButton(
-                onPressed: editAction,
-                icon: Icon(Icons.edit, color: Colors.blue),
-              ),
-              IconButton(
-                onPressed: delAction,
-                icon: Icon(Icons.delete, color: Colors.red),
-              ),
-            ],
-          ),
-        );
-      case OrderListViewEnum.status:
-        final statusText = _getLocalizedStatus(context, status);
-        return Flexible(
-          child: Center(
-            child: Container(
-              alignment: Alignment.center,
-              width: 140,
-              decoration: BoxDecoration(
-                color: status?.color,
-                borderRadius: AppRadius.buttonRadius,
-              ),
-              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-              child: Text(
-                statusText.toUpperCase(),
-                style: AppTxtStl.medium.copyWith(color: AppColour.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-        );
-      case OrderListViewEnum.text:
-        return Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Text(
-              txt,
-              style: AppTxtStl.medium,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        );
-      case OrderListViewEnum.debt:
-        return Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Text(
-              txt,
-              style: AppTxtStl.medium.copyWith(color: AppColour.rejectedDark),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        );
-    }
-  }
-
-  String _getLocalizedStatus(BuildContext context, OrderEnumStatus? status) {
-    switch (status) {
-      case OrderEnumStatus.paid:
-        return context.l10n.paidOrder;
-      case OrderEnumStatus.prepaid:
-        return context.l10n.prepaidOrder;
-      case OrderEnumStatus.unpaid:
-        return context.l10n.unpaidOrder;
-      default:
-        return "";
-    }
+  Widget _getRow(int i, OrderEntity data) {
+    return Row(
+      children: [
+        RowCell(txt: "${i + 1}"),
+        RowCell(txt: data.client?.user.username ?? ""),
+        RowCell(txt: data.client?.user.address ?? ""),
+        RowCell(txt: formatDateTime(data.createdAt)),
+        RowCell(txt: formatDate(data.deliveryOn!)),
+        RowCell(txt: "\$ ${getTotal(data.orderProducts).toStringAsFixed(2)}"),
+        RowCell(txt: "\$ ${data.paidAmount.toString()}"),
+        RowCell(
+          txt:
+              "\$ ${(getTotal(data.orderProducts) - data.paidAmount).toStringAsFixed(2)}",
+        ),
+        RowCell(
+          status: orderStatusFromInt(data.status),
+          viewEnum: OrderListViewEnum.status,
+        ),
+        RowCell(
+          viewEnum: OrderListViewEnum.action,
+          delAction: () => delAction(data),
+          editAction: () => editAction(data),
+        ),
+      ],
+    );
   }
 }

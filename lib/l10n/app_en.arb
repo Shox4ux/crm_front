@@ -380,10 +380,7 @@
   "@debt": {
     "description": "Table column header for debt"
   },
-  "status": "status",
-  "@status": {
-    "description": "Table column header for status"
-  },
+  
   "forThisMonth": "for this month",
   "@forThisMonth": {
     "description": "Dashboard card stat indicator text"
@@ -408,10 +405,6 @@
   "@units": {
     "description": "Unit label for quantities"
   },
-  "editWarehouse": "Edit Warehouse",
-  "@editWarehouse": {
-    "description": "Dialog title for editing warehouse"
-  },
   "changeImage": "Change image",
   "@changeImage": {
     "description": "Button label to change an image"
@@ -419,6 +412,10 @@
   "dataNotFound": "No Data Found",
   "@dataNotFound": {
     "description": "Message displayed when no data is available"
+  },
+  "dateHint": "dd.MM.yyyy",
+  "@dateHint": {
+    "description": "Hint text for date input fields"
   },
   "status": "Status",
   "@status": {
@@ -472,6 +469,18 @@
   "@deliveryOn": {
     "description": "Form field label for delivery date"
   },
+
+  "expDialogTitle": "{title} Product Expense",
+  "@expDialogTitle": {
+    "description": "The title for the product expense screen",
+    "placeholders": {
+      "title": {
+        "type": "String",
+        "example": "Monthly"
+      }
+    }
+  },
+
   "totalAmountLabel": "Total Amount: $ {amount}",
   "@totalAmountLabel": {
     "description": "Label for displaying total amount with currency",

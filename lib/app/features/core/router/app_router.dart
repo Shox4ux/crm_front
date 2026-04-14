@@ -13,7 +13,7 @@ import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
   static GoRouter router = GoRouter(
-    initialLocation: Routes.login,
+    initialLocation: Routes.home,
     routes: [
       GoRoute(
         path: Routes.wareProList,

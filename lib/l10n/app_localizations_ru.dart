@@ -95,7 +95,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get amount => 'Сумма';
 
   @override
-  String get expenseName => 'Cоздать расхода';
+  String get expenseName => 'Название расхода';
 
   @override
   String get name => 'Имя';
@@ -261,7 +261,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get comingProduct => 'Поступает';
 
   @override
-  String get existsProduct => 'Есть в наличии';
+  String get existsProduct => 'Есть наличии';
 
   @override
   String get number => 'номер';
@@ -285,13 +285,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get totalAmount => 'общая сумма';
 
   @override
-  String get paidAmount => 'оплаченная сумма';
+  String get paidAmount => 'oплачено';
 
   @override
   String get debt => 'задолженность';
-
-  @override
-  String get status => 'Статус';
 
   @override
   String get forThisMonth => 'в этом месяце';
@@ -312,13 +309,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get units => 'товаров';
 
   @override
-  String get editWarehouse => 'Редактировать склад';
-
-  @override
   String get changeImage => 'Изменить изображение';
 
   @override
   String get dataNotFound => 'Данные не найдены';
+
+  @override
+  String get dateHint => 'дд.MM.гггг';
+
+  @override
+  String get status => 'Статус';
 
   @override
   String get fromDate => 'С даты';
@@ -331,6 +331,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get createWarehouse => 'Создать склад';
+
+  @override
+  String get editWarehouse => 'Редактировать склад';
 
   @override
   String get addWareProduct => 'Добавить товар на склад';
@@ -348,10 +351,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get client => 'Клиент';
 
   @override
-  String get paidAmountField => 'Оплаченная сумма';
+  String get paidAmountField => 'Оплаченна';
 
   @override
   String get deliveryOn => 'Дата доставки';
+
+  @override
+  String expDialogTitle(String title) {
+    return '$title расход';
+  }
 
   @override
   String totalAmountLabel(String amount) {

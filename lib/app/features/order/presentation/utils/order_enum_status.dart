@@ -32,6 +32,17 @@ enum OrderEnumStatus {
 
   final Color color;
   const OrderEnumStatus({required this.color});
+
+  String localizedName(BuildContext context) {
+    switch (this) {
+      case OrderEnumStatus.paid:
+        return context.l10n.paidOrder;
+      case OrderEnumStatus.prepaid:
+        return context.l10n.prepaidOrder;
+      case OrderEnumStatus.unpaid:
+        return context.l10n.unpaidOrder;
+    }
+  }
 }
 
 OrderEnumStatus orderStatusFromInt(int value) {

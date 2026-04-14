@@ -1,3 +1,4 @@
+import 'package:crm_app/actions/app_actions.dart';
 import 'package:crm_app/app_storage.dart';
 import 'package:crm_app/app/features/client/domain/repo/client_repo.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
@@ -21,7 +22,6 @@ import 'package:crm_app/app_locator.dart';
 import 'package:crm_app/connectivity_service.dart';
 import 'package:crm_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -55,12 +55,15 @@ class CRMApp extends StatelessWidget {
     ],
 
     child: Shortcuts(
-      shortcuts: {
-        LogicalKeySet(LogicalKeyboardKey.escape): const ActivateIntent(),
-      },
+      shortcuts: actList,
       child: Actions(
         actions: {
-          ActivateIntent: CallbackAction<ActivateIntent>(
+          SubmitIntent: CallbackAction<SubmitIntent>(
+            onInvoke: (intent) {
+              return null;
+            },
+          ),
+          PopIntent: CallbackAction<PopIntent>(
             onInvoke: (intent) {
               if (AppRouter.router.canPop()) {
                 AppRouter.router.pop();

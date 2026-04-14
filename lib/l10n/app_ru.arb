@@ -43,7 +43,7 @@
   "retry": "Повторить",
   "address": "Адрес",
   "amount": "Сумма",
-  "expenseName": "Cоздать расхода",
+  "expenseName": "Название расхода",
   "name": "Имя",
   "password": "Пароль",
   "phone": "Телефон",
@@ -125,10 +125,16 @@
   "@comingProduct": {
     "description": "Product status label for incoming products"
   },
-  "existsProduct": "Есть в наличии",
+  "existsProduct": "Есть наличии",
   "@existsProduct": {
     "description": "Product status label for existing products"
   },
+
+  "dateHint": "дд.MM.гггг",
+  "@dateHint": {
+    "description": "Hint text for date input fields"
+  },
+ "expDialogTitle": "{title} расход",
   "number": "номер",
   "date": "дата",
   "orderDate": "дата заказа",
@@ -148,9 +154,9 @@
     "description": "Table column header for warehouse quantity"
   },
   "totalAmount": "общая сумма",
-  "paidAmount": "оплаченная сумма",
+  "paidAmount": "oплачено",
   "debt": "задолженность",
-  "status": "статус",
+
   "forThisMonth": "в этом месяце",
   "november": "Ноябрь",
   "december": "Декабрь",
@@ -219,7 +225,7 @@
   "@client": {
     "description": "Form field label for client dropdown"
   },
-  "paidAmountField": "Оплаченная сумма",
+  "paidAmountField": "Оплаченна",
   "@paidAmountField": {
     "description": "Form field label for paid amount input"
   },

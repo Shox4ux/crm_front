@@ -656,12 +656,6 @@ abstract class AppLocalizations {
   /// **'debt'**
   String get debt;
 
-  /// Filter dropdown label for status
-  ///
-  /// In en, this message translates to:
-  /// **'Status'**
-  String get status;
-
   /// Dashboard card stat indicator text
   ///
   /// In en, this message translates to:
@@ -698,12 +692,6 @@ abstract class AppLocalizations {
   /// **'units'**
   String get units;
 
-  /// Dialog title for editing a warehouse
-  ///
-  /// In en, this message translates to:
-  /// **'Edit Warehouse'**
-  String get editWarehouse;
-
   /// Button label to change an image
   ///
   /// In en, this message translates to:
@@ -715,6 +703,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Data Found'**
   String get dataNotFound;
+
+  /// Hint text for date input fields
+  ///
+  /// In en, this message translates to:
+  /// **'dd.MM.yyyy'**
+  String get dateHint;
+
+  /// Filter dropdown label for status
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
 
   /// Filter field label for start date
   ///
@@ -739,6 +739,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create Warehouse'**
   String get createWarehouse;
+
+  /// Dialog title for editing a warehouse
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Warehouse'**
+  String get editWarehouse;
 
   /// Dialog title for adding a warehouse product
   ///
@@ -781,6 +787,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delivery On'**
   String get deliveryOn;
+
+  /// The title for the product expense screen
+  ///
+  /// In en, this message translates to:
+  /// **'{title} Product Expense'**
+  String expDialogTitle(String title);
 
   /// Label for displaying total amount with currency
   ///

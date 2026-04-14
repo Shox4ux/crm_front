@@ -290,9 +290,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get debt => 'debt';
 
   @override
-  String get status => 'Status';
-
-  @override
   String get forThisMonth => 'for this month';
 
   @override
@@ -311,13 +308,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get units => 'units';
 
   @override
-  String get editWarehouse => 'Edit Warehouse';
-
-  @override
   String get changeImage => 'Change image';
 
   @override
   String get dataNotFound => 'No Data Found';
+
+  @override
+  String get dateHint => 'dd.MM.yyyy';
+
+  @override
+  String get status => 'Status';
 
   @override
   String get fromDate => 'From date';
@@ -330,6 +330,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get createWarehouse => 'Create Warehouse';
+
+  @override
+  String get editWarehouse => 'Edit Warehouse';
 
   @override
   String get addWareProduct => 'Add Ware Product';
@@ -351,6 +354,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deliveryOn => 'Delivery On';
+
+  @override
+  String expDialogTitle(String title) {
+    return '$title Product Expense';
+  }
 
   @override
   String totalAmountLabel(String amount) {

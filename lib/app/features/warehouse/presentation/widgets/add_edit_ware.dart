@@ -1,3 +1,4 @@
+import 'package:crm_app/actions/action_widgets/enter_action.dart';
 import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:crm_app/app/features/common/widget/custom_text_form.dart';
@@ -56,15 +57,18 @@ void addEditWarehouseDialog({
 
               return Row(
                 spacing: 20,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomBtn(
                     onPress: () => goBack(context),
                     txt: context.l10n.cancel,
                   ),
-                  CustomBtn(
-                    onPress: action,
-                    txt: isEdit ? context.l10n.edit : context.l10n.add,
+                  EnterAction(
+                    onEnter: action,
+                    child: CustomBtn(
+                      onPress: action,
+                      txt: isEdit ? context.l10n.edit : context.l10n.add,
+                    ),
                   ),
                 ],
               );

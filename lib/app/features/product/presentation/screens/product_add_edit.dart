@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:crm_app/actions/action_widgets/enter_action.dart';
 import 'package:crm_app/app/features/common/functions/del_confrm.dart';
 import 'package:crm_app/app/features/common/functions/form_empty_validation.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
@@ -301,6 +302,8 @@ class _ProductAddEditState extends State<ProductAddEdit> {
     i: -1,
   );
 
+  void addEditAction(ProductCubit cubit) =>
+      widget.isEdit ? updateProduct(cubit) : createProduct(cubit);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -399,17 +402,18 @@ class _ProductAddEditState extends State<ProductAddEdit> {
                                       if (state.status == ProdStatus.loading) {
                                         return const CustomLoading();
                                       }
-                                      return CustomBtn(
-                                        txt: widget.isEdit
-                                            ? context.l10n.edit
-                                            : context.l10n.create,
-                                        action: () => widget.isEdit
-                                            ? updateProduct(
-                                                context.read<ProductCubit>(),
-                                              )
-                                            : createProduct(
-                                                context.read<ProductCubit>(),
-                                              ),
+                                      return EnterAction(
+                                        onEnter: () => addEditAction(
+                                          context.read<ProductCubit>(),
+                                        ),
+                                        child: CustomBtn(
+                                          txt: widget.isEdit
+                                              ? context.l10n.edit
+                                              : context.l10n.create,
+                                          action: () => addEditAction(
+                                            context.read<ProductCubit>(),
+                                          ),
+                                        ),
                                       );
                                     },
                                   ),

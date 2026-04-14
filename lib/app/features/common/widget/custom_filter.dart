@@ -135,7 +135,7 @@ class _CustomFilterState extends State<CustomFilter> {
                             decoration: InputDecoration(
                               border: border,
                               labelText: context.l10n.fromDate,
-                              hintText: 'dd.MM.yyyy',
+                              hintText: context.l10n.dateHint,
                               suffixIcon: Icon(Icons.calendar_today),
                             ),
                             onTap: () => _pickDate(isFrom: true),
@@ -151,7 +151,7 @@ class _CustomFilterState extends State<CustomFilter> {
                             decoration: InputDecoration(
                               border: border,
                               labelText: context.l10n.toDate,
-                              hintText: 'dd.MM.yyyy',
+                              hintText: context.l10n.dateHint,
                               suffixIcon: Icon(Icons.calendar_today),
                             ),
                             onTap: () => _pickDate(isFrom: false),

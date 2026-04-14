@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:crm_app/actions/action_widgets/enter_action.dart';
 import 'package:crm_app/app/features/client/data/model/client_update.dart';
 import 'package:crm_app/app/features/client/data/model/create_as_client.dart';
 import 'package:crm_app/app/features/client/domain/entity/client_entity.dart';
@@ -251,15 +252,21 @@ class _ClientAddEditState extends State<ClientAddEdit> {
                                       onPress: delete,
                                       txt: context.l10n.delete,
                                     ),
-                                    ClientButton(
-                                      onPress: edit,
-                                      txt: context.l10n.edit,
+                                    EnterAction(
+                                      onEnter: edit,
+                                      child: ClientButton(
+                                        onPress: edit,
+                                        txt: context.l10n.edit,
+                                      ),
                                     ),
                                   ],
                                 )
-                              : ClientButton(
-                                  onPress: createClient,
-                                  txt: context.l10n.createClient,
+                              : EnterAction(
+                                  onEnter: createClient,
+                                  child: ClientButton(
+                                    onPress: createClient,
+                                    txt: context.l10n.createClient,
+                                  ),
                                 );
                         },
                       ),

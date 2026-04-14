@@ -1,3 +1,4 @@
+import 'package:crm_app/actions/action_widgets/enter_action.dart';
 import 'package:crm_app/app/features/client/domain/entity/client_entity.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
 import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
@@ -302,14 +303,14 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                             child: DropdownButtonFormField<OrderEnumStatus>(
                               initialValue: selectedStatus,
                               decoration: InputDecoration(
-                                labelText: 'Status',
+                                labelText: context.l10n.status,
                                 border: border,
                               ),
                               items: OrderEnumStatus.values
                                   .map(
                                     (c) => DropdownMenuItem(
                                       value: c,
-                                      child: Text(c.name),
+                                      child: Text(c.localizedName(context)),
                                     ),
                                   )
                                   .toList(),
@@ -407,11 +408,14 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                           onPress: () => Navigator.pop(context),
                           txt: context.l10n.cancel,
                         ),
-                        CustomBtn(
-                          onPress: widget.isEdit ? updateOrder : createOrder,
-                          txt: widget.isEdit
-                              ? context.l10n.edit
-                              : context.l10n.create,
+                        EnterAction(
+                          onEnter: widget.isEdit ? updateOrder : createOrder,
+                          child: CustomBtn(
+                            onPress: widget.isEdit ? updateOrder : createOrder,
+                            txt: widget.isEdit
+                                ? context.l10n.edit
+                                : context.l10n.create,
+                          ),
                         ),
                       ],
                     );
