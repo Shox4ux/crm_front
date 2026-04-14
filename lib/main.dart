@@ -60,7 +60,10 @@ class CRMApp extends StatelessWidget {
       ),
       BlocProvider(create: (_) => ClientCubit(locator<ClientRepo>())),
       BlocProvider(create: (_) => AdminCubit(locator<AdminRepo>())),
-      BlocProvider(create: (_) => OrderCancelCubit(locator<OrderCancelRepo>())),
+      BlocProvider(
+        create: (_) =>
+            OrderCancelCubit(locator<OrderCancelRepo>(), locator<AppStorage>()),
+      ),
       BlocProvider(create: (_) => LocaleCubit(locator<AppStorage>())),
     ],
 
