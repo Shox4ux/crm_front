@@ -254,6 +254,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unpaidOrder => 'Unpaid';
 
   @override
+  String get cancelledOrder => 'Cancelled';
+
+  @override
+  String get refundedOrder => 'Refunded';
+
+  @override
   String get all => 'All';
 
   @override

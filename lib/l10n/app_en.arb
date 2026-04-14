@@ -332,6 +332,14 @@
   "@unpaidOrder": {
     "description": "Order status label for unpaid orders"
   },
+  "cancelledOrder": "Cancelled",
+  "@cancelledOrder": {
+    "description": "Order status label for cancelled orders"
+  },
+  "refundedOrder": "Refunded",
+  "@refundedOrder": {
+    "description": "Order status label for refunded orders"
+  },
   "all": "All",
   "@all": {
     "description": "Label for selecting all items in a filter"

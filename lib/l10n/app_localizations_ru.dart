@@ -255,6 +255,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unpaidOrder => 'Не оплачено';
 
   @override
+  String get cancelledOrder => 'Отменено';
+
+  @override
+  String get refundedOrder => 'Возврат';
+
+  @override
   String get all => 'Все';
 
   @override

@@ -584,6 +584,18 @@ abstract class AppLocalizations {
   /// **'Unpaid'**
   String get unpaidOrder;
 
+  /// Order status label for cancelled orders
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get cancelledOrder;
+
+  /// Order status label for refunded orders
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get refundedOrder;
+
   /// Label for selecting all items in a filter
   ///
   /// In en, this message translates to:

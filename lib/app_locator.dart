@@ -1,4 +1,8 @@
 import 'package:crm_app/api_logger.dart';
+import 'package:crm_app/app/features/admin/data/repo/admin_repo.dart';
+import 'package:crm_app/app/features/admin/data/source/admin_api_service.dart';
+import 'package:crm_app/app/features/order_cancel/data/repo/order_cancel_repo.dart';
+import 'package:crm_app/app/features/order_cancel/data/source/order_cancel_api_service.dart';
 import 'package:crm_app/app_storage.dart';
 import 'package:crm_app/app/features/client/data/source/client_api_service.dart';
 import 'package:crm_app/app/features/client/domain/repo/client_repo.dart';
@@ -66,4 +70,16 @@ Future<void> setupLocator() async {
   // ==================================Order==============================
   locator.registerSingleton<OrderApiService>(OrderApiService(locator<Dio>()));
   locator.registerSingleton<OrderRepo>(OrderRepo(locator<OrderApiService>()));
+
+  // order Cancel
+  locator.registerSingleton<OrderCancelApiService>(
+    OrderCancelApiService(locator<Dio>()),
+  );
+  locator.registerSingleton<OrderCancelRepo>(
+    OrderCancelRepo(locator<OrderCancelApiService>()),
+  );
+
+  // admin
+  locator.registerSingleton<AdminApiService>(AdminApiService(locator<Dio>()));
+  locator.registerSingleton<AdminRepo>(AdminRepo(locator<AdminApiService>()));
 }

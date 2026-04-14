@@ -1,4 +1,8 @@
 import 'package:crm_app/actions/app_actions.dart';
+import 'package:crm_app/app/features/admin/data/repo/admin_repo.dart';
+import 'package:crm_app/app/features/admin/presentation/bloc/cubit/admin_cubit.dart';
+import 'package:crm_app/app/features/order_cancel/data/repo/order_cancel_repo.dart';
+import 'package:crm_app/app/features/order_cancel/presentation/bloc/cancel_order_cubit.dart';
 import 'package:crm_app/app_storage.dart';
 import 'package:crm_app/app/features/client/domain/repo/client_repo.dart';
 import 'package:crm_app/app/features/client/presentation/bloc/client_cubit.dart';
@@ -43,7 +47,11 @@ class CRMApp extends StatelessWidget {
       BlocProvider(create: (_) => WarehouseCubit(locator<WarehouseRepo>())),
       BlocProvider(create: (_) => WareProCubit(locator<WareProRepo>())),
       BlocProvider(
-        create: (_) => UserCubit(locator<UserRepo>(), locator<AppStorage>()),
+        create: (_) => UserCubit(
+          locator<UserRepo>(),
+          locator<AppStorage>(),
+          locator<AdminRepo>(),
+        ),
       ),
       BlocProvider(create: (_) => OrderCubit(locator<OrderRepo>())),
       BlocProvider(
@@ -51,6 +59,8 @@ class CRMApp extends StatelessWidget {
             ProductCubit(locator<ProductRepo>(), locator<ExpenseRepo>()),
       ),
       BlocProvider(create: (_) => ClientCubit(locator<ClientRepo>())),
+      BlocProvider(create: (_) => AdminCubit(locator<AdminRepo>())),
+      BlocProvider(create: (_) => OrderCancelCubit(locator<OrderCancelRepo>())),
       BlocProvider(create: (_) => LocaleCubit(locator<AppStorage>())),
     ],
 

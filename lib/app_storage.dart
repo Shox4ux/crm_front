@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const String tokenKey = "token";
 const String userIdKey = "user_id";
+const String adminKey = "admin_id";
+
 const String localeKey = "locale";
 
 class AppStorage {
@@ -24,6 +26,16 @@ class AppStorage {
   Future<int?> getUserId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getInt(userIdKey);
+  }
+
+  void saveAdminId(int adminId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(adminKey, adminId);
+  }
+
+  Future<int?> getAdminId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(adminKey);
   }
 
   Future<bool> isExpired() async {

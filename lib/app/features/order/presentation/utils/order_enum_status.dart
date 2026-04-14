@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 
@@ -6,7 +6,9 @@ enum OrderFilterStatus {
   all(color: AppColour.textDark),
   paid(color: AppColour.completedDark),
   prepaid(color: AppColour.onholdDark),
-  unpaid(color: AppColour.rejectedDark);
+  unpaid(color: AppColour.rejectedDark),
+  canceled(color: Colors.yellow),
+  refunded(color: Colors.blue);
 
   final Color color;
   const OrderFilterStatus({required this.color});
@@ -21,6 +23,10 @@ enum OrderFilterStatus {
         return context.l10n.prepaidOrder;
       case OrderFilterStatus.unpaid:
         return context.l10n.unpaidOrder;
+      case OrderFilterStatus.canceled:
+        return context.l10n.cancelledOrder;
+      case OrderFilterStatus.refunded:
+        return context.l10n.refundedOrder;
     }
   }
 }
@@ -28,7 +34,9 @@ enum OrderFilterStatus {
 enum OrderEnumStatus {
   paid(color: AppColour.completedDark),
   prepaid(color: AppColour.onholdDark),
-  unpaid(color: AppColour.rejectedDark);
+  unpaid(color: AppColour.rejectedDark),
+  canceled(color: Colors.yellow),
+  refunded(color: Colors.blue);
 
   final Color color;
   const OrderEnumStatus({required this.color});
@@ -41,6 +49,10 @@ enum OrderEnumStatus {
         return context.l10n.prepaidOrder;
       case OrderEnumStatus.unpaid:
         return context.l10n.unpaidOrder;
+      case OrderEnumStatus.canceled:
+        return context.l10n.cancelledOrder;
+      case OrderEnumStatus.refunded:
+        return context.l10n.refundedOrder;
     }
   }
 }

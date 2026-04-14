@@ -1,6 +1,4 @@
 import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
-import 'package:crm_app/app/features/common/functions/del_confrm.dart';
-import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/common/functions/show_toast.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:crm_app/app/features/common/widget/custom_footer.dart';
@@ -13,6 +11,8 @@ import 'package:crm_app/app/features/order/domain/entity/order_entity.dart';
 import 'package:crm_app/app/features/order/presentation/bloc/order_cubit.dart';
 import 'package:crm_app/app/features/common/widget/custom_filter.dart';
 import 'package:crm_app/app/features/order/presentation/widget/order_custom_table.dart';
+import 'package:crm_app/app/features/order_cancel/presentation/bloc/cancel_order_cubit.dart';
+import 'package:crm_app/app/features/order_cancel/presentation/widgets/order_cancel_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -26,20 +26,32 @@ class OrderList extends StatefulWidget {
 
 class _OrderListState extends State<OrderList> {
   String query = "";
+  late TextEditingController reasontCtrl;
+
   @override
   void initState() {
     super.initState();
-    context.read<OrderCubit>();
+    reasontCtrl = TextEditingController();
   }
 
-  void deleteOrder(OrderEntity order) {
-    showDelConfrm(
+  void cancelOrder(OrderEntity order) {
+    orderCancelDialog(
       ctx: context,
-      action: () {
-        context.read<OrderCubit>().deleteOrder(id: order.id);
-        goBack(context);
+      action: (body) {
+        var newB = body.copyWith(orderId: order.id);
+
+        context.read<OrderCancelCubit>().cancelOrder(body: newB);
       },
+
+      reasonCtrl: reasontCtrl,
     );
+    // showDelConfrm(
+    //   ctx: context,
+    //   action: () {
+    //     context.read<OrderCubit>().deleteOrder(id: order.id);
+    //     goBack(context);
+    //   },
+    // );
   }
 
   void editOrder(OrderEntity order) {
@@ -120,7 +132,7 @@ class _OrderListState extends State<OrderList> {
                         context.l10n.action,
                       ],
                       rows: orderList,
-                      delAction: deleteOrder,
+                      delAction: cancelOrder,
                       editAction: editOrder,
                     ),
                   );

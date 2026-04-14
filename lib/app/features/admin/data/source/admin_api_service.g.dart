@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_api_service.dart';
+part of 'admin_api_service.dart';
 
 // dart format off
 
@@ -10,8 +10,8 @@ part of 'user_api_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter,avoid_unused_constructor_parameters,unreachable_from_main
 
-class _UserApiService implements UserApiService {
-  _UserApiService(this._dio, {this.baseUrl, this.errorLogger}) {
+class _AdminApiService implements AdminApiService {
+  _AdminApiService(this._dio, {this.baseUrl, this.errorLogger}) {
     baseUrl ??= 'http://94.183.182.130:8001';
   }
 
@@ -22,56 +22,27 @@ class _UserApiService implements UserApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<LoginResponse>> loginUser({
-    required LoginRequest body,
+  Future<HttpResponse<AdminResponse>> getAdminByUserId({
+    required int userId,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
-    final _options = _setStreamType<HttpResponse<LoginResponse>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/auth/login',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late LoginResponse _value;
-    try {
-      _value = LoginResponse.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, response: _result);
-      rethrow;
-    }
-    final httpResponse = HttpResponse(_value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<UserResponse>> verifyUser({required String token}) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'token': token};
-    final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<UserResponse>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
+    final _options = _setStreamType<HttpResponse<AdminResponse>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/verify_user',
+            '/admins/get_by_user_id/${userId}',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UserResponse _value;
+    late AdminResponse _value;
     try {
-      _value = UserResponse.fromJson(_result.data!);
+      _value = AdminResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
