@@ -8,16 +8,16 @@ part of 'order_cancel_create.dart';
 
 OrderCancelCreate _$OrderCancelCreateFromJson(Map<String, dynamic> json) =>
     OrderCancelCreate(
-      orderId: (json['order_id'] as num).toInt(),
+      orderId: (json['order_id'] as num?)?.toInt(),
       cancelReason: json['cancel_reason'] as String,
       cancelType: (json['cancel_type'] as num).toInt(),
-      cancelerId: (json['canceler_id'] as num).toInt(),
+      cancelerId: (json['canceler_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$OrderCancelCreateToJson(OrderCancelCreate instance) =>
     <String, dynamic>{
-      'order_id': instance.orderId,
+      'order_id': ?instance.orderId,
       'cancel_reason': instance.cancelReason,
       'cancel_type': instance.cancelType,
-      'canceler_id': instance.cancelerId,
+      'canceler_id': ?instance.cancelerId,
     };

@@ -10,6 +10,7 @@ import 'package:crm_app/app/features/order/presentation/utils/get_total.dart';
 import 'package:crm_app/app/features/order/presentation/utils/order_enum_status.dart';
 import 'package:crm_app/app/features/order/presentation/utils/order_list_view_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 
 class OrderCustomTable extends StatelessWidget {
   final List<String> clms;
@@ -32,7 +33,7 @@ class OrderCustomTable extends StatelessWidget {
         border: Border.all(color: AppColour.stroke),
         borderRadius: AppRadius.cardRadius,
       ),
-      child: Column(children: [_buildHeader(), ..._buildRows()]),
+      child: Column(children: [_buildHeader(), ..._buildRows(context)]),
     );
   }
 
@@ -53,11 +54,13 @@ class OrderCustomTable extends StatelessWidget {
   }
 
   // ---------------- DATA ROWS ----------------
-  List<Widget> _buildRows() {
+  List<Widget> _buildRows(BuildContext ctx) {
     return List.generate(rows.length, (i) {
       return Column(
         children: [
-          i == 1 ? _getRow(i, rows[i]) : _getExpdRow(i, rows[i]),
+          rows[i].cancelInfo == null
+              ? _getRow(i, rows[i])
+              : _getExpdRow(i, rows[i], ctx),
           if (i != rows.length - 1)
             Container(height: 1, color: AppColour.whiteStroke),
         ],
@@ -65,7 +68,7 @@ class OrderCustomTable extends StatelessWidget {
     });
   }
 
-  Widget _getExpdRow(int i, OrderEntity data) {
+  Widget _getExpdRow(int i, OrderEntity data, BuildContext ctx) {
     return ExpansionTile(
       title: _getRow(i, data),
       textColor: AppColour.textSecondaryDark,
@@ -77,18 +80,34 @@ class OrderCustomTable extends StatelessWidget {
       showTrailingIcon: false,
       minTileHeight: 0,
       tilePadding: EdgeInsets.zero,
-      childrenPadding: EdgeInsets.all(10),
+      childrenPadding: EdgeInsets.only(bottom: 16, right: 22, left: 22),
       expandedAlignment: Alignment.centerLeft,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Column(
+          spacing: 16,
           children: [
-            CustomText(primary: "Reason: ", secondary: "secondary"),
+            Container(height: 1, color: AppColour.whiteStroke),
+
             Row(
-              spacing: 32,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CustomText(primary: "Updater: ", secondary: "secondary"),
-                CustomText(primary: "Updated At: ", secondary: "secondary"),
+                CustomText(
+                  primary: "${ctx.l10n.reason}: ",
+                  secondary: data.cancelInfo!.cancelReason,
+                ),
+                Row(
+                  spacing: 32,
+                  children: [
+                    CustomText(
+                      primary: "${ctx.l10n.canceler}: ",
+                      secondary: data.cancelInfo?.canceler.user.username ?? "",
+                    ),
+                    CustomText(
+                      primary: "${ctx.l10n.canceled_at}: ",
+                      secondary: formatDateTime(data.cancelInfo!.createdAt),
+                    ),
+                  ],
+                ),
               ],
             ),
           ],
@@ -116,6 +135,8 @@ class OrderCustomTable extends StatelessWidget {
           viewEnum: OrderListViewEnum.status,
         ),
         RowCell(
+          isOrder: true,
+          isCancel: data.cancelInfo != null,
           viewEnum: OrderListViewEnum.action,
           delAction: () => delAction(data),
           editAction: () => editAction(data),

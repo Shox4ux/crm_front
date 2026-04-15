@@ -252,6 +252,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get prepaidOrder => 'Предоплачен';
 
   @override
+  String get reason => 'Причина';
+
+  @override
+  String get canceled_at => 'Отменено';
+
+  @override
+  String get canceler => 'Отменитель';
+
+  @override
   String get unpaidOrder => 'Не оплачено';
 
   @override

@@ -8,7 +8,6 @@ import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/product/domain/entity/product_entity.dart';
 import 'package:crm_app/app/features/product/presentation/bloc/product_cubit.dart';
 import 'package:crm_app/app/features/warehouse/domain/entity/warehouse_entity.dart';
-import 'package:crm_app/app/features/warehouse_prod/data/fake_data.dart';
 import 'package:crm_app/app/features/warehouse_prod/data/model/ware_pro_create.dart';
 import 'package:crm_app/app/features/warehouse_prod/presentation/bloc/ware_pro_cubit.dart';
 import 'package:crm_app/app/features/warehouse_prod/presentation/widget/add_edit_ware_pro.dart';
@@ -25,27 +24,28 @@ class WarehouseProductList extends StatefulWidget {
 }
 
 class _WarehouseProductListState extends State<WarehouseProductList> {
-  late final WareProFake fake;
   late GlobalKey<FormState>? _formKey;
-  late final List<ProductEntity> prodList;
+  List<ProductEntity> prodList = [];
 
   @override
   void initState() {
     super.initState();
-    fake = WareProFake();
     context.read<WareProCubit>().getAllWareProdByWareId(widget.data!.id);
-    //Requesting all products , and get the list
     context.read<ProductCubit>().getAllProduct();
     prodList = context.read<ProductCubit>().getFiltList();
-
-    debugPrint("ProdList: ${prodList.length.toString()}");
     _formKey = GlobalKey<FormState>();
+  }
+
+  void setUp() {
+    context.read<ProductCubit>().getAllProduct();
+    prodList = context.read<ProductCubit>().getFiltList();
   }
 
   void onAdd(WareProCreate data) {
     setState(() {
       context.read<WareProCubit>().addWareProd(data);
     });
+    setUp();
   }
 
   void showAddDialog() {

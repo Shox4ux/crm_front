@@ -27,31 +27,30 @@ class OrderList extends StatefulWidget {
 class _OrderListState extends State<OrderList> {
   String query = "";
   late TextEditingController reasontCtrl;
-
+  late GlobalKey<FormState> key;
   @override
   void initState() {
     super.initState();
     reasontCtrl = TextEditingController();
+    key = GlobalKey<FormState>();
   }
 
   void cancelOrder(OrderEntity order) {
     orderCancelDialog(
       ctx: context,
+      key: key,
       action: (body) {
         var newB = body.copyWith(orderId: order.id);
-
         context.read<OrderCancelCubit>().cancelOrder(body: newB);
+        onRefresh();
       },
-
+      isEdit: order.cancelInfo != null,
       reasonCtrl: reasontCtrl,
     );
-    // showDelConfrm(
-    //   ctx: context,
-    //   action: () {
-    //     context.read<OrderCubit>().deleteOrder(id: order.id);
-    //     goBack(context);
-    //   },
-    // );
+  }
+
+  void onRefresh() {
+    context.read<OrderCubit>().getAllOrders();
   }
 
   void editOrder(OrderEntity order) {
@@ -67,9 +66,7 @@ class _OrderListState extends State<OrderList> {
     return RefresherWidget(
       bottom: 100,
       right: 40,
-      onRefresh: () {
-        context.read<OrderCubit>().getAllOrders();
-      },
+      onRefresh: onRefresh,
       child: Padding(
         padding: EdgeInsets.all(40),
         child: Column(

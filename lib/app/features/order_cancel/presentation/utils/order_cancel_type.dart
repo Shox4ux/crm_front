@@ -2,9 +2,9 @@ enum OrderCancelType { cancel, refund }
 
 OrderCancelType typeFromInt(int i) {
   switch (i) {
-    case 0:
+    case 3:
       return OrderCancelType.cancel;
-    case 1:
+    case 4:
       return OrderCancelType.refund;
     default:
       return OrderCancelType.cancel;
@@ -14,8 +14,8 @@ OrderCancelType typeFromInt(int i) {
 int typeToInt(OrderCancelType type) {
   switch (type) {
     case OrderCancelType.cancel:
-      return 0;
+      return 3;
     case OrderCancelType.refund:
-      return 1;
+      return 4;
   }
 }

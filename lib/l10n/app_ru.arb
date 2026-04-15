@@ -113,6 +113,18 @@
   "@prepaidOrder": {
     "description": "Order status label for prepaid orders"
   },
+  "canceler": "Отменитель",
+  "@canceler": {
+    "description": "Label for order canceler"
+  },
+  "canceled_at" : "Отменено",  
+  "@canceled_at": {
+    "description": "Label for order cancelation date"
+  },
+  "reason": "Причина",
+  "@reason":{
+    "description": "Label for order rejection reason"
+  },
   "unpaidOrder": "Не оплачено",
   "@unpaidOrder": {
     "description": "Order status label for unpaid orders"

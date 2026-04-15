@@ -1,4 +1,5 @@
 import 'package:crm_app/app/features/client/data/model/client_response.dart';
+import 'package:crm_app/app/features/order_cancel/data/model/order_cancel_response.dart';
 import 'package:crm_app/app/features/order_product/data/model/order_pro_response.dart';
 import 'package:crm_app/app/features/order/domain/entity/order_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -17,6 +18,7 @@ class OrderResponse extends OrderEntity {
     super.orderProducts,
     super.client,
     super.deliveryOn,
+    super.cancelInfo,
   });
 
   Map<String, dynamic> toJson() => _$OrderResponseToJson(this);

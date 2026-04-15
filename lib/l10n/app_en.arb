@@ -328,6 +328,18 @@
   "@prepaidOrder": {
     "description": "Order status label for prepaid orders"
   },
+  "reason": "Reason",
+  "@reason":{
+    "description": "Label for order rejection reason"
+  },
+  "canceled_at" : "Canceled at",  
+  "@canceled_at": {
+    "description": "Label for order cancelation date"
+  },
+  "canceler"  : "Canceler", 
+  "@canceler": {
+    "description": "Label for order canceler"
+  },
   "unpaidOrder": "Unpaid",
   "@unpaidOrder": {
     "description": "Order status label for unpaid orders"

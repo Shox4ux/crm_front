@@ -3,6 +3,7 @@ import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/common/widget/custom_btn.dart';
 import 'package:crm_app/app/features/common/widget/custom_text_form.dart';
+import 'package:crm_app/app/features/common/widget/dialog_title.dart';
 import 'package:crm_app/app/features/order_cancel/data/model/order_cancel_create.dart';
 import 'package:crm_app/app/features/order_cancel/presentation/utils/order_cancel_type.dart';
 import 'package:crm_app/app/features/warehouse/presentation/bloc/warehouse_cubit.dart';
@@ -36,7 +37,7 @@ void orderCancelDialog({
       var b = OrderCancelCreate(
         orderId: 1,
         cancelReason: reasonCtrl.text,
-        cancelType: slctCancelStatus?.index ?? 3,
+        cancelType: typeToInt(slctCancelStatus!),
       );
       action(b);
       goBack(ctx);
@@ -57,7 +58,7 @@ void orderCancelDialog({
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            title: Text("Dialog Title"),
+            title: DialogTitle(title: title ?? 'Cancel Order'),
             content: Form(
               key: key,
 
@@ -65,7 +66,11 @@ void orderCancelDialog({
                 spacing: 12,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  CustomForm(ctrl: reasonCtrl, txt: "Reason", valid: valid),
+                  CustomForm(
+                    ctrl: reasonCtrl,
+                    txt: context.l10n.reason,
+                    valid: valid,
+                  ),
                   DropdownButtonFormField<OrderCancelType>(
                     decoration: const InputDecoration(labelText: 'Status'),
                     items: statusList(),
@@ -98,13 +103,17 @@ void orderCancelDialog({
                         onPress: () => goBack(context),
                         txt: context.l10n.cancel,
                       ),
-                      EnterAction(
-                        onEnter: () => actionPress(ctx),
-                        child: CustomBtn(
-                          onPress: () => actionPress(ctx),
-                          txt: isEdit ? context.l10n.edit : context.l10n.add,
-                        ),
-                      ),
+                      isEdit
+                          ? SizedBox.shrink()
+                          : EnterAction(
+                              onEnter: () => actionPress(ctx),
+                              child: CustomBtn(
+                                onPress: () => actionPress(ctx),
+                                txt: isEdit
+                                    ? context.l10n.edit
+                                    : context.l10n.add,
+                              ),
+                            ),
                     ],
                   );
                 },

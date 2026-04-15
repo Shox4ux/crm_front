@@ -7,8 +7,8 @@ enum OrderFilterStatus {
   paid(color: AppColour.completedDark),
   prepaid(color: AppColour.onholdDark),
   unpaid(color: AppColour.rejectedDark),
-  canceled(color: Colors.yellow),
-  refunded(color: Colors.blue);
+  canceled(color: Colors.deepOrange),
+  refunded(color: Colors.deepPurple);
 
   final Color color;
   const OrderFilterStatus({required this.color});
@@ -35,8 +35,8 @@ enum OrderEnumStatus {
   paid(color: AppColour.completedDark),
   prepaid(color: AppColour.onholdDark),
   unpaid(color: AppColour.rejectedDark),
-  canceled(color: Colors.yellow),
-  refunded(color: Colors.blue);
+  canceled(color: Colors.pink),
+  refunded(color: Colors.deepPurple);
 
   final Color color;
   const OrderEnumStatus({required this.color});
@@ -65,6 +65,10 @@ OrderEnumStatus orderStatusFromInt(int value) {
       return OrderEnumStatus.prepaid;
     case 2:
       return OrderEnumStatus.unpaid;
+    case 3:
+      return OrderEnumStatus.canceled;
+    case 4:
+      return OrderEnumStatus.refunded;
     default:
       return OrderEnumStatus.paid;
   }

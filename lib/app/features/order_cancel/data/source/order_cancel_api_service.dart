@@ -9,7 +9,7 @@ abstract class OrderCancelApiService {
   factory OrderCancelApiService(Dio dio, {String baseUrl}) =
       _OrderCancelApiService;
 
-  @POST('/order_cancel/create')
+  @POST('/order_cancels/create')
   Future<HttpResponse<dynamic>> cancelOrder({
     @Body() required OrderCancelCreate body,
   });

@@ -24,6 +24,11 @@ OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) =>
       deliveryOn: json['delivery_on'] == null
           ? null
           : DateTime.parse(json['delivery_on'] as String),
+      cancelInfo: json['cancel_info'] == null
+          ? null
+          : OrderCancelResponse.fromJson(
+              json['cancel_info'] as Map<String, dynamic>,
+            ),
     );
 
 Map<String, dynamic> _$OrderResponseToJson(
@@ -39,4 +44,5 @@ Map<String, dynamic> _$OrderResponseToJson(
   'created_at': instance.createdAt.toIso8601String(),
   'order_products': ?instance.orderProducts?.map((e) => e.toJson()).toList(),
   'client': ?instance.client?.toJson(),
+  'cancel_info': ?instance.cancelInfo?.toJson(),
 };

@@ -578,6 +578,24 @@ abstract class AppLocalizations {
   /// **'Prepaid'**
   String get prepaidOrder;
 
+  /// Label for order rejection reason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get reason;
+
+  /// Label for order cancelation date
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled at'**
+  String get canceled_at;
+
+  /// Label for order canceler
+  ///
+  /// In en, this message translates to:
+  /// **'Canceler'**
+  String get canceler;
+
   /// Order status label for unpaid orders
   ///
   /// In en, this message translates to:

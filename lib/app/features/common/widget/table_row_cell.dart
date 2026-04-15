@@ -13,11 +13,17 @@ class RowCell extends StatelessWidget {
     this.status,
     this.viewEnum = OrderListViewEnum.text,
     this.delAction,
+    this.isCancel = false,
+    this.isOrder = false,
     this.editAction,
   });
   final String txt;
   final OrderEnumStatus? status;
   final OrderListViewEnum viewEnum;
+
+  final bool isCancel;
+  final bool isOrder;
+
   final void Function()? delAction;
   final void Function()? editAction;
 
@@ -34,10 +40,15 @@ class RowCell extends StatelessWidget {
                 onPressed: editAction,
                 icon: Icon(Icons.edit, color: Colors.blue),
               ),
-              IconButton(
-                onPressed: delAction,
-                icon: Icon(Icons.delete, color: Colors.red),
-              ),
+              isCancel
+                  ? SizedBox.shrink()
+                  : IconButton(
+                      onPressed: delAction,
+                      icon: Icon(
+                        isOrder ? Icons.cancel : Icons.delete,
+                        color: Colors.red,
+                      ),
+                    ),
             ],
           ),
         );
@@ -94,6 +105,10 @@ class RowCell extends StatelessWidget {
         return context.l10n.prepaidOrder;
       case OrderEnumStatus.unpaid:
         return context.l10n.unpaidOrder;
+      case OrderEnumStatus.canceled:
+        return context.l10n.cancelledOrder;
+      case OrderEnumStatus.refunded:
+        return context.l10n.refundedOrder;
       default:
         return "";
     }

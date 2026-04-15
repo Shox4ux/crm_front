@@ -1,3 +1,4 @@
+import 'package:crm_app/actions/action_widgets/enter_action.dart';
 import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/functions/go_back.dart';
 import 'package:crm_app/app/features/common/widget/dialog_title.dart';
@@ -19,7 +20,7 @@ void showWareProductDialog(
   required GlobalKey<FormState>? key,
 }) {
   final List<int> statusInts = [0, 1];
-  ProductEntity? selectedProduct;
+  ProductEntity? selectedProduct = editData?.product;
   ProductStatus? selectedStatus;
 
   final TextEditingController qtyCtrl = TextEditingController(
@@ -32,15 +33,17 @@ void showWareProductDialog(
 
   String? validate(dynamic val) {
     if (val == null) {
-      return 'Required';
+      return context.l10n.required;
     }
     if (val is String && val.isEmpty) {
-      return 'Required';
+      return context.l10n.required;
     }
-    if (val is String &&
-        double.tryParse(val) != null &&
-        double.parse(val) > selectedProduct!.activeQuantity) {
-      return 'Quantity cannot exceed available stock';
+    if (!isEdit) {
+      if (val is String &&
+          double.tryParse(val) != null &&
+          double.parse(val) > selectedProduct!.activeQuantity) {
+        return 'Quantity cannot exceed available stock';
+      }
     }
 
     return null;
@@ -59,7 +62,7 @@ void showWareProductDialog(
     }
   }
 
-  dynamic statusList() {
+  List<DropdownMenuItem<ProductStatus>> statusList() {
     return statusInts.map((intValue) {
       final status = wpStatusFromInt(intValue);
       return DropdownMenuItem(
@@ -69,7 +72,7 @@ void showWareProductDialog(
     }).toList();
   }
 
-  dynamic genProdList() {
+  List<DropdownMenuItem<ProductEntity>>? genProdList() {
     return prodList?.map((product) {
       return DropdownMenuItem(
         value: product,
@@ -81,12 +84,19 @@ void showWareProductDialog(
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(
-              'Qty: ${product.activeQuantity} | Price: \$${product.sellPrice}',
+              '${context.l10n.qty}: ${product.activeQuantity} | ${context.l10n.price}: \$${product.sellPrice}',
               style: const TextStyle(fontSize: 12),
             ),
           ],
         ),
       );
+    }).toList();
+  }
+
+  List<Widget> buildSelectedItem(BuildContext context) {
+    if (prodList == null) return [];
+    return prodList.map((product) {
+      return Text(product.name);
     }).toList();
   }
 
@@ -97,7 +107,6 @@ void showWareProductDialog(
         builder: (context, setState) {
           return AlertDialog(
             title: DialogTitle(title: title),
-
             content: SingleChildScrollView(
               child: SizedBox(
                 width: 400,
@@ -105,17 +114,13 @@ void showWareProductDialog(
                   key: key,
                   child: Column(
                     children: [
-                      /// PRODUCT DROPDOWN
                       DropdownButtonFormField<ProductEntity>(
                         validator: validate,
-                        selectedItemBuilder: (context) {
-                          if (prodList == null) return [];
-                          return prodList.map((product) {
-                            return Text(product.name);
-                          }).toList();
-                        },
+                        selectedItemBuilder: buildSelectedItem,
                         initialValue: editData?.product,
-                        decoration: const InputDecoration(labelText: 'Product'),
+                        decoration: InputDecoration(
+                          labelText: context.l10n.product,
+                        ),
                         items: genProdList(),
                         onChanged: (value) {
                           setState(() {
@@ -129,15 +134,17 @@ void showWareProductDialog(
                         controller: qtyCtrl,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          labelText: 'Custom Quantity',
+                          labelText: context.l10n.quantity,
                           suffix: Text(
-                            "| Total qty : ${selectedProduct?.activeQuantity}",
+                            "| ${context.l10n.qty} : ${selectedProduct?.activeQuantity ?? 0}",
                           ),
                         ),
                       ),
                       const SizedBox(height: 16),
                       DropdownButtonFormField<ProductStatus>(
-                        decoration: const InputDecoration(labelText: 'Status'),
+                        decoration: InputDecoration(
+                          labelText: context.l10n.status,
+                        ),
                         initialValue: wpStatusFromInt(editData?.status),
                         items: statusList(),
                         validator: validate,
@@ -157,9 +164,12 @@ void showWareProductDialog(
                 onPressed: () => goBack(context),
                 child: Text(context.l10n.cancel),
               ),
-              ElevatedButton(
-                onPressed: actionPress,
-                child: Text(context.l10n.confirm),
+              EnterAction(
+                onEnter: actionPress,
+                child: ElevatedButton(
+                  onPressed: actionPress,
+                  child: Text(context.l10n.confirm),
+                ),
               ),
             ],
           );

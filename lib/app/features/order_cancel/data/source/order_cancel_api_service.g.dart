@@ -28,12 +28,13 @@ class _OrderCancelApiService implements OrderCancelApiService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = body;
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
     final _options = _setStreamType<HttpResponse<dynamic>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/order_cancel/create',
+            '/order_cancels/create',
             queryParameters: queryParameters,
             data: _data,
           )

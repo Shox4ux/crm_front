@@ -344,7 +344,7 @@ class _OrderAddEditScreenState extends State<OrderAddEditScreen> {
                         decoration: InputDecoration(
                           border: border,
                           labelText: context.l10n.deliveryOn,
-                          hintText: 'dd.MM.yyyy',
+                          hintText: context.l10n.dateFormat,
                           suffixIcon: Icon(Icons.calendar_today),
                         ),
                         onTap: () => _pickDate(),

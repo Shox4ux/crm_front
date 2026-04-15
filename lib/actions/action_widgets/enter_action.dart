@@ -19,7 +19,7 @@ class EnterAction extends StatelessWidget {
         ),
       },
       child: KeyboardListener(
-        focusNode: FocusNode()..requestFocus(),
+        focusNode: FocusNode(),
         child: Focus(autofocus: true, child: child),
       ),
     );

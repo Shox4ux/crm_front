@@ -251,6 +251,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get prepaidOrder => 'Prepaid';
 
   @override
+  String get reason => 'Reason';
+
+  @override
+  String get canceled_at => 'Canceled at';
+
+  @override
+  String get canceler => 'Canceler';
+
+  @override
   String get unpaidOrder => 'Unpaid';
 
   @override

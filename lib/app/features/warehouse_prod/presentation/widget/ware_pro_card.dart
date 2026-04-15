@@ -1,3 +1,4 @@
+import 'package:crm_app/app/features/common/extensions/l10n_ext.dart';
 import 'package:crm_app/app/features/common/ui/app_colour.dart';
 import 'package:crm_app/app/features/common/ui/app_radius.dart';
 import 'package:crm_app/app/features/common/ui/app_text_style.dart';
@@ -36,7 +37,7 @@ class WareProCard extends StatelessWidget {
                         ),
                       ),
                       Text("\$ ${item.product?.sellPrice}"),
-                      Text("${item.quantity} units"),
+                      Text("${item.quantity} ${context.l10n.qty}"),
                       StatusItem(status: wpStatusFromInt(item.status)),
                     ],
                   ),

@@ -1,4 +1,5 @@
 import 'package:crm_app/app/features/client/data/model/client_response.dart';
+import 'package:crm_app/app/features/order_cancel/data/model/order_cancel_response.dart';
 import 'package:crm_app/app/features/order_product/data/model/order_pro_response.dart';
 
 class OrderEntity {
@@ -12,6 +13,7 @@ class OrderEntity {
   final DateTime createdAt;
   final List<OrderProResponse>? orderProducts;
   final ClientResponse? client;
+  final OrderCancelResponse? cancelInfo;
 
   OrderEntity({
     required this.id,
@@ -24,5 +26,6 @@ class OrderEntity {
     required this.orderProducts,
     required this.client,
     this.deliveryOn,
+    this.cancelInfo,
   });
 }

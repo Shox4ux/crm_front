@@ -12,7 +12,7 @@ class CustomText extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: primary,
-        style: AppTxtStl.medium.copyWith(color: AppColour.white),
+        style: AppTxtStl.medium.copyWith(color: AppColour.white, fontSize: 16),
         children: [
           TextSpan(
             text: secondary,
